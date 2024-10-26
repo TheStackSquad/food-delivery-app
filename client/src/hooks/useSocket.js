@@ -10,7 +10,7 @@ const useSocket = () => {
 
   useEffect(() => {
     // Connect to the Socket.IO server
-    const newSocket = io('http://localhost:5000'); // Replace with your server URL
+    const newSocket = io('http://localhost:5000', { transports: ['websocket'] });
     setSocket(newSocket);
 
     // Set connection state
