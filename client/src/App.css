@@ -21,14 +21,16 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 }
 .home,
 .account{
   background-color: var(--backgroundColor);
   width: var(--absoluteWidth);
   height: var(--absoluteHeight);
-  position: relative;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
