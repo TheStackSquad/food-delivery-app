@@ -1,14 +1,28 @@
-import './App.css';
-import ChatWidget from './components/ChatWidget';
+// src/App.js
+import "./App.css";
+import ChatWidget from "./components/ChatWidget";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Account from "./Pages/Account";
+import Menu from "./Pages/Menu";
+import GlobalLayout from './GlobalLayout/layout';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-     Dev Dynasty....
-      </header>
-      <ChatWidget />
-    </div>
+    <Router>
+      <GlobalLayout>
+      <div className="App">
+        {/* Place ChatWidget outside of Routes */}
+        <ChatWidget />
+        <Routes>
+          {/* Define route components here */}
+          <Route path="/" element={<Home />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/menu" element={<Menu />} />
+        </Routes>
+      </div>
+      </GlobalLayout>
+    </Router>
   );
 }
 

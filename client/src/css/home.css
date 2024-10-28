@@ -1,0 +1,45 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:#dad7b8;
+}
+.bgImg{
+    width: 100%;
+    height: 100vh;
+}
+.background-image{
+    width: 100%;
+    height: 100vh; 
+}
+.button-section{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    gap: 1rem;
+}
+.custom-btn{
+    font-size: 1.3rem;
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    margin: 0px .5rem;
+}
+.btn-1 {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.btn-1:hover,
+.btn-1:focus {
+    background-color: rgb(68, 45, 2, .3);
+    border-color: black;
+}
+.btn-2 {
+    background-color: black;
+    color: white;
+    border: none;
+}

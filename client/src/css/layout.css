@@ -1,0 +1,52 @@
+.global-layout{
+  width: 99%;
+  height: auto;
+  background-color: rgba(243, 243, 203, 0.3);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: none;
+}
+
+.caret {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  font-size: 1.2rem;
+}
+
+.dropdown {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: max-content;
+}
+
+.dropdown-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: fit-content;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.bell {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+

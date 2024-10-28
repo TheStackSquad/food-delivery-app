@@ -1,5 +1,6 @@
 // src/hooks/useSocket.js
 
+// eslint-disable-next-line
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client'; // Import Socket.IO
 
