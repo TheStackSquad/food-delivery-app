@@ -1,0 +1,19 @@
+/* FlashText.css */
+.flash-text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    height: auto;
+  }
+  
+  .flash-text {
+    font-size: 3rem;
+    font-weight: bold;
+    word-wrap: break-word;
+    color: orange;
+    font-family: var(--fontfamily);
+  }
+  

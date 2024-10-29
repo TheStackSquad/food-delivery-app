@@ -1,9 +1,16 @@
 // src/animations/chatMotion.js
-
 export const chatBoxAnimation = {
-    initial: { opacity: 0, y: 50 },    // Starting hidden state
-    animate: { opacity: 1, y: 0 },     // Visible and in place
-    exit: { opacity: 0, y: 50 },       // Exit with sliding down and hiding
-    transition: { duration: 0.3 }      // Duration of the animation
-  };
-  
+  initial: { opacity: 0, y: 30, scale: 0.95 },
+  animate: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: 30, scale: 0.95 },
+  transition: { duration: 0.5, ease: "easeInOut" },
+};
+
+export const chatIconAnimation = {
+  initial: { opacity: 1, scale: 0.85 },
+  animate: { opacity: 1, scale: 1 }, // Removed 'y' adjustment
+  transition: {
+    duration: 0.5,
+    ease: "easeInOut",
+  },
+};
