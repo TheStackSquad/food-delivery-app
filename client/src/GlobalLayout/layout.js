@@ -103,14 +103,11 @@ function GlobalLayout() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                {MENU_ITEMS.map((item) => (
-                  <DropdownItem
-                    key={item.path}
-                    path={item.path}
-                    label={item.label}
-                    special={item.special}
-                  />
-                ))}
+                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/')}>Home</motion.div>
+                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/account')}>Account</motion.div>
+                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/menu')}>Menu</motion.div>
+                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/payment')}>Payments</motion.div>
+                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/logout')}>Logout</motion.div>
               </motion.div>
             )}
           </AnimatePresence>
