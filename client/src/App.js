@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Account from "./Pages/Account";
 import Payment from "./Pages/Payment";
 import Menu from "./Pages/Menu";
+import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
 
 function App() {

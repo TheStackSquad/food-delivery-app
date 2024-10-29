@@ -2,7 +2,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import Pizza from '../asset/img/pizza-food.webp';
+import FlashText from '../components/FlashText';
+import texts from '../asset/textData/text';
 import '../css/home.css';
 
 function Home() {
@@ -10,14 +11,8 @@ function Home() {
 
   return (
     <div className='home'>
-      {/* Background Image Container */}
-      <div className='bgImg'>
-        <img
-          src={Pizza}
-          alt="Hand holding a pizza"
-          className='background-image'
-        />
-      </div>
+
+<FlashText texts={texts} />
 
       {/* Button Section */}
       <div className='button-section'>
