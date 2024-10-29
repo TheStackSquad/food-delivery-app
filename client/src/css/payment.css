@@ -1,0 +1,156 @@
+/* General layout */
+.payment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  
+  .payment-grid {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header h4 {
+    color: #333;
+    font-size: 1.4em;
+    margin: 0;
+  }
+  
+  /* Payment Methods */
+  .payment-methods h4,
+  .payment-methods p {
+    color: #666;
+    font-size: 1em;
+    margin: 8px 0;
+  }
+  
+  .payment-methods-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+  
+  /* Card styles  */
+  .card {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    color: #555;
+    font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card:hover {
+    background-color: #d0e6ff;
+  }
+  
+  .card-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  
+  /* Card Details */
+  .card-details {
+    margin-top: 15px;
+  }
+  
+  .card-details h4 {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 8px;
+  }
+  
+  .card-details input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 600px) {
+    .payment-grid {
+      padding: 10px;
+      max-width: 90%;
+      width: 100%;
+      border-radius: 6px;
+    }
+  
+    .header h4 {
+      font-size: 1.2em;
+    }
+  
+    .payment-methods h4,
+    .payment-methods p,
+    .card-details h4 {
+      font-size: 0.9em;
+    }
+  
+    .card {
+      font-size: 0.9em;
+      padding: 6px;
+    }
+  
+    .card-logo {
+      width: 18px;
+      height: 18px;
+    }
+  
+    .card-details input[type="text"] {
+      padding: 6px;
+      font-size: 0.85em;
+    }
+  
+    .btn {
+      padding: 8px;
+      font-size: 0.95em;
+    }
+  }
+  
