@@ -1,75 +1,129 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FaBell, FaBars } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useContext, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaBell, FaCaretDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LayoutContext } from './LayoutContext';
 import ChatWidget from '../components/ChatWidget';
-import { dropdownVariants, itemVariants } from '../Motion/animation';
 import '../css/layout.css';
+import { itemVariants } from '../Motion/animation';
 
-function GlobalLayout({ children }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isChatIconVisible, setIsChatIconVisible] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
+// Dropdown menu items configuration
+const MENU_ITEMS = [
+  { path: '/', label: 'Home' },
+  { path: '/account', label: 'Account' },
+  { path: '/menu', label: 'Menu' },
+  { path: '/logout', label: 'Logout' },
+  { path: '/care-center', label: 'Care Center', special: true }
+];
+
+function GlobalLayout() {
   const navigate = useNavigate();
-  const hideIconTimerRef = useRef(null); // Use useRef to store timer ID
+  const dropdownRef = useRef(null);
+  const {
+    isOpen,
+    toggleDropdown,
+    setIsOpen, // We'll need this to directly close the dropdown
+    setIsChatIconVisible,
+    updateInteraction
+  } = useContext(LayoutContext);
 
+  // Handle click outside
   useEffect(() => {
-    if (isChatIconVisible && !isChatOpen) {
-      hideIconTimerRef.current = setTimeout(() => {
-        setIsChatIconVisible(false);
-      }, 10000);
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      // Add event listener only when dropdown is open
+      document.addEventListener('mousedown', handleClickOutside);
+      // Add escape key listener
+      const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+          setIsOpen(false);
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+
+      // Cleanup
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('keydown', handleEscape);
+      };
     }
-    return () => clearTimeout(hideIconTimerRef.current); // Clear timer on component unmount or re-render
-  }, [isChatIconVisible, isChatOpen]);
+  }, [isOpen, setIsOpen]);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleDropdownClick = (path) => {
-    if (path === '/care-center') {
-      setIsChatIconVisible(true); // Show chat icon
-      setIsChatOpen(false); // Ensure chat box is closed initially
+  // Handle dropdown item clicks
+  const handleDropdownClick = useCallback((path, isSpecial) => {
+    if (isSpecial) {
+      setIsChatIconVisible(true);
+      updateInteraction();
     } else {
       navigate(path);
     }
-    setIsOpen(false); // Close dropdown after selection
-  };
+    setIsOpen(false); // Directly close dropdown instead of toggle
+  }, [navigate, setIsChatIconVisible, setIsOpen, updateInteraction]);
+
+  // Dropdown item component
+  const DropdownItem = ({ path, label, special }) => (
+    <motion.div
+      className="dropdown-item"
+      variants={itemVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      onClick={() => handleDropdownClick(path, special)}
+    >
+      {label}
+    </motion.div>
+  );
 
   return (
     <div className="global-layout">
       <div className="header">
-        <div className="caret" onClick={toggleDropdown}>
-          <FaBars />
+        {/* Dropdown trigger */}
+        <div 
+          ref={dropdownRef}
+          className="caret" 
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event from bubbling
+            toggleDropdown();
+            updateInteraction();
+          }}
+        >
+          <FaCaretDown />
+          
+          {/* Dropdown menu */}
           <AnimatePresence>
             {isOpen && (
               <motion.div
                 className="dropdown"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                variants={dropdownVariants}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
               >
                 <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/')}>Home</motion.div>
                 <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/account')}>Account</motion.div>
                 <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/menu')}>Menu</motion.div>
                 <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/payment')}>Payments</motion.div>
                 <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/logout')}>Logout</motion.div>
-                <motion.div className="dropdown-item" variants={itemVariants} onClick={() => handleDropdownClick('/care-center')}>Care Center</motion.div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-        <div className="bell">
+
+        {/* Notification bell */}
+        <div 
+          className="bell"
+          onClick={updateInteraction}
+        >
           <FaBell />
         </div>
       </div>
-      {children}
-      {isChatIconVisible && (
-        <ChatWidget isOpen={isChatOpen}
-        setIsChatOpen={setIsChatOpen}
-        isChatIconVisible={isChatIconVisible} />
-      )}
+
+      {/* Chat Widget */}
+      <ChatWidget />
     </div>
   );
 }
