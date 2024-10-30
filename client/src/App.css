@@ -7,7 +7,7 @@
   --absoluteHeight: 100vh;
   --width: 100%;
   --height: 100%;
-  --backgroundColor: none;
+  --backgroundColor: transparent;
   --fontfamily: fondamento;
   --color:  rgb(24, 19, 10);
   --borderRadius: .5rem;
@@ -24,11 +24,13 @@
   position: relative;
 }
 .home,
+.contact,
 .account{
   background-color: var(--backgroundColor);
   width: var(--absoluteWidth);
   height: var(--absoluteHeight);
   overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

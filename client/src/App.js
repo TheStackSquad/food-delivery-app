@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Account from "./Pages/Account";
 import Payment from "./Pages/Payment";
+import Contact from "./Pages/Contact";
 import Menu from "./Pages/Menu";
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
@@ -21,6 +22,7 @@ function App() {
               <Route path="/account" element={<Account />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/payment" element={<Payment />} />
+              <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
         </GlobalLayout>
