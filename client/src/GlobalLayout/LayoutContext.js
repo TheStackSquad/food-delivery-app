@@ -1,18 +1,17 @@
+// src/GlobalLayout/LayoutContext.js
 import React, { createContext, useState, useRef, useEffect } from 'react';
 
 export const LayoutContext = createContext();
 
 export const LayoutProvider = ({ children }) => {
   // Core state
-  const [isOpen, setIsOpen] = useState(false);              // Dropdown state
-  const [isChatIconVisible, setIsChatIconVisible] = useState(false);  // Chat icon visibility
-  const [isChatOpen, setIsChatOpen] = useState(false);      // Chat window state
+  const [isOpen, setIsOpen] = useState(false);
+  const [isChatIconVisible, setIsChatIconVisible] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [lastInteraction, setLastInteraction] = useState(Date.now());
   const hideIconTimerRef = useRef(null);
 
-  // Handle inactivity timer
   useEffect(() => {
-    // Only start timer if chat icon is visible but chat is not open
     if (isChatIconVisible && !isChatOpen) {
       if (hideIconTimerRef.current) {
         clearTimeout(hideIconTimerRef.current);
@@ -20,10 +19,9 @@ export const LayoutProvider = ({ children }) => {
 
       hideIconTimerRef.current = setTimeout(() => {
         setIsChatIconVisible(false);
-      }, 10000); // 10 seconds inactivity timer
+      }, 10000);
     }
 
-    // Cleanup timer if chat is opened or icon is hidden
     return () => {
       if (hideIconTimerRef.current) {
         clearTimeout(hideIconTimerRef.current);
@@ -31,31 +29,25 @@ export const LayoutProvider = ({ children }) => {
     };
   }, [isChatIconVisible, isChatOpen, lastInteraction]);
 
-  // Dropdown toggle
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  // Chat toggle with interaction tracking
   const toggleChat = () => {
     setLastInteraction(Date.now());
     setIsChatOpen(prev => !prev);
   };
 
-  // Update last interaction time
   const updateInteraction = () => {
     setLastInteraction(Date.now());
   };
 
   const layoutState = {
-    // State
     isOpen,
     isChatIconVisible,
     isChatOpen,
     lastInteraction,
-    // Setters
     setIsOpen,
     setIsChatIconVisible,
     setIsChatOpen,
-    // Actions
     toggleDropdown,
     toggleChat,
     updateInteraction,

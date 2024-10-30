@@ -1,8 +1,9 @@
+# backend/api/app.py
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 from pymongo import MongoClient
-from socket_handler import register_socket_handlers
+from backend.api.socket_handler import register_socket_handlers
 import config
 
 # Initialize Flask app and enable CORS
@@ -11,9 +12,13 @@ CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Connect to MongoDB
-client = MongoClient(config.MONGO_URI)
-db = client['chat_db']
-messages_collection = db['messages']
+try:
+    client = MongoClient(config.MONGO_URI)
+    db = client['chat_db']
+    messages_collection = db['messages']
+except Exception as e:
+    print("Database connection error:", e)
+    db, messages_collection = None, None 
 
 # Register Socket.IO handlers
 register_socket_handlers(socketio, messages_collection)
@@ -33,6 +38,10 @@ def save_message():
 
     messages_collection.insert_one(data)
     return jsonify({'message': 'Message saved successfully'}), 201
+
+def handler(event, context):
+    from flask_socketio import WSGIApp
+    return WSGIApp(socketio)(event, context)
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000, debug=True)

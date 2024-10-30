@@ -1,7 +1,9 @@
 .global-layout{
   width: 99%;
   height: auto;
-  background-color: rgba(243, 243, 203, 0.3);
+  background-color:none;
+  position: sticky;
+  top: 1rem;
 }
 
 .header {

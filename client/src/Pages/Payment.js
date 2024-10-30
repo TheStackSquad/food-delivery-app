@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/payment.css';
+//import '../css/payment.css';
 
 function Payment() {
   return (
@@ -43,7 +43,7 @@ function Payment() {
                 <input type='text' placeholder='Name on Card' />
               </div>
           </div>
-          <button className='btn'>ADD</button>
+          <button className='btn-box'>ADD</button>
         </div>
       </div>
     </>
