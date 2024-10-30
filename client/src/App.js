@@ -11,21 +11,21 @@ import GlobalLayout from './GlobalLayout/layout';
 
 function App() {
   return (
-    <Router>
-      <GlobalLayout>
-      <div className="App">
-        {/* Place ChatWidget outside of Routes */}
-        <ChatWidget />
-        <Routes>
-          {/* Define route components here */}
-          <Route path="/" element={<Home />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/payment" element={<Payment />} />
-        </Routes>
-      </div>
-      </GlobalLayout>
-    </Router>
+    <LayoutProvider>
+      <Router>
+        <GlobalLayout>
+          <div className="App">
+            <ChatWidget />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/payment" element={<Payment />} />
+            </Routes>
+          </div>
+        </GlobalLayout>
+      </Router>
+    </LayoutProvider>
   );
 }
 

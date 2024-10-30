@@ -13,7 +13,8 @@
     font-size: 3rem;
     font-weight: bold;
     word-wrap: break-word;
-    color: orange;
+    color: rgb(56, 39, 7);
+    text-shadow: .2rem .1rem orange;
     font-family: var(--fontfamily);
   }
   

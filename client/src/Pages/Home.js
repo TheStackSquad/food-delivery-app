@@ -17,14 +17,14 @@ function Home() {
       {/* Button Section */}
       <div className='button-section'>
         <Button
-          className='custom-btn btn-1'
+          className='custom-button btn-1'
           variant="none"
           onClick={() => navigate('/menu')} // Navigate to Menu page on click
         >
           Skip
         </Button>
         <Button
-          className='custom-btn btn-2'
+          className='custom-button btn-2'
           variant="outline-secondary"
           onClick={() => navigate('/account')} // Navigate to Account page on click
         >
