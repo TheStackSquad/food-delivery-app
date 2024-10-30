@@ -1,53 +1,79 @@
-.global-layout{
-  width: 99%;
-  height: auto;
-  background-color:none;
-  position: sticky;
-  top: 1rem;
+.global-layout {
+  width: 100%;
+  min-height: 100vh; /* Ensure the layout takes the full height */
+  position: relative;
+  background-color: none;
+  background: none;
 }
-
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: none;
+  background-color: transparent; /* Remove background color */
 }
-
-.caret {
+.logo {
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  height: 50px;
+}
+.icons-grid{
   display: flex;
-  align-items: center;
-  cursor: pointer;
+  margin: 0px .3rem;
+}
+.toggle-button {
   position: relative;
-  font-size: 1.2rem;
-}
-
-.dropdown {
-  position: absolute;
-  top: 2rem;
-  left: 0;
-  background-color: whitesmoke;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  padding: 0.5rem;
-  width: max-content;
-}
-
-.dropdown-item {
-  padding: 0.5rem;
-  cursor: pointer;
+  z-index: 100;
+  font-size: 1rem;
+  background-color: transparent;
   transition: background-color 0.3s;
-  width: fit-content;
+  cursor: pointer;
+  border: none;
 }
-
-.dropdown-item:hover {
+.toggle-button:hover {
   background-color: #f0f0f0;
 }
-
-.bell {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100vh; /* Full height */
+  background-color: rgb(248, 193, 90, .4);
+  box-shadow: 0 4px 8px rgb(248, 193, 90, .1);
+  z-index: 50;
+  padding-top: 4rem;
 }
+.navigation-menu{
+  margin-top: 3rem;
+}
+.dropdown-item {
+  position: relative;
+  padding: 0.7rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  overflow: hidden;
+}
+
+.dropdown-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgb(32, 0, 31, .2); /* Color of the hover effect */
+  transition: width 0.3s ease; /* Controls the animation speed */
+  z-index: -1; /* Keeps the effect behind the text */
+}
+
+.dropdown-item:hover::before {
+  width: 100%;
+  color: wheat;
+}
+
+
