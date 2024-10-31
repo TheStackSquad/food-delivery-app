@@ -15,11 +15,9 @@
   z-index: 1000;
   background-color: transparent; /* Remove background color */
 }
-.logo {
-  width: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  height: 50px;
+.brand {
+  width: fit-content;
+  height: fit-content;
 }
 .icons-grid{
   display: flex;

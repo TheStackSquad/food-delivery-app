@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaPaypal, FaCreditCard, FaApplePay, FaGooglePay } from 'react-icons/fa';
 import '../css/payment.css';
 
 function Payment() {
@@ -18,19 +19,19 @@ function Payment() {
 
             <div className='payment-methods-list'>
               <div className='payment-card'>
-                <img src='path/to/paypal-logo.png' alt='PayPal' className='payment-card-logo' />
+                <FaPaypal className='payment-card-logo' />
                 PayPal
               </div>
               <div className='payment-card'>
-                <img src='path/to/credit-card-logo.png' alt='Credit Card' className='payment-card-logo' />
+                <FaCreditCard className='payment-card-logo' />
                 Credit Card
               </div>
               <div className='payment-card'>
-                <img src='path/to/apple-pay-logo.png' alt='Apple Pay' className='payment-card-logo' />
+                <FaApplePay className='payment-card-logo' />
                 Apple Pay
               </div>
               <div className='payment-card'>
-                <img src='path/to/google-pay-logo.png' alt='Google Pay' className='payment-card-logo' />
+                <FaGooglePay className='payment-card-logo' />
                 Google Pay
               </div>
             </div>
@@ -43,7 +44,7 @@ function Payment() {
               <input type='text' placeholder='Name on Card' />
             </div>
           </div>
-          <button className='payment-btn'>ADD</button>
+          <button className='payment-btn'>Proceed</button>
         </div>
       </div>
     </>

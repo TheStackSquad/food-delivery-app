@@ -1,0 +1,183 @@
+.contact{
+  background-color: orangered;
+}
+.contact-grid {
+  width: 95%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+  padding: 1rem;
+  position: relative;
+  top: 8rem;
+  margin-top: -6rem;
+}
+.pitch{
+}
+.pitch,
+.pitch-text{
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: flex-start;
+}
+h2{
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.user-image{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: .5rem;
+}
+.pitch,
+.email-grid,
+.faq-grid,
+.place-order-card {
+  width: 90%;
+  max-width: 500px;
+  border: 2px solid rgb(63, 42, 3);
+  border-radius: 0.5rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: wheat;
+}
+@media (max-width: 576px) {
+  .pitch,
+  .email-grid,
+  .faq-grid,
+  .place-order-card {
+    width: 90%;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Media query for very small mobile screens */
+@media (max-width: 360px) {
+  .pitch,
+  .email-grid,
+  .faq-grid,
+  .place-order-card {
+    width: 98%;
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+}
+.text,
+.text-2{
+  text-align: start;
+  word-wrap: break-word;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.chat-widget-toggle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+.widget-toggler{
+  text-transform: uppercase;
+}
+.arrow-icon{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+
+/*Email Grid*/
+.email-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: .5rem;
+  border: 2px solid rgb(63, 42, 3);
+  margin-bottom: 2rem;
+}
+
+.email-form{
+  width: 95%;
+}
+.input-group {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem 0.5rem 0.5rem 2.5rem; /* Add padding-left for icon space */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.textarea-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.send-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: .7rem;
+}
+
+.send-button:hover {
+  background-color: #45a049;
+}
+
+
+.faq-header{
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: start;
+  width: 100%;
+}
+.about-us{
+  padding: .5rem .1rem;
+  font-size: 1.2rem;
+}
+
+.promo-card{
+  padding: 1rem;
+  border-radius: .4rem;
+  background-color: orange;
+  color: black;
+  font-size: 1.1rem;
+}
+.send-btn{
+  width: 100%;
+  text-decoration: none;
+  margin-bottom: .7rem;
+}
+
+.send-button:hover {
+  background-color: #ff5a4d; /* Darkens the background on hover */
+}
+

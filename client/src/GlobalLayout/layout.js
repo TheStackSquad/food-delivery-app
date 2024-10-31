@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutContext } from './LayoutContext';
-import DevDynasty from '../asset/img/mandela.webp';
 import { slideVariants, menuItemVariants } from '../Motion/animation';
 import '../css/layout.css';
 
@@ -55,7 +54,8 @@ function GlobalLayout({ children }) {
     <div className="global-layout">
       <div className="header">
         {/* Left side - Image */}
-        <img src={DevDynasty} alt="Logo" className="logo" />
+  
+        <h3 className='brand'>Dev-Kitchen</h3>
 
         {/* Center - Menu and Dropdown */}
         <div className='icons-grid'>

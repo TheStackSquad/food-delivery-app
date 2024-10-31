@@ -3,10 +3,8 @@ import '../css/menu.css';
 
 function Menu() {
   return (
-    <div className='menu'>
-        <div className='form'>
+    <div className='menu-page'>
             Menu Here
-        </div>
     </div>
   )
 }

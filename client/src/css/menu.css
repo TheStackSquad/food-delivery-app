@@ -1,7 +1,7 @@
-.account{
+.menu-page{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(243, 174, 149, .3);
+    background-color: orchid;
 }

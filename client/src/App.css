@@ -14,25 +14,33 @@
   --padding: 1rem;
 }
 .App {
-  text-align: center;
-  width: var(--absoluteWidth);
-  height: var(--absoluteHeight);
+  width: var(--width);
+  height: 100vh;
   background-color: var(--backgroundColor);
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .home,
 .contact,
-.account{
-  background-color: var(--backgroundColor);
-  width: var(--absoluteWidth);
-  height: var(--absoluteHeight);
+.account,
+.menu-page,
+.payment-container,
+.contact{
+  width: var(--width);
+  min-height: var(--absoluteHeight);
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

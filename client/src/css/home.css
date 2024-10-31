@@ -1,22 +1,17 @@
 .home {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: #dad7b8;
-    background-image: url(../asset/img/pizza-food.webp);
-    background-position: center center; /* Keeps image truly centered */
+    background-image: url(../asset/img/bg1.webp);
+    background-position:center center;
     background-repeat: no-repeat;
-    background-size: contain; /* Keeps entire image visible */
-    background-attachment: fixed; /* Fixes the image during scroll */
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    background-size: cover;
+    background-attachment: fixed;
     z-index: 1;
-}
-.button-section{
+  }
+  
+  .button-section {
     width: 100%;
     height: auto;
     position: absolute;
@@ -24,7 +19,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-}
+  }
+  
 .custom-button{
     font-size: 1.1rem;
     letter-spacing: .1px;
