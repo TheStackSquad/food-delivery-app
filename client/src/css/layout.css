@@ -2,8 +2,7 @@
   width: 100%;
   min-height: 100vh; /* Ensure the layout takes the full height */
   position: relative;
-  background-color: none;
-  background: none;
+  background-color: var(--background-color);
 }
 .header {
   display: flex;

@@ -1,0 +1,122 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: lightblue;
+    place-items: center;
+    overflow-y: auto;
+    margin-top: -7rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .contentContainer{
+    border: 2px solid red;
+    width: 100%;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+}
+
+.formHeader{
+    background-image: url('../asset/img/serverimg.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+    margin-top: -.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.title{
+    text-align: center;
+    padding-right: .5rem;
+}
+.formWrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.formBox{
+    padding-top: var(--padding);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    width: 95%;
+    margin-top: 1rem;
+  }
+/* General label styles */
+label {
+    font-size: 1rem;
+    font-weight: 400;
+    position: absolute;
+    top: 40%;
+    right: 2.2rem;
+    transform: translateY(-20%);
+    pointer-events: none;
+    transition: font-size 0.3s, top 0.3s, color 0.3s;
+}
+
+/* Input field styling */
+.input {
+    height: 30px;
+    width: 90%;
+    padding: var(--padding);
+    max-width: 450px;
+    border: none;
+    outline: none;
+    color: black;
+    border-bottom: 0.2rem solid wheat;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+/* Input hover and focus effects */
+.input:hover,
+.input:focus {
+    outline: none;
+    border-color: #6c3d6c;
+}
+
+/* Label slide-up and color change on input hover/focus */
+.input:hover + label,
+.input:focus + label {
+    font-size: 0.75rem;
+    top: 0;
+    color: #6c3d6c;
+}
+
+  .buttonContainer {
+    margin: 1.2rem 0px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .submitButton {
+    width: 100%;
+    max-width: 200px;
+    padding: 1rem 1.5rem;
+    background-color: #6c3d6c;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
