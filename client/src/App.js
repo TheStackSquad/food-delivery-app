@@ -1,4 +1,3 @@
-// src/App.js
 import "./App.css";
 import ChatWidget from "./components/ChatWidget";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -12,22 +11,21 @@ import GlobalLayout from './GlobalLayout/layout';
 
 function App() {
   return (
-    <LayoutProvider>
-      <Router>
+    <Router>
+      <LayoutProvider>
+        {/* GlobalLayout placed outside to be globally accessible */}
         <GlobalLayout>
-          <div className="App">
-            <ChatWidget />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </div>
+          <ChatWidget />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
         </GlobalLayout>
-      </Router>
-    </LayoutProvider>
+      </LayoutProvider>
+    </Router>
   );
 }
 

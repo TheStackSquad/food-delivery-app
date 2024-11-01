@@ -7,26 +7,28 @@
   --absoluteHeight: 100vh;
   --width: 100%;
   --height: 100%;
-  --backgroundColor: transparent;
+  --background-color: none;
   --fontfamily: fondamento;
   --color:  rgb(24, 19, 10);
   --borderRadius: .5rem;
   --padding: 1rem;
+  --paddingRegular: .5rem;
 }
 .App {
   width: var(--width);
   height: 100vh;
-  background-color: var(--backgroundColor);
+  background-color: var(--background-color);
   overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: relative;
 }
 .home,
 .contact,
-.account,
 .menu-page,
 .payment-container,
 .contact{
