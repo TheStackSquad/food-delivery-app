@@ -24,6 +24,9 @@ const ChatWidget = () => {
     updateInteraction 
   } = useContext(LayoutContext);
 
+  console.log("ChatWidget rendered, isChatOpen:", isChatOpen, "isChatIconVisible:", isChatIconVisible);
+
+
   // Effect to handle user interactions
   useEffect(() => {
     const handleUserActivity = () => {
@@ -68,6 +71,9 @@ const ChatWidget = () => {
     return null;
   }
 
+  console.log("ChatWidget rendered, isChatOpen:", isChatOpen);
+
+
   return (
     <div className="chat-widget">
       {/* Chat icon */}
@@ -75,8 +81,10 @@ const ChatWidget = () => {
         {!isChatOpen && isChatIconVisible && (
           <motion.div
             className="chat-icon"
-            {...chatIconAnimation}
+             
+           Chat icon  {...chatIconAnimation}
             onClick={() => {
+              console.log("Chat icon clicked");
               toggleChat();
               updateInteraction();
             }}
@@ -90,6 +98,7 @@ const ChatWidget = () => {
       <AnimatePresence mode="wait">
         {isChatOpen && (
           <motion.div className="chat-box"
+            
           {...chatBoxAnimation}
           layoutId='chat'>
             <div className="chat-header">

@@ -9,7 +9,7 @@
 }
 
 .chat-icon {
-  background-color: rgb(248, 127, 82, .5);
+  background-color: rgb(110, 75, 9);
   padding: .2rem;
   border-radius: 50%;
   width: 50px;
@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: 1035;
 }
 .envelope-icon {
   font-size: 2rem;

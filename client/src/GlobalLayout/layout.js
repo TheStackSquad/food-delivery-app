@@ -63,7 +63,6 @@ function GlobalLayout({ children }) {
               onClick={(e) => {
                 e.stopPropagation();
                 toggleDropdown();
-                updateInteraction();
               }}
               className="toggle-button"
             >
@@ -85,7 +84,7 @@ function GlobalLayout({ children }) {
                       { path: '/account', label: 'Account' },
                       { path: '/menu', label: 'Menu' },
                       { path: '/payment', label: 'Payments' },
-                      { path: '/contact', label: 'Care Center' },
+                      { path: '/contact', label: 'Reach Us' },
                     ].map((item) => (
                       <motion.div
                         key={item.path}
