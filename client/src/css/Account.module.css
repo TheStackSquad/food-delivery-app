@@ -1,110 +1,107 @@
-.wrapper {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    background-color: lightblue;
-    place-items: center;
+.wrapper{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: var(--width);
+    min-height: var(--absoluteHeight);
+    overflow-x: hidden;
     overflow-y: auto;
-    margin-top: -7rem;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-  }
-  .contentContainer{
-    border: 2px solid red;
-    width: 100%;
-    height: fit-content;
     position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid red;
 }
 
-.formHeader{
-    background-image: url('../asset/img/serverimg.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 600px;
-    margin-top: -.8rem;
+.contentContainer{
+    width: 95%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 5rem;
+    bottom: 0;
+    border: 2px solid rgb(3, 104, 3, .3);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
-.title{
-    text-align: center;
-    padding-right: .5rem;
+.formHeader{
+    padding-top: 5rem;
+}
+.formHeader,
+.formWrapper,
+.formBox{
+    width: 100%;
 }
 .formWrapper{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding-top: 2rem;
 }
 .formBox{
-    padding-top: var(--padding);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: .5rem;
+}
+
+.title{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: black;
+    padding: 1rem;
+    text-align: center;
 }
 
 .inputGroup {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
     position: relative;
-    width: 95%;
-    margin-top: 1rem;
   }
-/* General label styles */
-label {
-    font-size: 1rem;
-    font-weight: 400;
-    position: absolute;
-    top: 40%;
-    right: 2.2rem;
-    transform: translateY(-20%);
-    pointer-events: none;
-    transition: font-size 0.3s, top 0.3s, color 0.3s;
-}
 
-/* Input field styling */
-.input {
-    height: 30px;
+  .input {
     width: 90%;
-    padding: var(--padding);
-    max-width: 450px;
+    height: 40px;
+    padding: 0.75rem;
+    font-size: clamp(0.875rem, 3.5cqi, 1rem);
     border: none;
-    outline: none;
-    color: black;
-    border-bottom: 0.2rem solid wheat;
+    border-bottom: 2px solid #e5e7eb;
     background-color: transparent;
-    font-size: 1rem;
-}
-
-/* Input hover and focus effects */
-.input:hover,
-.input:focus {
-    outline: none;
+    transition: border-color 0.3s ease;
+    padding-right: .2rem;
+  }
+  
+  /* Input states */
+  .input:hover,
+  .input:focus {
     border-color: #6c3d6c;
-}
-
-/* Label slide-up and color change on input hover/focus */
-.input:hover + label,
-.input:focus + label {
-    font-size: 0.75rem;
-    top: 0;
+    outline: none;
+  }
+  .input:hover + label,
+  .input:focus + label {
     color: #6c3d6c;
-}
+  }
+    /* Micro-interactions */
+    .input:focus {
+        box-shadow: 0 2px 4px rgba(108, 61, 108, 0.1);
+      }
 
+  label {
+    position: absolute;
+    left: 0;
+    top: -1.5rem; /* Fixed position above input */
+    font-size: clamp(0.75rem, 3cqi, 0.875rem);
+    color: #6b7280;
+    transition: color 0.3s ease;
+    pointer-events: none;
+  }
+  /* Improved button styling */
   .buttonContainer {
-    margin: 1.2rem 0px;
+    margin: 2rem 0;
     display: flex;
     justify-content: center;
     width: 100%;
+    padding: 0 1rem;
   }
   
   .submitButton {
@@ -115,8 +112,15 @@ label {
     color: white;
     border: none;
     border-radius: 9999px;
-    font-size: 1rem;
+    font-size: clamp(0.875rem, 3.5cqi, 1rem);
     font-weight: 500;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .submitButton:hover {
+    background-color: #563156;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }

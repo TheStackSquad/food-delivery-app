@@ -30,8 +30,12 @@
 .home,
 .contact,
 .menu-page,
+.wrapper,
 .payment-container,
 .contact{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   width: var(--width);
   min-height: var(--absoluteHeight);
   overflow-x: hidden;

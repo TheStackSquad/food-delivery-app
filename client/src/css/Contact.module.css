@@ -1,5 +1,5 @@
 .contact{
-  background-color: orangered;
+  background-color: whitesmoke;
 }
 .contact-grid {
   width: 95%;
@@ -83,13 +83,41 @@ h2{
   align-items: center;
   width: 80%;
 }
-.widget-toggler{
+.widget-toggler,
+.arrow-icon {
+  cursor: pointer;
   text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.arrow-icon{
+
+.widget-toggler:hover,
+.widget-toggler:focus,
+.arrow-icon:hover,
+.arrow-icon:focus {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.widget-toggler:hover, 
+.widget-toggler:focus {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow effect */
+}
+
+.arrow-icon {
   font-size: 1.2rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
 }
+
+.arrow-icon:hover, 
+.arrow-icon:focus {
+  transform: scale(1.1); /* Slightly larger scale for icon */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+}
+
 
 
 /*Email Grid*/
@@ -163,6 +191,12 @@ h2{
   padding: .5rem .1rem;
   font-size: 1.2rem;
 }
+.place-order-card{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
 
 .promo-card{
   padding: 1rem;
@@ -171,13 +205,20 @@ h2{
   color: black;
   font-size: 1.1rem;
 }
-.send-btn{
-  width: 100%;
+.order-button{
+  width: 70%;
   text-decoration: none;
   margin-bottom: .7rem;
+  text-align: center;
+  background-color: orange;
+  padding: 1rem;
+  border-radius: .4rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: black;
 }
 
-.send-button:hover {
+.order-button:hover {
   background-color: #ff5a4d; /* Darkens the background on hover */
 }
 
