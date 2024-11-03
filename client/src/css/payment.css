@@ -90,7 +90,7 @@
 .payment-card-details, input[type="text"] {
   width: 100%;
   height: auto;
-  padding: 1rem;
+  padding: 1.4rem .5rem;
   margin: 6px 0;
   border: 1px solid #ddd;
   border-radius: .4rem;
