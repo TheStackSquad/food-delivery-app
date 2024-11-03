@@ -1,20 +1,19 @@
 .contact{
-  background-color: whitesmoke;
+  background-color: rgb(192, 64, 18, .4);
+  font-family: var(--fontfamily1);
 }
 .contact-grid {
   width: 95%;
-  min-height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   overflow-y: auto;
-  padding: 1rem;
+  padding-top: 5rem;
   position: relative;
   top: 8rem;
   margin-top: -6rem;
-}
-.pitch{
 }
 .pitch,
 .pitch-text{
@@ -47,13 +46,25 @@ h2{
   padding: 1rem;
   font-size: 1rem;
   background-color: wheat;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
+
+.pitch:hover,
+.email-grid:hover,
+.faq-grid:hover,
+.place-order-card:hover {
+  transform: scale(1.05); /* Slightly scales up the container */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+  background-color: #f5deb3; /* Slightly darkens the background color */
+}
+
 @media (max-width: 576px) {
   .pitch,
   .email-grid,
   .faq-grid,
   .place-order-card {
     width: 90%;
+    max-width: 370px;
     padding: 0.8rem;
     font-size: 0.9rem;
   }
@@ -98,26 +109,12 @@ h2{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-.widget-toggler:hover, 
-.widget-toggler:focus {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow effect */
-}
-
 .arrow-icon {
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
 }
-
-.arrow-icon:hover, 
-.arrow-icon:focus {
-  transform: scale(1.1); /* Slightly larger scale for icon */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Shadow for depth */
-}
-
 
 
 /*Email Grid*/

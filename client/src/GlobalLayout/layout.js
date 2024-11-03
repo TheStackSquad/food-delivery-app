@@ -84,6 +84,7 @@ function GlobalLayout({ children }) {
                       { path: '/account', label: 'Account' },
                       { path: '/menu', label: 'Menu' },
                       { path: '/payment', label: 'Payments' },
+                      { path: '/login', label: 'Login' },
                       { path: '/contact', label: 'Reach Us' },
                     ].map((item) => (
                       <motion.div

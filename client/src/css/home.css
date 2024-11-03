@@ -2,14 +2,15 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #dad7b8;
     background-image: url(../asset/img/bg1.webp);
-    background-position:center center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    transition: opacity 0.3s ease; /* Smooth transition for opacity change */
     z-index: 1;
-  }
+}
+
   
   .button-section {
     width: 100%;
@@ -19,15 +20,17 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
+    display: flex;
+    justify-content: center;
   }
   
 .custom-button{
-    font-size: 1.1rem;
-    letter-spacing: .1px;
+    font-size: 1.3rem;
     line-height: 2rem;
-    padding: .5rem 1.3rem;
+    padding: .5rem 1rem;
     border-radius: .3rem;
     margin: 0px .5rem;
+    font-weight: 400;
     font-family: var(--fontfamily);
 }
 .btn-1 {
