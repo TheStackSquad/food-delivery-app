@@ -13,7 +13,7 @@
   --height: 100%;
   --background-color: none;
   --fontfamily: fondamento;
-  --fontfamily1: Macondo;
+  --fontfamilyMacondo: Macondo;
   --color:  rgb(24, 19, 10);
   --borderRadius: .5rem;
   --padding: 1rem;
@@ -55,4 +55,5 @@
   left: 0;
   right: 0;
   bottom: 0;
+  font-family: var(--fontfamilyMacondo);
 }

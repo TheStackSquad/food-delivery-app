@@ -89,7 +89,7 @@ function Contact() {
             {/* Topic Dropdown */}
             <div className={styles["input-group"]}>
               <select className={styles["input-field"]}>
-                <option value="">Select topic</option>
+                <option value="" className="select-dropdown">Select topic</option>
                 <option value="general">General Inquiry</option>
                 <option value="support">Support</option>
                 <option value="feedback">Feedback</option>
