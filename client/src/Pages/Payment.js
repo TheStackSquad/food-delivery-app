@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaPaypal, FaCreditCard, FaApplePay, FaGooglePay } from 'react-icons/fa';
+import ImageUser from '../asset/img/user5.webp';
 import '../css/payment.css';
 
 function Payment() {
@@ -10,7 +11,7 @@ function Payment() {
 
           <div className='payment-header'>
             <h4>Payment Method</h4>
-            <img className='payment-profile-image' alt='profile' />
+            <img src={ImageUser} className='payment-profile-image' alt='profile' />
           </div>
 
           <div className='payment-methods'>
