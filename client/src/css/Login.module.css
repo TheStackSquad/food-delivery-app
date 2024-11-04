@@ -1,0 +1,256 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    position: relative;
+    overflow: hidden;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .loginCard {
+    background: transparent;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .header {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+    font-size: 5rem;
+    font-weight: 800;
+    font-family: var(--fontfamilyMacondo);
+    
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 7rem;
+  }
+  
+  .inputGroup {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 0.625rem 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+  }
+  
+  .inputGroup label {
+    position: absolute;
+    left: 0;
+    top: 0.625rem;
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-size: 0.875rem;
+  }
+  
+  .inputLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .inputLine::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #2196f3;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .inputGroup input:focus ~ .inputLine::after,
+  .inputGroup input:not(:placeholder-shown) ~ .inputLine::after {
+    transform: scaleX(1);
+  }
+  
+  .inputGroup input:focus ~ label,
+  .inputGroup input:not(:placeholder-shown) ~ label {
+    transform: translateY(-1.25rem);
+    font-size: 0.75rem;
+    color: #2196f3;
+  }
+  
+  .submitButton {
+    background-color: #2196f3;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #1976d2;
+  }
+  
+  .forgotLink {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.75rem;
+    align-self: flex-start;
+  }
+  
+  .forgotLink:hover {
+    color: #2196f3;
+  }
+  
+  .signupText {
+    text-align: center;
+    color: #666;
+    font-size: 0.75rem;
+    margin-top: 1rem;
+  }
+  
+  .signupText a {
+    color: #2196f3;
+    text-decoration: none;
+  }
+  
+  .signupText a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Blob animations - scaled down for mobile */
+  .blob, .blob2 {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 43% 57% 63% 37% / 48% 45% 55% 52%;
+    background: linear-gradient(45deg, #2196f3, #64b5f6);
+    opacity: 0.1;
+    animation: blobAnimation 20s linear infinite;
+  }
+  
+  .blob {
+    top: -125px;
+    left: -125px;
+  }
+  
+  .blob2 {
+    bottom: -125px;
+    right: -125px;
+    animation-delay: -10s;
+    animation-direction: reverse;
+  }
+  
+  @keyframes blobAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Media Queries */
+  /* Extra small devices (phones, 320px and up) */
+  @media screen and (min-width: 320px) {
+    .loginCard {
+      padding: 1rem;
+      margin: 0.5rem;
+    }
+  
+    .header {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+  
+    .inputGroup input {
+      font-size: 0.875rem;
+    }
+  
+    .submitButton {
+      padding: 0.625rem;
+      font-size: 0.875rem;
+    }
+  }
+  
+  /* Small devices (large phones, 375px and up) */
+  @media screen and (min-width: 375px) {
+    .loginCard {
+      padding: 1.25rem;
+    }
+  
+    .header {
+      font-size: 1.5rem;
+    }
+  
+    .inputGroup input {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Medium devices (tablets, 768px and up) */
+  @media screen and (min-width: 768px) {
+    .loginCard {
+      max-width: 400px;
+      padding: 2rem;
+    }
+  
+    .header {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .blob, .blob2 {
+      width: 500px;
+      height: 500px;
+    }
+  
+    .blob {
+      top: -250px;
+      left: -250px;
+    }
+  
+    .blob2 {
+      bottom: -250px;
+      right: -250px;
+    }
+  
+    .forgotLink {
+      font-size: 0.875rem;
+    }
+  
+    .signupText {
+      font-size: 0.875rem;
+    }
+  }
