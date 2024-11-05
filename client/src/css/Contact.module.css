@@ -1,20 +1,19 @@
 .contact{
-  background-color: orangered;
+  background-color: rgb(192, 64, 18, .4);
+  font-family: var(--fontfamilyMacondo);
 }
 .contact-grid {
   width: 95%;
-  min-height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   overflow-y: auto;
-  padding: 1rem;
+  padding-top: 5rem;
   position: relative;
   top: 8rem;
   margin-top: -6rem;
-}
-.pitch{
 }
 .pitch,
 .pitch-text{
@@ -24,7 +23,7 @@
   align-items: flex-start;
 }
 h2{
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -45,17 +44,29 @@ h2{
   border-radius: 0.5rem;
   margin: 2rem auto;
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   background-color: wheat;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
+
+.pitch:hover,
+.email-grid:hover,
+.faq-grid:hover,
+.place-order-card:hover {
+  transform: scale(1.05); /* Slightly scales up the container */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+  background-color: #f5deb3; /* Slightly darkens the background color */
+}
+
 @media (max-width: 576px) {
   .pitch,
   .email-grid,
   .faq-grid,
   .place-order-card {
     width: 90%;
+    max-width: 370px;
     padding: 0.8rem;
-    font-size: 0.9rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -66,7 +77,7 @@ h2{
   .faq-grid,
   .place-order-card {
     width: 98%;
-    font-size: 0.85rem;
+    font-size: 1.3rem;
     padding: 0.6rem;
   }
 }
@@ -74,21 +85,35 @@ h2{
 .text-2{
   text-align: start;
   word-wrap: break-word;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: 500;
 }
 .chat-widget-toggle{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  width: 100%;
 }
-.widget-toggler{
+.widget-toggler,
+.arrow-icon {
+  cursor: pointer;
   text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.arrow-icon{
+
+.widget-toggler:hover,
+.widget-toggler:focus,
+.arrow-icon:hover,
+.arrow-icon:focus {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.arrow-icon {
   font-size: 1.2rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
 }
 
 
@@ -121,19 +146,28 @@ h2{
   transform: translateY(-50%);
   color: #888;
 }
+input::placeholder{
+  text-align: end;
+  font-size: 1.1rem;
+}
 
 .input-field {
   width: 100%;
-  padding: 0.5rem 0.5rem 0.5rem 2.5rem; /* Add padding-left for icon space */
   border: 1px solid #ddd;
   border-radius: 4px;
   outline: none;
+  font-size: 1rem;
+  padding: 0.75rem 1rem 0.75rem 2.5rem; 
+}
+.select-dropdown{
+  font-family: var(--fontfamilyMacondo);
   font-size: 1rem;
 }
 
 .textarea-field {
   resize: vertical;
   min-height: 100px;
+  padding: 0.75rem 1rem;
 }
 
 .send-button {
@@ -163,6 +197,15 @@ h2{
   padding: .5rem .1rem;
   font-size: 1.2rem;
 }
+.place-order-card{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
+.order-header{
+  text-align: center;
+}
 
 .promo-card{
   padding: 1rem;
@@ -171,13 +214,20 @@ h2{
   color: black;
   font-size: 1.1rem;
 }
-.send-btn{
-  width: 100%;
+.order-button{
+  width: 70%;
   text-decoration: none;
   margin-bottom: .7rem;
+  text-align: center;
+  background-color: orange;
+  padding: 1rem;
+  border-radius: .4rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: black;
 }
 
-.send-button:hover {
+.order-button:hover {
   background-color: #ff5a4d; /* Darkens the background on hover */
 }
 

@@ -1,15 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Uncommented Link import
+import React, { useContext } from "react";
+import { LayoutContext } from "../GlobalLayout/LayoutContext"; // Import the context
+import { Link } from "react-router-dom";
 import user1 from "../asset/img/user1.webp";
 import user2 from "../asset/img/user2.webp";
 import user3 from "../asset/img/user3.webp";
 import user4 from "../asset/img/user4.webp";
 import user5 from "../asset/img/user5.webp";
-import MenuBook from "../asset/img/menu-book.png"; // Uncommented MenuBook import
+import MenuBook from "../asset/img/menu-book.png";
 import { FaArrowRight, FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 import styles from "../css/Contact.module.css";
 
 function Contact() {
+  const { toggleChat, isChatOpen, setIsChatIconVisible } = useContext(LayoutContext);
+
+  console.log("Contact component rendered:", { isChatOpen });
+
+  const handleToggleChat = () => {
+    console.log("handleToggleChat called");
+    setIsChatIconVisible(true); // Ensure icon is visible when toggling from contact page
+    toggleChat();
+  };
+  console.log('HandleToggleChat', handleToggleChat);
+
   return (
     <div className={`contact ${styles.contact}`}>
       <div className={styles["contact-grid"]}>
@@ -30,7 +42,9 @@ function Contact() {
               Seven days a week. (And we respond within 5 mins!)
             </p>
           </div>
-          <div className={styles["chat-widget-toggle"]}>
+          {/* Toggle Chat Widget */}
+          <div className={styles["chat-widget-toggle"]}
+          onClick={handleToggleChat}>
             <h3 className={styles["widget-toggler"]}>Start a conversation</h3>
             <FaArrowRight className={styles["arrow-icon"]} />
           </div>
@@ -75,7 +89,7 @@ function Contact() {
             {/* Topic Dropdown */}
             <div className={styles["input-group"]}>
               <select className={styles["input-field"]}>
-                <option value="">Select topic</option>
+                <option value="" className="select-dropdown">Select topic</option>
                 <option value="general">General Inquiry</option>
                 <option value="support">Support</option>
                 <option value="feedback">Feedback</option>
@@ -106,10 +120,7 @@ function Contact() {
             logistics for food vendors and enhancing the dining experience for
             customers. We connect food businesses with efficient delivery
             solutions, enabling them to focus on what they do best—creating
-            delicious meals. From seamless order processing to reliable
-            delivery, DevKitchen is here to help food vendors expand their reach
-            and provide customers with easy access to their favorite flavors,
-            all in one convenient platform.
+            delicious meals.
           </p>
 
           <button type="button" className={styles["send-button"]}>
@@ -129,7 +140,7 @@ function Contact() {
           </p>
           <Link
             to="/menu"
-            className={`${styles["send-button"]} ${styles["send-btn"]}`}
+            className={`${styles["order-button"]} ${styles["send-btn"]}`}
           >
             Order Here
           </Link>

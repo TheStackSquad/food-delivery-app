@@ -13,8 +13,9 @@
     font-size: 3rem;
     font-weight: bold;
     word-wrap: break-word;
-    color: rgb(56, 39, 7);
+    color: rgb(2, 39, 71);
     text-shadow: .2rem .1rem orange;
-    font-family: var(--fontfamily);
+    font-family: var(--fontfamily1);
+    text-transform: uppercase;
   }
   

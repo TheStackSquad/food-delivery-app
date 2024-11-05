@@ -26,9 +26,9 @@ function Home() {
         <Button
           className='custom-button btn-2'
           variant="outline-secondary"
-          onClick={() => navigate('/account')} // Navigate to Account page on click
+          onClick={() => navigate('/login')} // Navigate to Account page on click
         >
-          Start With Email or Phone
+          Login Here
         </Button>
       </div>
 

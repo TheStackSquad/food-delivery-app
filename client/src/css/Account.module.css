@@ -1,0 +1,159 @@
+.wrapper{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: var(--width);
+  min-height: var(--absoluteHeight);
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(124, 7, 120, .3);
+}
+
+.contentContainer{
+  width: 95%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 7rem;
+  bottom: 0;
+  background-color: aliceblue;
+  border: 2px solid rgb(3, 104, 3, .3);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 3rem;
+  border-radius: .5rem;
+  font-family: var(--fontfamilyMacondo);
+}
+.formHeader,
+.formWrapper,
+.formBox{
+  width: 100%;
+}
+/* Form header with blob SVG background */
+.formHeader {
+  position: relative;
+  width: 100%;
+  padding-top: 5rem;
+}
+.formHeader::before {
+  content: '';
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 500px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23FF0066' d='M64.6,-27.4C69.7,-5.3,50.2,18.5,27.3,34.3C4.5,50.1,-21.7,58.1,-35.5,48.2C-49.3,38.3,-50.7,10.7,-42.7,-15.4C-34.7,-41.4,-17.4,-65.9,6.2,-67.9C29.7,-70,59.5,-49.5,64.6,-27.4Z' transform='translate(100 100)' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.2;
+  z-index: 0;
+}
+.formWrapper{
+  padding-top: 2rem;
+}
+.formBox{
+  padding: .5rem;
+}
+
+.title{
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: black;
+  padding: 1rem;
+  text-align: center;
+}
+.inputGroup {
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 2rem;
+  position: relative;
+  padding: var(--paddingRegular);
+}
+/* Container query for xs viewports (below 400px) */
+@media (max-width: 480px) {
+  .inputGroup {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 1.5rem;
+    padding: var(--paddingRegular);
+  }
+}
+
+.input {
+  width: 95%;
+  height: 40px;
+  padding-right: 1rem;
+  font-size: clamp(0.875rem, 3.5vw, 1rem);
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #e5e7eb;
+  background-color: transparent;
+  transition: border-color 0.3s ease;
+  padding-right: 0.2rem;
+}
+input::placeholder{
+  font-family: var(--fontfamilyMacondo);
+}
+/* Input states */
+.input:hover,
+.input:focus {
+  border-color: #6c3d6c;
+  outline: none;
+}
+.input:hover + label,
+.input:focus + label {
+  color: #6c3d6c;
+}
+ /* Micro-interactions */
+ .input:focus {
+  box-shadow: 0 2px 4px rgba(108, 61, 108, 0.1);
+}
+
+label {
+position: absolute;
+left: 0;
+top: -1.5rem; /* Fixed position above input */
+font-size: clamp(1rem, 3vw, 0.875rem);
+color: #6b7280;
+transition: color 0.3s ease;
+pointer-events: none;
+}
+/* Improved button styling */
+.buttonContainer {
+margin: 2rem 0;
+display: flex;
+justify-content: center;
+width: 100%;
+padding: 0 1rem;
+}
+
+.submitButton {
+width: 100%;
+max-width: 200px;
+padding: 1rem 1.5rem;
+background-color: #6c3d6c;
+color: white;
+border: none;
+border-radius: 9999px;
+font-size: clamp(1.4rem, 3.5vw, 1rem);
+font-weight: 500;
+transition: all 0.3s ease;
+cursor: pointer;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+font-family: var(--fontfamilyMacondo);
+}
+
+.submitButton:hover {
+background-color: #563156;
+transform: translateY(-1px);
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}

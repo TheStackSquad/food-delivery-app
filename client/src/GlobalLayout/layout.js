@@ -9,6 +9,8 @@ import '../css/layout.css';
 function GlobalLayout({ children }) {
   const navigate = useNavigate();
   const slideRef = useRef(null);
+
+  // LayoutContext usage restricted to GlobalLayout
   const {
     isOpen,
     toggleDropdown,
@@ -53,62 +55,58 @@ function GlobalLayout({ children }) {
   return (
     <div className="global-layout">
       <div className="header">
-        {/* Left side - Image */}
-  
         <h3 className='brand'>Dev-Kitchen</h3>
 
-        {/* Center - Menu and Dropdown */}
         <div className='icons-grid'>
-        <div ref={slideRef} className="relative z-50">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDropdown();
-              updateInteraction();
-            }}
-            className="toggle-button"
-          >
-            {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          <div ref={slideRef} className="relative z-50">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown();
+              }}
+              className="toggle-button"
+            >
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
 
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial="closed"
-                animate="open"
-                exit="closed"
-                variants={slideVariants}
-                className="menu"
-              >
-                <div className="px-4 space-y-4 navigation-menu">
-                  {[
-                    { path: '/', label: 'Home' },
-                    { path: '/account', label: 'Account' },
-                    { path: '/menu', label: 'Menu' },
-                    { path: '/payment', label: 'Payments' },
-                    { path: '/contact', label: 'Care Center' },
-                  ].map((item) => (
-                    <motion.div
-                      key={item.path}
-                      variants={menuItemVariants}
-                      className="dropdown-item"
-                      onClick={() => handleMenuClick(item.path)}
-                    >
-                      {item.label}
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Right side - Icons */}
-        <div className="icons-container">
-          <div className="cart-icon" onClick={updateInteraction}>
-            <FaShoppingCart />
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  variants={slideVariants}
+                  className="menu"
+                >
+                  <div className="px-4 space-y-4 navigation-menu">
+                    {[
+                      { path: '/', label: 'Home' },
+                      { path: '/account', label: 'Account' },
+                      { path: '/menu', label: 'Menu' },
+                      { path: '/payment', label: 'Payments' },
+                      { path: '/login', label: 'Login' },
+                      { path: '/contact', label: 'Reach Us' },
+                    ].map((item) => (
+                      <motion.div
+                        key={item.path}
+                        variants={menuItemVariants}
+                        className="dropdown-item"
+                        onClick={() => handleMenuClick(item.path)}
+                      >
+                        {item.label}
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </div>
+
+          <div className="icons-container">
+            <div className="cart-icon" onClick={updateInteraction}>
+              <FaShoppingCart />
+            </div>
+          </div>
         </div>
       </div>
 
