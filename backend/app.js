@@ -1,17 +1,22 @@
+// backend/app.js
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const socketHandler = require('./socket/socketHandler');
 const connectDB = require('./config/db');
 const routes = require('./routes');
-require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
 
+// Middleware
+app.use(morgan('dev'));
+app.use('/', routes); 
 // Middleware & Routes
 app.use('/', routes);
 
 // Database Connection
+connectDB();
 connectDB();
 
 // Initialize Socket.IO
