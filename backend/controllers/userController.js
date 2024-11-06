@@ -71,4 +71,22 @@ const signup = async (req, res) => {
   }
 };
 
-module.exports = { signup };
+const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    // Fetch user from the database
+    const user = await User.findOne({ username });
+    if (user && await bcrypt.compare(password, user.password)) {
+      // Fetch user's address and log it to the terminal (optional)
+      // const address = await Address.findOne({ userId: user._id });
+      // console.log('User Address:', address);
+      res.status(200).json({ success: true, user });
+    } else {
+      res.status(401).json({ success: false, message: 'Invalid username or password' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+module.exports = { login, signup };
