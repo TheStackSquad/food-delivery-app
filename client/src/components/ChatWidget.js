@@ -24,7 +24,6 @@ const ChatWidget = () => {
     updateInteraction 
   } = useContext(LayoutContext);
 
-  console.log("ChatWidget rendered, isChatOpen:", isChatOpen, "isChatIconVisible:", isChatIconVisible);
 
 
   // Effect to handle user interactions
@@ -71,7 +70,7 @@ const ChatWidget = () => {
     return null;
   }
 
-  console.log("ChatWidget rendered, isChatOpen:", isChatOpen);
+
 
 
   return (
@@ -84,7 +83,6 @@ const ChatWidget = () => {
              
            Chat icon  {...chatIconAnimation}
             onClick={() => {
-              console.log("Chat icon clicked");
               toggleChat();
               updateInteraction();
             }}

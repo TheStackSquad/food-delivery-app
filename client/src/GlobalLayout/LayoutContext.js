@@ -11,11 +11,7 @@ export const LayoutProvider = ({ children }) => {
   const [lastInteraction, setLastInteraction] = useState(Date.now());
   const hideIconTimerRef = useRef(null);
 
-  // Inside LayoutProvider, add this useEffect to monitor changes in isChatOpen
-  // Debug logs for state changes
-  useEffect(() => {
-    console.log("State Update - isChatOpen:", isChatOpen, "isChatIconVisible:", isChatIconVisible);
-  }, [isChatOpen, isChatIconVisible]);
+
 
 
   useEffect(() => {
@@ -39,7 +35,8 @@ export const LayoutProvider = ({ children }) => {
   }, [isChatOpen, lastInteraction]);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-  console.log('What Does This Say', toggleDropdown);
+  console.log(toggleDropdown);
+  
 
  const toggleChat = () => {
   console.log("toggleChat called - current states:", { isChatOpen, isChatIconVisible });
@@ -50,7 +47,6 @@ export const LayoutProvider = ({ children }) => {
   
 
 const updateInteraction = () => {
-  console.log("updateInteraction called");
   setLastInteraction(Date.now());
   setIsChatIconVisible(true); // Ensure icon is visible on interaction
 };
