@@ -1,0 +1,57 @@
+/* navbarSlide.css */
+.navbar-container {
+  width: 95%;
+  height: 50px;
+  background-color: rgba(223, 228, 231, 0.7);
+  border-radius: 1rem; /* Equal rounded corners for all sides */
+  padding: var(--paddingRegular);
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 576px) {
+.navbar-container {
+  width: 90%;
+  max-width: 350px;
+  height: 45px;
+  padding: var(--paddingRegular);
+  margin-bottom: 1rem;
+}
+}
+
+  
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .navbar-item {
+    font-size: 1.2rem;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.3s ease;
+    z-index:2;
+    font-family: var(--fontfamilyMacondo);
+  }
+  
+  /* The animated background */
+  .navbar-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    background-color: orange;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    z-index: 1;
+  }
+  
