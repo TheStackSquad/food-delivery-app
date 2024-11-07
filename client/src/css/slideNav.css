@@ -110,114 +110,27 @@
   }
 
 /* MD & LG VIEWPORTS */
-@media (min-width: 576px) {
+@media screen and (min-width: 576px) {
   .navbar-container {
-    width: 95%;
-    height: 100%;
-    background-color: rgba(223, 228, 231, 0.7);
-    border-radius: 1rem;
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--fontfamilyMacondo);
+    width: 600px;
+    height: auto;
+    top: 80%;
   }
-  @media screen and (max-width: 576px) {
-    .navbar-container {
-      width: 90%;
-      max-width: 350px;
-      height: 45px;
-      padding: var(--paddingRegular);
-      margin-bottom: 1rem;
-    }
-    }
   .navbar{
     width: 100%;
     height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(231, 211, 172, .9);
+    border-radius: 0.5rem;
   }
   .navbar-item{
-    font-size: 1.3rem;
-    background: none;
-    outline: none;
-    border:none;
-    cursor: pointer;
     position: relative;
-    font-family: var(--fontfamilyMacondo);
-    z-index: 2;
   }
   .card-container{
-    margin-top: .5rem;
-    height: auto;
-    padding: var(--padding);
-    font-family: var(--fontfamilyMacondo);
-    border-radius: .5rem;
-    background-color: rgba(223, 228, 231, 0.7);
+    background-color: rgb(231, 211, 172, .5);
   }
-  @media screen and (max-width: 576px) {
-    .card-container {
-      width: 90%;
-      max-width: 370px;
-      height: fit-content;
-      padding: var(--paddingRegular);
-      margin-bottom: 1rem;
-    }
-    }
-  .card-content{
-    text-align: center;
-    font-size: 1.2rem;
-    color: black;
+  .navbar-background {
+    height: 50px;
+    background-color: orange;
   }
-  .button-box{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-    font-family: var(--fontfamilyMacondo);
-  }
-  .btn-1, .btn-2 {
-    font-size: 1.4rem;
-    padding: 0.5rem 0.9rem;
-    border-radius: 0.4rem;
-    font-family: var(--fontfamilyMacondo);
-    margin: 0.6rem 0;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-  
-  .btn-1 {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  
-  .btn-1:hover, .btn-1:focus, .btn-2:hover, .btn-2:focus {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    outline: none;
-  }
-  
-  .btn-2 {
-    background-color: black;
-    color: whitesmoke;
-  }
-  
-  .btn-1:active, .btn-2:active {
-    transform: scale(0.98);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-    /* The animated background */
-    .navbar-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: orange;
-      transition: all 0.3s ease;
-      border-radius: 0.5rem;
-      z-index: 1;
-    }
 }

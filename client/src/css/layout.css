@@ -17,15 +17,16 @@
 .brand {
   width: fit-content;
   height: fit-content;
-  border: .1px solid orangered;
+  border: 2px solid orangered;
   color: orange;
-  text-shadow: .1rem .1rem rgb(68, 20, 2);
-  box-shadow: .1rem .1rem orange;
+  text-shadow: 2px 2px 4px rgba(68, 20, 2, 0.8);
+  box-shadow: 3px 3px 10px rgba(255, 69, 0, 0.7);
   padding: var(--paddingRegular);
-  border-radius: .4rem;
-  background-color: rgb(4, 58, 105, .4);
+  border-radius: 0.4rem;
+  background-color: rgba(4, 58, 105, 0.6);
   font-family: var(--fontfamilyMacondo);
 }
+
 .icons-grid{
   display: flex;
   margin: 0px .3rem;
@@ -37,23 +38,29 @@
   background-color: orange;
   padding: var(--padding);
   border-radius: 50%;
-  transition: background-color 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, box-shadow 0.2s, transform 0.2s;
   cursor: pointer;
   border: none;
 }
+
+.toggle-button:hover {
+  background-color: #ffa500;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.toggle-button:active {
+  background-color: #ff8c00;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transform: translateY(2px);
+}
+
 .cart-icon{
   background-color: lightblue;
   padding: var(--padding);
   border-radius: 50%;
   margin-left: .5rem;
-}
-.toggle-button:hover,
-.toggle-button:focus,
-.cart-icon:focus,
-.cart-icon:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .menu {
   position: fixed;
@@ -106,3 +113,34 @@
 }
 
 
+
+/*MD & LG VIEWPORTS */
+@media screen and (min-width: 576px) {
+  .icons-grid{
+    gap: .5rem;
+  }
+  .toggle-button:hover {
+    background-color: orangered;
+    box-shadow: 0 6px 15px rgb(31, 20, 1, .5);
+  }
+  
+  .toggle-button:active {
+    background-color: #ff8c00;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(3px);
+  }
+  .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh; /* Full height */
+    background-color: rgba(20, 14, 1, 0.4);
+    box-shadow: 0 4px 8px rgb(133, 42, 8, .5);
+    z-index: 50;
+    padding-top: 4rem;
+  }
+  .navigation-menu{
+    margin-top: 3rem;
+  }
+}
