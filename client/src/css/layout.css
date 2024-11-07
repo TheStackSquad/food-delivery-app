@@ -71,12 +71,15 @@
 }
 .dropdown-item {
   position: relative;
+  display: flex;
+  align-items: center;
   padding: 0.7rem;
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: 600;
   overflow: hidden;
   color: orange;
+  gap: 8px;
   font-family: var(--fontfamilyMacondo);
 }
 
@@ -95,6 +98,11 @@
 .dropdown-item:hover::before {
   width: 100%;
   color: wheat;
+}
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
 }
 
 

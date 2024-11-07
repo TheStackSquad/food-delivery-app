@@ -1,6 +1,14 @@
 import React, { useContext, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
+import { FaShoppingCart,
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaUtensils,
+  FaMoneyCheckAlt,
+  FaSignInAlt,
+  FaPhone } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutContext } from './LayoutContext';
 import { slideVariants, menuItemVariants } from '../Motion/animation';
@@ -78,25 +86,30 @@ function GlobalLayout({ children }) {
                   variants={slideVariants}
                   className="menu"
                 >
-                  <div className="px-4 space-y-4 navigation-menu">
-                    {[
-                      { path: '/', label: 'Home' },
-                      { path: '/account', label: 'Account' },
-                      { path: '/menu', label: 'Menu' },
-                      { path: '/payment', label: 'Payments' },
-                      { path: '/login', label: 'Login' },
-                      { path: '/contact', label: 'Reach Us' },
-                    ].map((item) => (
-                      <motion.div
-                        key={item.path}
-                        variants={menuItemVariants}
-                        className="dropdown-item"
-                        onClick={() => handleMenuClick(item.path)}
-                      >
-                        {item.label}
-                      </motion.div>
-                    ))}
-                  </div>
+                 <div className="px-4 space-y-4 navigation-menu">
+  {[
+    { path: '/', label: 'Home', icon: <FaHome />, color: 'orchid' },
+    { path: '/account', label: 'Account', icon: <FaUser />, color: 'deepskyblue' },
+    { path: '/menu', label: 'Menu', icon: <FaUtensils />, color: 'tomato' },
+    { path: '/payment', label: 'Payments', icon: <FaMoneyCheckAlt />, color: 'limegreen' },
+    { path: '/login', label: 'Login', icon: <FaSignInAlt />, color: 'goldenrod' },
+    { path: '/contact', label: 'Reach Us', icon: <FaPhone />, color: 'slateblue' },
+  ].map((item) => (
+    <motion.div
+      key={item.path}
+      variants={menuItemVariants}
+      className="dropdown-item"
+      onClick={() => handleMenuClick(item.path)}
+    >
+      {/* Apply individual color to icon */}
+      <span className="icon" style={{ color: item.color }}>
+        {item.icon}
+      </span>
+      <span className="label">{item.label}</span>
+    </motion.div>
+  ))}
+</div>
+
                 </motion.div>
               )}
             </AnimatePresence>
