@@ -6,10 +6,10 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 350px;
-  height: fit-content;
+  height: 200px;
   text-align: center;
   position: absolute;
-  top: 87%;
+  top: 88%;
   left: 50%;
   transform: translate(-50%, -50%);
   margin-top: 1rem;
@@ -21,7 +21,7 @@
     max-width: 350px;
     height: fit-content;
     padding: var(--paddingRegular);
-    margin-bottom: 1rem;
+    margin: 1rem 0px;
   }
   }
 .card-content {
