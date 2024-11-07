@@ -157,3 +157,38 @@ input::placeholder{
   transform: scale(1);
   transition: transform 0s, opacity 0.3s;
 }
+
+
+/* MD & LG VIEWPORTS */
+@media screen and (min-width: 576px) {
+  .inputGroup input {
+    width: 100%;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    outline: none;
+    background: transparent;
+    transition: all 0.3s ease;
+    color: white;
+    font-family: var(--fontfamilyMacondo);
+    position: relative;
+  }
+  input::placeholder{
+    position: absolute;
+    right: 0;
+    color: black;
+    font-family: var(--fontfamilyMacondo);
+  }
+  .inputGroup label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(-50%);
+    color: #888;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    pointer-events: none;
+    color: whitesmoke;
+  }
+}
