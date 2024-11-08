@@ -59,3 +59,7 @@
   bottom: 0;
   font-family: var(--fontfamilyMacondo);
 }
+
+a {
+  text-decoration: none;
+}
