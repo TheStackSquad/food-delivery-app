@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart,
   FaBars,
   FaTimes,
@@ -63,7 +63,11 @@ function GlobalLayout({ children }) {
   return (
     <div className="global-layout">
       <div className="header">
-        <h3 className='brand'>Dev-Kitchen</h3>
+        <Link
+          to="/"
+        >
+          <h3 className='brand'>Dev-Kitchen</h3>
+        </Link>
 
         <div className='icons-grid'>
           <div ref={slideRef} className="relative z-50">
