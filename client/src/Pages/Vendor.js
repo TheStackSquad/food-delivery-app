@@ -8,7 +8,7 @@ function Vendor() {
     <div className={styles.vendor}>
        <div className={styles.vendorContainer}>
         <div className={styles.header}>
-          Geow Your Business Here!
+          Dev-Kitchen Vendor Hub
         </div>
       <div className={styles.vendorSlide}>
         <CardSlide />

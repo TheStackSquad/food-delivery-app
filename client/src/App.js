@@ -1,3 +1,4 @@
+// App.js
 import "./App.css";
 import ChatWidget from "./components/ChatWidget";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -9,6 +10,10 @@ import Contact from "./Pages/Contact";
 import Vendor from "./Pages/Vendor";
 import Rider from "./Pages/Rider";
 import Menu from "./Pages/Menu";
+import VendorSignup from "./Pages/VendorRoutes/VendorSignUp";
+import VendorProfile from "./Pages/VendorRoutes/VendorProfile";
+import VendorAddMenu from "./Pages/VendorRoutes/VendorAddMenu";
+
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
 
@@ -16,7 +21,6 @@ function App() {
   return (
     <Router>
       <LayoutProvider>
-        {/* GlobalLayout placed outside to be globally accessible */}
         <GlobalLayout>
           <ChatWidget />
           <Routes>
@@ -27,6 +31,10 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/vendor" element={<Vendor />} />
+            {/* Add nested signup route */}
+            <Route path="/vendor/signup" element={<VendorSignup />} />
+            <Route path="/vendor/profile" element={<VendorProfile />} />
+            <Route path="/vendor/addmenu" element={<VendorAddMenu />} />
             <Route path="/rider" element={<Rider />} />
           </Routes>
         </GlobalLayout>

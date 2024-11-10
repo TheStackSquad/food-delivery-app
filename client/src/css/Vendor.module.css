@@ -1,12 +1,9 @@
 .vendor{
     width: 100%;
     min-height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
     background-color: orangered;
+    clip-path: path("M 0 0 L 100% 0 L 100% 70% Q 50% 100% 0 70% Z");
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +14,7 @@
     width: 100%;
     max-width: 370px;
     min-height: 100vh;
-    padding-top: 17rem;
+    padding-top: .5rem;
     transition: transform 0.3s ease;
 }
 
