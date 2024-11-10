@@ -65,14 +65,14 @@ function GlobalLayout({ children }) {
       <div className="header">
         <h3 className='brand'>Dev-Kitchen</h3>
 
-        <div className='icons-grid'>
+        <div className='iconsGrid'>
           <div ref={slideRef} className="relative z-50">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 toggleDropdown();
               }}
-              className="toggle-button"
+              className="togglebuttonLayout"
             >
               {isOpen ? <FaTimes /> : <FaBars />}
             </button>

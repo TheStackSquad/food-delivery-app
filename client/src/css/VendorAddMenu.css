@@ -1,0 +1,84 @@
+/* src/Pages/VendorRoutes/AddMenu.module.css */
+
+.centeredContainer {
+    padding: 1rem;
+    text-align: center;
+    width: 90%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid red;
+  }
+  .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .message {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .button {
+    padding: 0.6rem 1.2rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .input, .dropdown, .toggleButton, .submitButton {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .coverImageSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .coverLabel {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .infoToggle {
+    color: #4a90e2;
+    cursor: pointer;
+  }
+  
+  .coverInfoText, .formatNote {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  
+  .uploadBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+.foodIcon{
+  width: 50px;
+  height: auto;
+  font-size: 1rem;
+}
