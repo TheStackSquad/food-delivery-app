@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { NavbarSlide } from '../animations/navbarSlide';
-import '../css/navbarSlide.css';
-//import '../css/slideNav.css';
+import '../css/slideNav.css';
 
 const SlideNav = () => {
   const [selectedIndex, setSelectedIndex] = useState(0); // Track the selected index

@@ -7,12 +7,13 @@
   width: 100%;
   min-height: 100vh;
   position: relative;
+  margin-top: -7rem;
   background-color: rgb(203, 219, 236, .3);
 }
 
 .section1 {
   width: 100%;
-  height: 600px;
+  height: fit-content;
   position: relative;
 }
 
@@ -23,8 +24,19 @@
 }
 
 .section2 {
-  max-width: 380px;
-  width: 95%;
-  margin-top: 1rem;
+  max-width: 480px;
+  width: 100%;
+  height: 100vh;
+  margin-top: .1rem;
+  margin-bottom: 3rem;
 
+  /* Add bezier-style curved background */
+  background-image: 
+    radial-gradient(circle at 20% 40%, rgba(255, 200, 200, 0.8), transparent 70%),
+    radial-gradient(circle at 80% 30%, rgba(200, 255, 255, 0.6), transparent 60%),
+    radial-gradient(circle at 50% 70%, rgba(200, 200, 255, 0.7), transparent 70%);
+  background-color: #f0f0f0; /* Fallback color */
+  position: relative;
+  overflow: hidden;
 }
+
