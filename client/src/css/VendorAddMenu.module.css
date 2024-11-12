@@ -1,0 +1,272 @@
+.container {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: blanchedalmond;
+}
+.centeredContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--fontfamilyMacondo);
+}
+.foodIcon {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+}
+
+.message {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+.button {
+  background-color: #006B4D;
+  color: white;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: var(--fontfamilyMacondo);
+}
+.button:hover {
+  background-color: #005540;
+}
+.formContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 10rem;
+  font-family: var(--fontfamilyMacondo);
+  margin-bottom: 3rem;
+}
+@media (max-width: 575.98px) {
+  .formContainer {
+    max-width: 370px;
+    width: 95%;
+    margin: 0 auto;
+  }
+}
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+}
+.selectWrapper {
+  position: relative;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  background-color: white;
+  overflow: hidden;
+}
+
+.selectWrapper select {
+  padding: 0.75rem;
+  width: 90%;
+  appearance: none;
+  font-size: 1rem;
+  border: none;
+}
+.chevronIcon {
+  color: #666;
+  pointer-events: none;
+}
+.addCategory {
+  background: none;
+  width: 100%;
+  border: none;
+  color: #006B4D;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: start;
+  font-size: 1.2rem;
+  font-family: var(--fontfamilyMacondo);
+}
+.coverImageSection {
+  margin-bottom: 2rem;
+}
+
+.coverLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+
+.infoToggle {
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.coverInfoText {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.uploadBox {
+  border: 2px dashed #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  background-color: #f9f9f9;
+}
+
+.uploadBox svg {
+  color: #666;
+}
+
+.uploadBox p {
+  color: #666;
+  font-weight: 500;
+}
+
+.formatNote {
+  color: #666;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.inputGroupForPrice {
+  display: flex;
+  gap: 1rem; 
+  margin: 0px 1rem;
+  justify-content: space-around;
+  align-items: center;
+}
+.inputGroupForPrice .inputGroup {
+  margin-right: 1rem;
+}
+
+.inputGroupForPrice .inputGroup:last-child {
+  margin-right: 0;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+.input::placeholder{
+  color: black;
+  font-family: var(--fontfamilyMacondo);
+  position: relative;
+  text-align: start;
+}
+.label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+}
+@media (max-width: 575.98px){
+  .label {
+    max-width: 370px;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+}
+.toggleSwitch {
+  position: relative;
+  width: 40px;
+  height: 20px;
+}
+.toggleSwitch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggleSwitch input:checked + .slider {
+  background-color: #4caf50;
+}
+
+.toggleSwitch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+
+.submitButton {
+  width: 100%;
+  background-color: #006B4D;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  font-family: var(--fontfamilyMacondo);
+  margin-bottom: 3rem;
+}
+
+.submitButton:hover {
+  background-color: #005540;
+}

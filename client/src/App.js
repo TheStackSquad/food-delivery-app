@@ -12,7 +12,10 @@ import Rider from "./Pages/Rider";
 import Menu from "./Pages/Menu";
 import VendorSignup from "./Pages/VendorRoutes/VendorSignUp";
 import VendorProfile from "./Pages/VendorRoutes/VendorProfile";
+import VendorPayout from "./Pages/VendorRoutes/VendorPayout";
 import VendorAddMenu from "./Pages/VendorRoutes/VendorAddMenu";
+import VendorInsight from "./Pages/VendorRoutes/VendorInsight";
+import VendorLayout from './GlobalLayout/VendorLayout';
 
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
@@ -32,9 +35,14 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/vendor" element={<Vendor />} />
             {/* Add nested signup route */}
+            <Route path="/vendor" element={<VendorLayout />}>
             <Route path="/vendor/signup" element={<VendorSignup />} />
             <Route path="/vendor/profile" element={<VendorProfile />} />
+            <Route path="/vendor/payout" element={<VendorPayout />} />
             <Route path="/vendor/addmenu" element={<VendorAddMenu />} />
+            <Route path="/vendor/insight" element={<VendorInsight />} />
+            </Route>
+            
             <Route path="/rider" element={<Rider />} />
           </Routes>
         </GlobalLayout>
