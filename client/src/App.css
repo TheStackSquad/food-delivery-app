@@ -45,7 +45,7 @@
   padding: 0;
   box-sizing: border-box;
   width: var(--width);
-  height: var(--absoluteHeight);
+  min-height: var(--absoluteHeight);
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;

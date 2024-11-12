@@ -1,52 +1,60 @@
 // src/components/Snap.js
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { horizontalSlide, slideAnimation } from '../animations/snapSlide';
+import { horizontalSlide, enhancedCardAnimation } from '../animations/snapSlide';
 import vendorData from '../data/VendorData';
 import styles from '../css/Snap.module.css';
 
 const Snap = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleNavIndex, setVisibleNavIndex] = useState(0);
+  const navRefs = useRef([]);
 
-  const handleTagClick = (index) => {
-    setActiveIndex(index);
+  // Update the activeIndex as each navItem scrolls into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = navRefs.current.indexOf(entry.target);
+            if (index !== -1) setActiveIndex(index);
+          }
+        });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.7 }
+    );
 
-    // Adjust visibleNavIndex to keep 3 items in view
-    if (index >= visibleNavIndex + 3) {
-      setVisibleNavIndex(index - 2); // Shift to show the selected item and the next two items
-    } else if (index < visibleNavIndex) {
-      setVisibleNavIndex(index); // Shift back to keep the selected item at the start
-    }
-  };
+    navRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleTagClick = (index) => setActiveIndex(index);
 
   return (
     <div className={styles.snapContainer}>
-      {/* Navbar with 3 visible items */}
-      <div className={styles.navbar}>
-        {vendorData.liTags
-          .slice(visibleNavIndex, visibleNavIndex + 3)
-          .map((item, index) => (
-            <motion.li
-              key={item.id}
-              className={`${styles.navItem} ${
-                activeIndex === index + visibleNavIndex ? styles.activeNavItem : ''
-              }`}
-              onClick={() => handleTagClick(index + visibleNavIndex)}
-              variants={horizontalSlide}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {item.title}
-            </motion.li>
-          ))}
+      {/* Navbar with smooth scroll */}
+      <div className={`${styles.navbar} ${styles.scrollableNavbar}`}>
+        {vendorData.liTags.map((item, index) => (
+          <motion.li
+            key={item.id}
+            ref={(el) => (navRefs.current[index] = el)}
+            className={`${styles.navItem} ${
+              activeIndex === index ? styles.activeNavItem : ''
+            }`}
+            onClick={() => handleTagClick(index)}
+            variants={horizontalSlide}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            {item.title}
+          </motion.li>
+        ))}
       </div>
 
-      {/* Card Content with two cards in view */}
+      {/* Card Content with enhanced animations */}
       <div className={styles.cardContainer}>
         {vendorData.cardContent
-          // Display only two cards around the active card
           .filter((_, index) => Math.abs(index - activeIndex) <= 1)
           .map((card) => (
             <motion.div
@@ -54,7 +62,7 @@ const Snap = () => {
               className={`${styles.card} ${
                 card.id - 1 === activeIndex ? styles.activeCard : ''
               }`}
-              variants={slideAnimation}
+              variants={enhancedCardAnimation}
               initial="hidden"
               animate="visible"
               exit="exit"

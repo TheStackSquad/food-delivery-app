@@ -1,0 +1,198 @@
+/* src/css/Payment.module.css */
+
+.checkoutContainer {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.checkoutWrapper{
+  padding-top: 5rem;
+  font-family: var(--fontfamilyMacondo);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 575.98px){
+  .checkoutWrapper{
+    width: 98%;
+    max-width: 400px;
+    font-family: var(--fontfamilyMacondo);
+    border: 2px solid red;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.scanButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  width: 90%;
+  font-family: var(--fontfamilyMacondo);
+}
+.paymentGateways {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 575.98px){
+  .paymentGateways {
+    display: flex;
+    justify-content: space-around;
+    max-width: 370px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+}
+.icon {
+  margin-right: 0.5rem;
+}
+.gatewayIcon {
+  height: 30px;
+  width: 30px;
+  color: #aaa;
+}
+
+.form {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+@media (max-width: 575.98px){
+  .form {
+    max-width: 350px;
+    width: 95%;
+    margin-bottom: 1.5rem;
+  }
+}
+.label {
+  display: block;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  overflow-x: hidden;
+}
+.inputContainer {
+  position: relative;
+}
+.input[type="text"],
+input[type="number"],
+.input[type="password"],
+input {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgb(59, 19, 4); /* Bottom border only */
+  border-radius: 0; /* Removes any rounded edges */
+  margin-bottom: .4rem;
+  transition: border-color 0.3s ease;
+}
+.input[type="text"]:focus,
+input[type="number"]:focus,
+.input[type="password"]:focus,
+input:focus {
+  border-bottom: 2px solid rgb(59, 19, 4); 
+}
+
+.inputIcon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  cursor: pointer;
+}
+
+.payButton {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+.paymentGateways {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.gatewayImage {
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.gatewayCard {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gatewayIcon, .gatewayImage {
+  width: 100%;
+  height: auto;
+}

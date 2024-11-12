@@ -22,112 +22,63 @@
   align-items: center;
 }
 
-/* Default styles for larger screens */
+/* Wrapper for the input and icons */
 .inputWrapper {
   display: flex;
   align-items: center;
-  background: transparent;
+  background-color: white;
   width: 90%;
-  max-width: 400px;
+  max-width: 370px;
   height: 50px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  padding: 0 2rem; /* Space for icons */
 }
-
-/* Media query for mobile screens */
-@media (max-width: 576px) {
+@media (max-width: 575.98px){
   .inputWrapper {
+    display: flex;
+    align-items: center;
+    background-color: white;
     width: 90%;
     max-width: 370px;
+    height: 50px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding: 0 2rem; /* Space for icons */
   }
 }
-
-@media (max-width: 480px) {
-  .inputWrapper {
-    width: 100%;
-    max-width: 100%;
-    border-width: 1px;  /* Reduce border width on very small screens */
-  }
-}
-
+/* Styling for the input field */
 .input {
   flex: 1;
   border: none;
   outline: none;
   font-size: 1rem;
-  background: black;
-  color: white;
-  border-radius: 0.5rem;
-  width: 100%;
-  height: 100%;
-  padding: 1rem 0px;
-}
-.input[type="text"]{
-  padding-left: 3rem;
-}
-input::placeholder {
-  color: whitesmoke;
-  text-align: start;
+  background: transparent;
+  color: #333;
+  padding: 0 2.5rem; /* Padding to center placeholder */
+  text-align: center; /* Center the placeholder */
 }
 
-.iconLeft {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.iconRight {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.icon {
-  color: orange;
-  font-size: 1.2rem;
-}
-
-@media screen and (min-width: 576px){
-  
-.inputWrapper {
-  width: 50%;
-  border: 2px solid red;
-}
-
-.input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  background: wheat;
-  color: black;
-  max-width: 400px;
-  width: 90%;
-  padding-left: 2rem; /* Add padding to move text inside */
-}
-
+/* Center placeholder */
 .input::placeholder {
-  color: black;
-  padding-left: 3rem;
+  color: #888;
+  text-align: center;
 }
 
+/* Positioning left icon */
 .iconLeft {
   position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.iconRight {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.icon {
+  left: 0.5rem;
   color: orange;
   font-size: 1.2rem;
 }
+
+/* Positioning right icon */
+.iconRight {
+  position: absolute;
+  right: 0.5rem;
+  color: orange;
+  font-size: 1.2rem;
 }
