@@ -18,7 +18,19 @@ export const cards = [
       content: "Make your meals stand out by showcasing your unique dishes! Attract more customers by adding delicious details and vibrant images",
       buttonText: "Add Meals",
       route: "/vendor/addmenu" },
-    { id: 4, title: "Card 4", content: "Content for card 4", buttonText: "Explore", route: "/page4" },
-    { id: 5, title: "Card 5", content: "Content for card 5", buttonText: "Sign Up Today", route: "/page5" }
+
+    { id: 4, title: "Payout",
+      content: "Stay on top of your sales with instant insights and seamless payouts. Track your earnings, review detailed stats, and manage all your transactions with ease. Your payout, your way – right at your fingertips.",
+      buttonText: "Explore Your Payouts",
+      route: "/vendor/payout" },
+      
+      { 
+        id: 5, 
+        title: "Unlock Insights", 
+        content: "Gain valuable insights into your store's performance and customer behavior. Stay ahead of the curve with data-driven decisions that drive growth.",
+        buttonText: "Explore Insights", 
+        route: "/vendor/insight" 
+      }
+      
   ];
   
