@@ -1,40 +1,20 @@
-/* src/css/home.css */
-
+/* Basic container setup */
 .home {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   min-height: 100vh;
-  position: relative;
-  margin-top: -7rem;
   background-color: rgba(203, 219, 236, 0.3);
-  overflow-y: auto; /* Enable vertical scrolling */
-  scroll-behavior: smooth; /* Smooth scroll effect */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  margin-top: -8rem;
+
 }
 
-/* Custom scrollbar for a sleek look (Webkit browsers) */
-.home::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
-}
-
-.home::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1); /* Track color */
-}
-
-.home::-webkit-scrollbar-thumb {
-  background-color: rgba(59, 59, 59, 0.3); /* Scroll thumb color */
-  border-radius: 4px; /* Rounded edges */
-}
-
-.home::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(59, 59, 59, 0.5); /* Darker on hover */
-}
-
-
+/* Section 1 */
 .section1 {
   width: 100%;
-  height: fit-content;
+  padding: 1rem 0; /* Space around content */
   position: relative;
 }
 
@@ -44,19 +24,50 @@
   display: block;
 }
 
+/* Section 2 */
 .section2 {
-  max-width: 480px;
-  width: 100%;
-  height: 100vh;
-  margin-top: .1rem;
-  margin-bottom: 3rem;
-
-  /* Add bezier-style curved background */
+  width: 100%; 
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-image: 
     radial-gradient(circle at 20% 40%, rgba(255, 200, 200, 0.8), transparent 70%),
     radial-gradient(circle at 80% 30%, rgba(200, 255, 255, 0.6), transparent 60%),
     radial-gradient(circle at 50% 70%, rgba(200, 200, 255, 0.7), transparent 70%);
-  background-color: #f0f0f0; /* Fallback color */
+  background-color: #f0f0f0;
   position: relative;
 }
 
+/* Section 3 */
+.section3 {
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.star-listing{
+  font-family: var(--fontfamilyMacondo);
+  text-align: center;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+  /* For larger screens, make adjustments if needed */
+  .section1, .section3 {
+    max-width: 800px; /* Center alignment within viewport */
+    margin: 0 auto;   /* Center horizontally */
+  }
+  .section2 {
+    background-size: cover; /* Ensures full-width background on larger screens */
+    background-position: center;
+  }
+}
