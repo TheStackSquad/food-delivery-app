@@ -74,7 +74,9 @@ input[type="email"] {
   font-size: 1rem;
   margin-top: .5rem;
 }
-  
+input::placeholder{
+  padding-right: .5rem;
+}
   .coverLabel {
     display: flex;
     justify-content: space-between;

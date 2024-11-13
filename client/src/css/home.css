@@ -58,6 +58,5 @@
     radial-gradient(circle at 50% 70%, rgba(200, 200, 255, 0.7), transparent 70%);
   background-color: #f0f0f0; /* Fallback color */
   position: relative;
-  overflow: hidden;
 }
 

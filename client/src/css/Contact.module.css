@@ -1,9 +1,11 @@
 .contact{
   background-color: rgb(192, 64, 18, .4);
   font-family: var(--fontfamilyMacondo);
+  position: relative;
+  margin-top: -7rem;
 }
 .contact-grid {
-  width: 95%;
+  width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -13,8 +15,44 @@
   padding-top: 5rem;
   position: relative;
   top: 8rem;
-  margin-top: -6rem;
 }
+@media (max-width: 575.98px){
+  .pitch,
+  .email-grid,
+  .faq-grid,
+  .place-order-card{
+    max-width: 320px;
+    width: 90%;
+    height: fit-content;
+    border-radius: 0.5rem;
+  margin: 1.2rem auto;
+  padding: var(--paddingRegular);
+  font-size: 1.5rem;
+    border: 2px solid rgb(63, 42, 3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  }
+}
+/* Media query for very small mobile screens */
+@media (max-width: 360px) {
+  .pitch,
+  .email-grid,
+  .faq-grid,
+  .place-order-card {
+    width: 98%;
+    font-size: 1.3rem;
+    padding: 0.6rem;
+  }
+}
+
+.pitch:hover,
+.email-grid:hover,
+.faq-grid:hover,
+.place-order-card:hover {
+  transform: scale(1);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  background-color: #f5deb3;
+}
+
 .pitch,
 .pitch-text{
   display: flex;
@@ -28,79 +66,24 @@ h2{
   text-transform: capitalize;
 }
 .user-image{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
-  margin-right: .5rem;
-}
-.pitch,
-.email-grid,
-.faq-grid,
-.place-order-card {
-  width: 90%;
-  max-width: 500px;
-  border: 2px solid rgb(63, 42, 3);
-  border-radius: 0.5rem;
-  margin: 2rem auto;
-  padding: 1rem;
-  font-size: 1.5rem;
-  background-color: wheat;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-}
-
-.pitch:hover,
-.email-grid:hover,
-.faq-grid:hover,
-.place-order-card:hover {
-  transform: scale(1.05); /* Slightly scales up the container */
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-  background-color: #f5deb3; /* Slightly darkens the background color */
-}
-
-@media (max-width: 576px) {
-  .pitch,
-  .email-grid,
-  .faq-grid,
-  .place-order-card {
-    width: 90%;
-    max-width: 370px;
-    padding: 0.8rem;
-    font-size: 1.4rem;
-  }
-}
-
-/* Media query for very small mobile screens */
-@media (max-width: 360px) {
-  .pitch,
-  .email-grid,
-  .faq-grid,
-  .place-order-card {
-    width: 98%;
-    font-size: 1.3rem;
-    padding: 0.6rem;
-  }
-}
-.text,
-.text-2{
-  text-align: start;
-  word-wrap: break-word;
-  font-size: 1.4rem;
-  font-weight: 500;
+  border-radius: 50%;
+  gap: .3rem;
 }
 .chat-widget-toggle{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 95%;
 }
 .widget-toggler,
 .arrow-icon {
   cursor: pointer;
-  text-transform: uppercase;
+  text-transform: capitalize;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 .widget-toggler:hover,
 .widget-toggler:focus,
 .arrow-icon:hover,
@@ -108,14 +91,12 @@ h2{
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .arrow-icon {
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
 }
-
 
 /*Email Grid*/
 .email-grid {
@@ -127,7 +108,6 @@ h2{
   border: 2px solid rgb(63, 42, 3);
   margin-bottom: 2rem;
 }
-
 .email-form{
   width: 95%;
 }
@@ -138,7 +118,6 @@ h2{
   align-items: center;
   margin-bottom: 1rem;
 }
-
 .input-icon {
   position: absolute;
   left: 1rem;
@@ -172,11 +151,11 @@ input::placeholder{
 
 .send-button {
   width: 100%;
-  padding: 0.75rem;
+  padding: var(--padding);
   background-color: #4caf50;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: .5rem;
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: .7rem;
@@ -193,6 +172,8 @@ input::placeholder{
   text-align: start;
   width: 100%;
 }
+
+
 .about-us{
   padding: .5rem .1rem;
   font-size: 1.2rem;
@@ -230,4 +211,3 @@ input::placeholder{
 .order-button:hover {
   background-color: #ff5a4d; /* Darkens the background on hover */
 }
-

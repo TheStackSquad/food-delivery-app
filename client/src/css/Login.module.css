@@ -61,6 +61,11 @@
     background: transparent;
     font-size: 1rem;
   }
+  .inputGroup input[type="text"] {
+    border: none;
+    outline: none;
+    background: transparent;
+  }
   
   .inputGroup label {
     position: absolute;
