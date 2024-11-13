@@ -84,10 +84,11 @@
 .inputGroup input[type="password"]{
   width: 100%;
   height: 50px;
-  font-size: 1rem;
+  font-size: 1.3rem;
   padding: 0.5rem 0;
   border: none;
   border-bottom: 2px solid #ddd;
+  border-radius: 0px;
   outline: none;
   background: transparent;
   transition: all 0.3s ease;
@@ -106,10 +107,12 @@ input::placeholder{
   top: -8px;
   right: 0;
   font-size: 0.75rem;
-  color: #7c0778;
+  font-weight: bolder;
+  color: orange;
 }
 .inputGroup input:focus {
-  border-bottom-color: #7c0778;
+  border-bottom-color: orange;
+  font-weight: bold;
 }
 
 /* Button Styling */

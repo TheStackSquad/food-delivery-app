@@ -7,16 +7,16 @@
   width: 100%;
   height: fit-content;
 }
+
 .scrollableNavbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.7rem;
   padding: var(--padding);
   overflow-x: auto;
   height: 40px;
-  width: 100%;
-  max-width: 400px;
+  width: 95%;
+  max-width: 350px;
   scroll-behavior: smooth;
 }
 
@@ -28,12 +28,17 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: border-color 0.3s;
-  padding: 8px 16px;
+  padding: 8px;
   scroll-snap-align: center; 
 }
-
+.navItem:hover{
+  color: #200202;
+  font-weight: bold;
+}
 .activeNavItem {
-  border-color: #2980b9; 
+  transform: scale(1.1); /* Slight enlargement for active items */
+  color: #2980b9; /* Active color */
+  border-bottom: 2px solid #2980b9;
 }
 .cardContainer {
   display: flex;
@@ -41,12 +46,11 @@
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-  max-height: 500px;
+  max-height: 100%;
   max-width: 400px;
   width: 90%;
   position: relative;
   padding: 1rem;
-  border: 2px solid #ddd;
   overflow-y: hidden;
 }
 @media (max-width: 575.98px) {

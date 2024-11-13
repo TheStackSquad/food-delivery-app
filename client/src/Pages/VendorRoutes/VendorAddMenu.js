@@ -14,6 +14,7 @@ function AddMenu() {
 
   return (
     <div className={styles.container}>
+       <div className={styles.vendorContainer}>
       {isAddingMeal ? (
         <div className={styles.formContainer}>
           {/* Category Dropdown */}
@@ -124,6 +125,7 @@ function AddMenu() {
           </button>
         </div>
       )}
+      </div>
     </div>
   );
 }

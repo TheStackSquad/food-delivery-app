@@ -7,37 +7,37 @@
   height: 100vh;
   color: white;
   transition: background 0.5s ease-in-out;
+  position: relative;
+  background-color: none;
+  margin-top: -7rem;
+}
+/* Styling for the form container to sit on top */
+.formWrap {
+  border-radius: 8px;
+  text-align: center;
+  max-width: 350px;
+  width: 100vw;
+  min-height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom:0;
-  background-color: gold;
+  top: 3rem;
+}
+@media (max-width: 575.98px) {
+  .formWrap {
+    max-width: 370px;
+    width: 95%;
+    margin: 0 auto;
+  }
+}
+.formWrap h2{
+  font-family: var(--fontfamilyMacondo);
+  color: black;
 }
 
 /* Backgrounds for Signup and Login states */
 .signup, .login {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-/* Styling for the form container to sit on top */
-.formWrap {
-  background: rgb(192, 127, 6,.3);
-  padding: 2rem;
-  border-radius: 8px;
-  text-align: center;
-  max-width: 350px;
-  width: 90%;
-  height: fit-content;
-  padding-top: .5rem;
-  position: relative;
-}
-.formWrap h2{
-  font-family: var(--fontfamilyMacondo);
+width: 95%;
+height: fit-content;
+border: 2px solid rgb(70, 46, 3);
 }
 
 .formBox {
@@ -70,7 +70,7 @@
   transition: all 0.3s ease;
   font-size: 0.9rem;
   pointer-events: none;
-  color: whitesmoke;
+  color: black;
 }
 
 .inputGroup input[type="email"],
@@ -84,16 +84,17 @@
   border: none;
   border-bottom: 2px solid #ddd;
   outline: none;
+  border-radius: 0px;
   background: transparent;
   transition: all 0.3s ease;
-  color: white;
+  color: black;
   font-family: var(--fontfamilyMacondo);
 }
 
 input::placeholder{
   position: absolute;
   right: 0;
-  color: white;
+  color: black;
   font-family: var(--fontfamilyMacondo);
 }
 .inputGroup input:focus + label,
