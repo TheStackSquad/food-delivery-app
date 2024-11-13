@@ -1,0 +1,87 @@
+/* Container styles */
+.container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  /* Card styles */
+  .card {
+    width: 100%;
+    max-width: 28rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Header styles */
+  .header {
+    padding: 0.5rem;
+  }
+  
+  .starRatingContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .starRating {
+    display: flex;
+  }
+  
+  /* Star icon styles */
+  .starIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: color 0.2s ease;
+  }
+  .activeStar {
+    color: #ffd700; /* Gold color for active stars */
+  }
+  .inactiveStar {
+    color: #ddd;
+  }
+  .starIcon:hover,
+  .starIcon:focus {
+    color: #ffca28; /* Lighter gold on hover */
+  }
+  
+  /* Content styles */
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  
+  .name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Cart button styles */
+  .cartButton {
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  .cartButton:hover,
+  .cartButton:focus {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+  }
+  
+  /* Cart icon styles */
+  .cartIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #333;
+  }
+  

@@ -10,6 +10,7 @@ import Contact from "./Pages/Contact";
 import Vendor from "./Pages/Vendor";
 import Rider from "./Pages/Rider";
 import Menu from "./Pages/Menu";
+import Dashboard from "./Pages/Dashboard";
 import VendorSignup from "./Pages/VendorRoutes/VendorSignUp";
 import VendorProfile from "./Pages/VendorRoutes/VendorProfile";
 import VendorPayout from "./Pages/VendorRoutes/VendorPayout";
@@ -32,6 +33,7 @@ function App() {
             <Route path="/menu" element={<Menu />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login/dashboard" element={<Dashboard />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/vendor" element={<Vendor />} />
             {/* Add nested signup route */}

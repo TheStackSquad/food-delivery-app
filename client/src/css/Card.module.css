@@ -1,0 +1,28 @@
+/* src/css/Card.module.css */
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: var(--paddingRegular);
+    background-color: rgb(230, 239, 248);
+    box-shadow: 0 4px 8px rgb(5, 62, 119, .4);
+  }
+
+  @media (max-width: 575.98px){
+    
+.card {
+    max-width: 370px;
+    width: 90%;
+  }
+  }
+  
+  .cardHeader {
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    border-bottom: .1px solid rgb(3, 27, 51, .1);
+  }
+  
+  .cardContent {
+    padding-top: 0.5rem;
+  }
+  
