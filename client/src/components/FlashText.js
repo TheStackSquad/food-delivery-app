@@ -1,8 +1,10 @@
-// components/FlashText.js
+// src/components/FlashText.js
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import texts from '../data/text';
 import '../css/flashText.css';
-const FlashText = ({ texts }) => {
+
+const FlashText = () => {
   const [currentText, setCurrentText] = React.useState(0);
 
   // Cycle through texts with a delay
@@ -12,7 +14,7 @@ const FlashText = ({ texts }) => {
     }, 4000); // Change text every 4 seconds
 
     return () => clearInterval(interval);
-  }, [texts.length]);
+  }, []);
 
   return (
     <div className="flash-text-container">

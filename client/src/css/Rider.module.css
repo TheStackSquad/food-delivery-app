@@ -1,0 +1,41 @@
+/* Mobile-first styles */
+.rider {
+    position: relative;
+    height: 100vh; /* Ensure the height is at least the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background: black; /* Fallback color */
+  }
+  
+  .deliveryImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the full viewport */
+    z-index: -1; /* Put the image behind the text */
+  }
+  
+  h1 {
+    font-size: 2rem; /* Base font size for mobile */
+    margin: 0;
+    z-index: 1; /* Ensure the text is above the image */
+  }
+  
+  /* Styles for larger screens */
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3rem; /* Increase font size for tablets and larger screens */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 4rem; /* Even larger font size for desktop screens */
+    }
+  }
+  

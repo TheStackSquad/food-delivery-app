@@ -1,7 +1,6 @@
 // src/Pages/Home.js
 import React from "react";
 import FlashText from "../components/FlashText";
-import texts from "../asset/textData/text";
 import SlideNav from "../components/slideNav";
 import Snap from "../components/Snap";
 import Ratings from '../components/Ratings';
@@ -14,7 +13,7 @@ function Home() {
     <div className="home">
       <div class="section1">
         <img src={BackgroundImage} alt='backgroundImg' className='HomeImg' />
-        <FlashText texts={texts} />
+        <FlashText />
         <SlideNav />
       </div>
       <div class="section2">

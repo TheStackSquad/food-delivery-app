@@ -81,7 +81,7 @@ const ChatWidget = () => {
           <motion.div
             className="chat-icon"
              
-           Chat icon  {...chatIconAnimation}
+           {...chatIconAnimation}
             onClick={() => {
               toggleChat();
               updateInteraction();

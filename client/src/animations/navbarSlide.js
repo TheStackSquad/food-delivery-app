@@ -1,4 +1,5 @@
 // components/animations/navbarSlide.js
+import React from "react";
 import { motion } from 'framer-motion';
 
 export const NavbarSlide = ({ selectedIndex }) => {

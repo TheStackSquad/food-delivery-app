@@ -1,0 +1,106 @@
+/* Mobile-first styles */
+.signupContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 0.875rem;
+  color: #333;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transition: all 0.3s ease;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  background-color: transparent;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 2px solid #0056b3;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+  top: -18px;
+  left: 0;
+  font-size: 0.75rem;
+  color: #0056b3;
+}
+
+.errorInput {
+  border-bottom: 2px solid red;
+}
+
+.errorText {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.submitButton {
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #004080;
+}
+
+.toggleLink {
+  text-align: center;
+  color: #0056b3;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.toggleLink:hover {
+  color: #004080;
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .signupContainer {
+    max-width: 500px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}

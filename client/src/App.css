@@ -1,6 +1,14 @@
 @font-face {
-  font-family:fondamento;
-  src: url(./asset/fontz/Fondamento-Regular.woff);
+  font-family:AlteText;
+  src: url(./asset/fontz/Josefin/JosefinSans-Regular.woff2);
+}
+@font-face {
+  font-family:MontserratAlte-Light;
+  src: url(./asset/fontz/MontserratAlte/MontserratAlternates-Light.woff);
+}
+@font-face {
+  font-family:MontserratAlte-Regular;
+  src: url(./asset/fontz/MontserratAlte/MontserratAlternates-Regular.woff);
 }
 @font-face {
   font-family:Macondo;
@@ -14,6 +22,9 @@
   --background-color: none;
   --fontfamily: fondamento;
   --fontfamilyMacondo: Macondo;
+  --Alte-Regular: MontserratAlte-Regular;
+  --Alte-Light: MontserratAlte-Light;
+  --Alte-Text: AlteText;
   --color:  rgb(24, 19, 10);
   --borderRadius: .5rem;
   --padding: 1rem;

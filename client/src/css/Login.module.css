@@ -37,7 +37,7 @@
     line-height: 1.9;
     font-size: 5rem;
     font-weight: 800;
-    font-family: var(--fontfamilyMacondo);
+    font-family: var(--Alte-Text);
     
   }
   
@@ -74,7 +74,7 @@
     color: #666;
     transition: all 0.3s ease;
     pointer-events: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
   
   .inputLine {

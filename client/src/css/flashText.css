@@ -10,12 +10,13 @@
   }
   
   .flash-text {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
     word-wrap: break-word;
     color: rgb(2, 39, 71);
     text-shadow: .2rem .1rem orange;
-    font-family: var(--fontfamily1);
+    font-family: Alte;
     text-transform: uppercase;
+    font-family: var(--Alte-Regular) ;
   }
   

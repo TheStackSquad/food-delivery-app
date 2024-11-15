@@ -87,7 +87,7 @@
   overflow: hidden;
   color: orange;
   gap: 8px;
-  font-family: var(--fontfamilyMacondo);
+  font-family: var(--Alte-Text);
 }
 
 .dropdown-item::before {
