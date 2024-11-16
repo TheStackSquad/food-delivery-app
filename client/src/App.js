@@ -1,4 +1,5 @@
 // App.js
+import React from "react";
 import "./App.css";
 import ChatWidget from "./components/ChatWidget";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,6 +19,10 @@ import VendorAddMenu from "./Pages/VendorRoutes/VendorAddMenu";
 import VendorInsight from "./Pages/VendorRoutes/VendorInsight";
 import VendorLayout from './GlobalLayout/VendorLayout';
 
+import RiderSignUp from "./Pages/RiderRoutes/RiderSignUp";
+import RiderProfile from "./Pages/RiderRoutes/RiderProfile";
+import RiderPayout from "./Pages/RiderRoutes/RiderPayout";
+
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
 
@@ -27,6 +32,7 @@ function App() {
       <LayoutProvider>
         <GlobalLayout>
           <ChatWidget />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/account" element={<Account />} />
@@ -44,8 +50,10 @@ function App() {
             <Route path="/vendor/addmenu" element={<VendorAddMenu />} />
             <Route path="/vendor/insight" element={<VendorInsight />} />
             </Route>
-            
             <Route path="/rider" element={<Rider />} />
+            <Route path="/rider/signup" element={<RiderSignUp />} />
+            <Route path="/rider/profile" element={<RiderProfile />} />
+            <Route path="/rider/payout" element={<RiderPayout />} />
           </Routes>
         </GlobalLayout>
       </LayoutProvider>

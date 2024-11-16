@@ -1,0 +1,114 @@
+/* RiderSignUp.module.css */
+.signupContainer {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .header{
+    font-family: var(--Alte-Text);
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 575.98px){
+    .signupForm{
+      width: 95%;
+      max-width: 400px;
+      position: relative;
+      margin-top: 9rem;
+    }
+  }
+  
+  .inputGroup {
+    position: relative;
+    margin: 15px 0px;
+    height: auto;
+  }
+  .label {
+    font-size: 1.1rem;
+    color: #333;
+    position: absolute;
+    top: -9px;
+    left: 0;
+    transition: all 0.3s ease;
+    font-family: var(--fontfamilyMacondo);
+  }
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #ccc;
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+  }
+  input:focus {
+    outline: none;
+    border-bottom: 2px solid #0056b3;
+  }
+  
+  input:focus + .label,
+  input:not(:placeholder-shown) + label {
+    top: -18px;
+    left: 0;
+    font-size: 0.75rem;
+    color: #0056b3;
+  }
+  
+  .errorInput {
+    border-bottom: 2px solid red;
+  }
+  
+  .errorText {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  .submitButton {
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: #004080;
+  }
+  
+  .toggleLink {
+    text-align: center;
+    color: #0056b3;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+  }
+  
+  .toggleLink:hover {
+    color: #004080;
+  }
+  
+  /* Larger screens */
+  @media (min-width: 768px) {
+    .signupContainer {
+      max-width: 500px;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  

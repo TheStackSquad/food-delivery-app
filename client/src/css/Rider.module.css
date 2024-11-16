@@ -1,0 +1,42 @@
+/* Rider.module.css */
+.rider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: black;
+  }
+  .riderGrid{
+    background-image: url(../asset/img/serverimg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -7rem;
+  }
+  .riderPitch {
+    font-size: 3rem;
+    color: whitesmoke; /* Dark text color */
+    text-shadow: 3px 3px 6px rgba(255, 140, 0, 0.8), /* Orange glow */
+                 -3px -3px 6px rgba(255, 140, 0, 0.8); /* Mirror shadow */
+    font-family: var(--Alte-Text);
+    letter-spacing: .3rem;
+    z-index: 1;
+  }
+  /* Styles for larger screens */
+  @media (min-width: 576px) {
+    .riderPitch {
+      font-size: 3rem; /* Increase font size for tablets and larger screens */
+    }
+  }
+  
+  @media (min-width: 880px) {
+    .riderPitch {
+      font-size: 4rem; /* Even larger font size for desktop screens */
+    }
+  }
+  
