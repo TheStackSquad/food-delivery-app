@@ -28,7 +28,6 @@
     width: 98%;
     max-width: 400px;
     font-family: var(--fontfamilyMacondo);
-    border: 2px solid red;
   }
 }
 
@@ -153,28 +152,6 @@ input:focus {
   margin-bottom: 1.5rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .gatewayImage {
   max-width: 40px;
   max-height: 40px;
@@ -195,4 +172,44 @@ input:focus {
 .gatewayIcon, .gatewayImage {
   width: 100%;
   height: auto;
+}
+
+
+@media (min-width: 576px){
+  .checkoutWrapper{
+    width: 90%;
+    max-width: 700px;
+    font-family: var(--Alte-Text);
+    position: relative;
+    border: .2px solid gainsboro;
+    box-shadow: .2rem .1rem gainsboro;
+  }
+  .title {
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+  .scanButton {
+    width: max-content;
+  }
+  .paymentGateways {
+    max-width: 400px;
+  }
+  .gatewayIcon {
+    height: 50px;
+    width: 50px;
+    color: #aaa;
+  }
+  .form {
+    max-width: 400px;
+    width: 95%;
+    margin-bottom: 1.5rem;
+  }
+  .label {
+    display: block;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    overflow-x: hidden;
+    font-family: var(--Alte-Text);
+  }
 }

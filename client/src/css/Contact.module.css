@@ -211,3 +211,65 @@ input::placeholder{
 .order-button:hover {
   background-color: #ff5a4d; /* Darkens the background on hover */
 }
+
+/* Medium Viewports*/
+@media screen and (min-width: 576px){
+  .contact{
+    font-family: var(--Alte-Text);
+  }
+  .contact-grid {
+    width: 90%;
+    padding-top: 2rem;
+    top: .8rem;
+  }
+  .pitch,
+  .email-grid,
+  .faq-grid,
+  .place-order-card{
+    max-width: 500px;
+    width: 90%;
+    margin: .5rem 0px;
+    font-family: var(--Alte-Text);
+    padding: 0px .3rem;
+    border: 2px solid wheat;
+  }
+  
+.pitch:hover,
+.email-grid:hover,
+.faq-grid:hover,
+.place-order-card:hover {
+  transform: scale(1);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  background-color: #f5deb3;
+}
+
+h2{
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.user-image{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  gap: .5rem;
+}
+.pitchText{
+  font-size: 1.6rem;
+  font-family: var(--Alte-Text);
+}
+.widget-toggler{
+  font-size: 1.5rem;
+  margin-left: .9rem;
+}
+.arrow-icon {
+  font-size: 1.7rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.send-button {
+  font-size: 1.4rem;
+  margin-bottom: .9rem;
+}
+  }

@@ -101,3 +101,15 @@
     color: white;
     font-size: 24px;
   }
+
+  @media screen and (min-width: 576px){
+    .container {
+      padding: .2px;
+      margin-top: -8rem;
+    }
+    .payoutWrapper{
+      padding-top:5rem;
+      background-color: #f5f8f7;
+      min-height: 100vh;
+    }
+  }

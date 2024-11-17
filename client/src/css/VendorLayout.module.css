@@ -79,3 +79,9 @@
   .navLink:active .icon {
     animation: iconBounce 0.3s ease;
   }
+
+  @media screen and (min-width: 576px){
+    .navigation {
+      height: 80px;
+    }
+  }

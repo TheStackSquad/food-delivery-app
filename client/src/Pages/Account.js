@@ -116,7 +116,7 @@ const Account = () => {
       <div className={styles.contentContainer}>
         <div className={styles.formHeader}>
           <h2 className={styles.title}>
-            Sign-Up <br /> Here!
+            Sign-Up Here!
           </h2>
         </div>
         {/* Display global form errors */}
@@ -129,7 +129,7 @@ const Account = () => {
         <form className={styles.formBox} onSubmit={handleSubmit}>
           {/* Username */}
           <div className={styles.inputGroup}>
-            <label htmlFor="username">Full Name</label>
+            <label className={styles.label} htmlFor="username">Full Name</label>
             <input
               type="text"
               id="username"
@@ -145,7 +145,7 @@ const Account = () => {
 
           {/* Email Address */}
           <div className={styles.inputGroup}>
-            <label htmlFor="email">Email Address</label>
+            <label className={styles.label} htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
@@ -159,7 +159,7 @@ const Account = () => {
 
           {/* Phone Number */}
           <div className={styles.inputGroup}>
-            <label htmlFor="phone">Phone Number</label>
+            <label className={styles.label} htmlFor="phone">Phone Number</label>
             <input
               type="tel"
               id="phone"
@@ -173,7 +173,7 @@ const Account = () => {
 
           {/* Delivery Address */}
           <div className={styles.inputGroup}>
-            <label htmlFor="address">Delivery Address</label>
+            <label className={styles.label} htmlFor="address">Delivery Address</label>
             <input
               type="text"
               id="address"
@@ -189,7 +189,7 @@ const Account = () => {
 
           {/* City/State */}
           <div className={styles.inputGroup}>
-            <label htmlFor="city">City/State</label>
+            <label className={styles.label} htmlFor="city">City/State</label>
             <input
               type="text"
               id="city"
@@ -203,7 +203,7 @@ const Account = () => {
 
           {/* Password */}
           <div className={styles.inputGroup}>
-            <label htmlFor="password">Password</label>
+            <label className={styles.label} htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -219,7 +219,7 @@ const Account = () => {
 
           {/* Confirm Password */}
           <div className={styles.inputGroup}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label className={styles.label} htmlFor="confirmPassword">Confirm Password</label>
             <input
               type="password"
               id="confirmPassword"

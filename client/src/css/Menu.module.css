@@ -46,7 +46,7 @@
   height: fit-content;
   border-radius: .4rem;
   padding: 1.5rem 0px;
-  color: #333; /* Adjust text color as desired */
+  color: #333; 
 }
 .input[type="text"]{
 padding-left: 2rem;
@@ -72,4 +72,54 @@ font-family: var(--fontfamilyMacondo);
 .iconRight{
   right: .5rem;
   color: orange;
+}
+
+@media (min-width: 576px) {
+  .inputWrapper {
+    max-width: 500px;
+    width: 95%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+  border: transparent;
+  outline: transparent;
+  }
+  .input {
+    background: blanchedalmond;
+    width: 100%;
+    height: 100%;
+    border-radius: .4rem;
+    padding: 1.5rem 0px;
+    color: #333;
+}
+.input[type="text"]{
+  padding-left: 2rem;
+  font-size: 1.3rem;
+  font-family: var(--fontfamilyMacondo);
+  }
+  .input::placeholder{
+    color: black;
+    position: absolute;
+    right: 11rem;
+    font-size: 1.3rem;
+  }
+  .iconLeft,
+.iconRight{
+  position: absolute;
+  top: 25%;
+  font-size: 1.5rem;
+}
+.iconRight{
+  right: .5rem;
+  color: orange;
+}
+.iconRight:hover,
+.iconRight:focus{
+  border: .1px solid gainsboro;
+  box-shadow: .1px .1px gainsboro;
+  transform: scale(.9);
+}
+
 }

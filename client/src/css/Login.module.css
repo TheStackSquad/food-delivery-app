@@ -188,7 +188,7 @@
   
   /* Media Queries */
   /* Extra small devices (phones, 320px and up) */
-  @media screen and (min-width: 320px) {
+  @media screen and (max-width: 320px) {
     .loginCard {
       padding: 1rem;
       margin: 0.5rem;
@@ -209,33 +209,30 @@
     }
   }
   
-  /* Small devices (large phones, 375px and up) */
-  @media screen and (min-width: 375px) {
-    .loginCard {
-      padding: 1.25rem;
-    }
-  
-    .header {
-      font-size: 1.5rem;
-    }
-  
-    .inputGroup input {
-      font-size: 1rem;
-    }
-  }
-  
   /* Medium devices (tablets, 768px and up) */
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 576px) {
     .loginCard {
-      max-width: 400px;
+      max-width: 700px;
+      height: fit-content;
       padding: 2rem;
     }
   
     .header {
-      font-size: 2rem;
+      font-size: 4rem;
       margin-bottom: 2rem;
     }
-  
+     .inputGroup label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.4rem;
+  }
+  .submitButton {
+    background-color: #2196f3;
+    color: white;
+    padding: var(--padding);
+    font-size: 1.4rem;
+  }
     .blob, .blob2 {
       width: 500px;
       height: 500px;
@@ -252,10 +249,10 @@
     }
   
     .forgotLink {
-      font-size: 0.875rem;
+      font-size: 1.1rem;
     }
   
     .signupText {
-      font-size: 0.875rem;
+      font-size: 1rem;
     }
   }
