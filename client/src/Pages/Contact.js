@@ -35,9 +35,9 @@ function Contact() {
             <img src={user4} alt="user4" className={styles["user-image"]} />
             <img src={user5} alt="user5" className={styles["user-image"]} />
           </div>
-          <div className={styles["pitch-text"]}>
+          <div className={styles.pitchText}>
             <p className={styles.text}>Urgently want to reach us?</p>
-            <p className={styles["text-2"]}>
+            <p className={styles.text2}>
               We're available 9 am - 11 pm WAT <br />
               Seven days a week. (And we respond within 5 mins!)
             </p>

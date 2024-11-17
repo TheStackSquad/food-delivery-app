@@ -84,4 +84,20 @@
     height: 1.5rem;
     color: #333;
   }
-  
+
+@media screen and (min-width: 576px){
+  .card {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+  }
+  .starIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+}

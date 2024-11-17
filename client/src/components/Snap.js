@@ -86,7 +86,7 @@ const Snap = () => {
                 <card.icon className={styles.icon} />
                 <p className={styles.headerText}>{card.headerText}</p>
               </div>
-              <p>{card.content}</p>
+              <p className={styles.cardContent}>{card.content}</p>
               <ul className={styles.features}>
                 {card.features.map((feature, i) => (
                   <li key={i} style={{ color: '#2ecc71' }}>

@@ -10,7 +10,7 @@
   transform: translate(-50%, -50%);
   font-family: var(--fontfamilyMacondo);
 }
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575.98px) {
   .navbar-container {
     width: 90%;
     max-width: 350px;
@@ -45,7 +45,7 @@
   border-radius: .5rem;
   background-color: rgba(223, 228, 231, 0.7);
 }
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575.98px) {
   .card-container {
     width: 90%;
     max-width: 370px;
@@ -113,25 +113,37 @@
 /* MD & LG VIEWPORTS */
 @media screen and (min-width: 576px) {
   .navbar-container {
-    width: 600px;
+    max-width: 600px;
+    width: 90%;
     height: auto;
-    top: 80%;
+    top: 70%;
+    overflow-x: hidden;
   }
   .navbar{
-    width: 100%;
-    height: 50px;
+    height: 80px;
+    padding: var(--padding);
     justify-content: space-evenly;
     background-color: rgb(231, 211, 172, .9);
     border-radius: 0.5rem;
   }
   .navbar-item{
+    font-size: 1.7rem;
     position: relative;
   }
   .card-container{
-    background-color: rgb(231, 211, 172, .5);
+    background-color: rgb(231, 211, 172, .2);
+  }
+  .card-content{
+    font-size: 1.5rem;
   }
   .navbar-background {
-    height: 50px;
+    height: 110px;
     background-color: orange;
+  }
+  .btn-1, .btn-2 {
+    font-size: 1.7rem;
+    padding: var(--padding);
+    width: 300px;
+    max-width: 250px;
   }
 }

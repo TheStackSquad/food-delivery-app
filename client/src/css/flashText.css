@@ -18,4 +18,10 @@
     font-family: var(--fontfamily1);
     text-transform: uppercase;
   }
+
+  @media screen and (min-width: 576px){
+    .flash-text {
+      font-size: 6.5rem;
+    }
+  }
   
