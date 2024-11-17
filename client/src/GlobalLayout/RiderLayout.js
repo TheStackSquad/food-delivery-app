@@ -1,39 +1,39 @@
-//src/GlobalLayout/VendorLayout.js
+//src/GlobalLayout/RiderLayout.js
 import React from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import { FaUserPlus, FaUser, FaWallet, FaHamburger, FaChartBar } from 'react-icons/fa';
-import styles from '../css/VendorLayout.module.css';
+import { FaUserPlus, FaUser, FaWallet, FaMotorcycle, FaChartBar } from 'react-icons/fa';
+import styles from '../css/VendorLayout.module.css'; // Using the same CSS module
 
 const navigation = [
   {
     name: 'Signup',
-    to: '/vendor/signup',
+    to: '/rider/signup',
     icon: FaUserPlus,
   },
   {
     name: 'Profile',
-    to: '/vendor/profile',
+    to: '/rider/profile',
     icon: FaUser,
   },
   {
     name: 'Payout',
-    to: '/vendor/payout',
+    to: '/rider/payout',
     icon: FaWallet,
   },
   {
-    name: 'Menu',
-    to: '/vendor/addmenu',
-    icon: FaHamburger,
+    name: 'Deliveries',
+    to: '/rider/delivery',
+    icon: FaMotorcycle,
   },
   {
     name: 'Insights',
-    to: '/vendor/insight',
+    to: '/rider/insight',
     icon: FaChartBar,
   },
 ];
 
-const VendorLayout = () => {
-   // eslint-disable-next-line
+const RiderLayout = () => {
+  // eslint-disable-next-line
   const location = useLocation();
 
   return (
@@ -41,7 +41,6 @@ const VendorLayout = () => {
       <main className={styles.content}>
         <Outlet />
       </main>
-
       <nav className={styles.navigation}>
         <ul className={styles.navList}>
           {navigation.map((item) => {
@@ -66,4 +65,4 @@ const VendorLayout = () => {
   );
 };
 
-export default VendorLayout;
+export default RiderLayout;

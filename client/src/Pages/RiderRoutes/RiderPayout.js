@@ -16,7 +16,7 @@ const earningsData = [
 ];
 
 const statsData = {
-  totalEarnings: 800,
+  totalEarnings: `85, 750`,
   deliveryCount: 42,
   averageRating: 4.8,
   totalTips: 120,
@@ -39,7 +39,7 @@ const RiderPayout = () => {
             {/* Total Earnings Display */}
             <div className={styles.earningsDisplay}>
               <div className={styles.totalEarnings}>
-                ${statsData.totalEarnings.toLocaleString()}
+              ₦{statsData.totalEarnings.toLocaleString()}
               </div>
               <div className={styles.statGrid}>
                 <div className={styles.statBox}>
@@ -51,7 +51,7 @@ const RiderPayout = () => {
                 </div>
                 <div className={styles.statBox}>
                   <div className={styles.statLabel}>Tips</div>
-                  <div className={styles.statValue}>${statsData.totalTips}</div>
+                  <div className={styles.statValue}> ₦{statsData.totalTips}</div>
                 </div>
               </div>
             </div>

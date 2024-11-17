@@ -1,92 +1,91 @@
 /* RiderProfile.module.css */
 .profileContainer {
-    padding: 1rem;
-    max-width: 500px;
-    min-height: 100vh;
-    margin: 0 auto;
-    background-color: #f7f5f2;
-    font-family: var(--fontfamilyMacondo);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .profileWrap {
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profilePictureSection {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .profilePicture {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f3f3f3;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
-  .cameraIcon {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background-color: white;
-    border-radius: 50%;
-    padding: 5px;
-  }
-  
-  .riderInfoSection {
-    margin-bottom: 1.5rem;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="tel"],
-  input[type="number"],
-  select {
-    width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  input::placeholder {
-    color: #aaa;
-  }
-  
-  .saveButton {
-    width: 100%;
-    padding: 0.7rem;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .saveButton:hover {
-    background-color: #45a049;
-  }
-  
+  padding: 1rem;
+  max-width: 500px;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-family: var(--fontfamilyMacondo);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileWrap {
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profilePictureSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.profilePicture {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f3f3;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+.cameraIcon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.riderInfoSection {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+.saveButton {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.saveButton:hover {
+  background-color: #45a049;
+}

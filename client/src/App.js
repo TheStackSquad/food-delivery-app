@@ -22,6 +22,9 @@ import VendorLayout from './GlobalLayout/VendorLayout';
 import RiderSignUp from "./Pages/RiderRoutes/RiderSignUp";
 import RiderProfile from "./Pages/RiderRoutes/RiderProfile";
 import RiderPayout from "./Pages/RiderRoutes/RiderPayout";
+import RiderDelivery from "./Pages/RiderRoutes/RiderDeliveries";
+import RiderInsight from "./Pages/RiderRoutes/RiderInsight";
+import RiderLayout from './GlobalLayout/RiderLayout';
 
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
@@ -50,10 +53,15 @@ function App() {
             <Route path="/vendor/addmenu" element={<VendorAddMenu />} />
             <Route path="/vendor/insight" element={<VendorInsight />} />
             </Route>
+
             <Route path="/rider" element={<Rider />} />
+            <Route path="/rider" element={<RiderLayout />}>
             <Route path="/rider/signup" element={<RiderSignUp />} />
             <Route path="/rider/profile" element={<RiderProfile />} />
             <Route path="/rider/payout" element={<RiderPayout />} />
+            <Route path="/rider/delivery" element={<RiderDelivery />} />
+            <Route path="/rider/insight" element={<RiderInsight />} />
+            </Route>
           </Routes>
         </GlobalLayout>
       </LayoutProvider>
