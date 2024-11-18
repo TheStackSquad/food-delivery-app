@@ -109,6 +109,34 @@ input::placeholder{
   border-bottom-color: #7c0778;
 }
 
+/* Flash Message Styling*/
+.flashMessage {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInOut 5s ease-in-out;
+}
+
+.successMessage {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.errorMessage {
+  background-color: #FF5722;
+  color: white;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
 
 
 

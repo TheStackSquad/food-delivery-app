@@ -9,6 +9,7 @@ import {
   validatePassword,
 } from "../../frontendUtils/validation";
 import signUpUser from "../../API/signup";
+import useFlashMessage from '../../hooks/flashMessage';
 
 function Signup() {
   const [isSignup, setIsSignup] = useState(true);
@@ -20,8 +21,9 @@ function Signup() {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState('');
+ // const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [message, messageType, showMessage] = useFlashMessage(5000);
 
   // Handle input changes and reset specific field errors
   const handleChange = (e) => {
@@ -39,7 +41,7 @@ function Signup() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccess('');
+   // setSuccess('');
     setLoading(true);
 
     // Validate inputs and set errors if any
@@ -67,7 +69,7 @@ function Signup() {
       };
       await signUpUser(formattedData);
 
-      setSuccess('Registration successful!');
+      showMessage('Registration successful!');
       setFormData({
         username: '',
         email: '',
@@ -76,11 +78,10 @@ function Signup() {
         confirmPassword: '',
       });
       setErrors({});
-      setTimeout(() => setSuccess(''), 5000);
     } catch (error) {
-      setErrors({
-        form: error.message || 'Registration failed. Please try again.',
-      });
+      showMessage(
+        error.message || 'Registration failed. Please try again.',
+      );
     } finally {
       setLoading(false);
     }
@@ -93,11 +94,19 @@ function Signup() {
   return (
     <div className={`${styles.gridContainer} ${isSignup ? styles.signup : styles.login}`}>
       <div className={styles.formWrap}>
+         {/* Flash message with dynamic styling */}
+         {message && (
+          <div 
+            className={`
+              ${styles.flashMessage} 
+              ${messageType === 'success' ? styles.successMessage : styles.errorMessage}
+            `}
+          >
+            {message}
+          </div>
+        )}
         <h2>{isSignup ? 'Sign Up' : 'Login'}</h2>
 
-        {/* Display global form errors */}
-        {errors.form && <div className={styles.error}>{errors.form}</div>}
-        {success && <div className={styles.success}>{success}</div>}
 
         <form className={styles.formGrid} onSubmit={handleSubmit}>
           {isSignup && (
