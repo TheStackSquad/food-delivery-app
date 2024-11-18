@@ -49,10 +49,6 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'City is required'],
     trim: true
   },
-  deliveryTime: {
-    type: String,
-    required: [true, 'Delivery time preference is required']
-  },
   profilePic: {
     type: String,
     default: 'default-profile-pic.webp'

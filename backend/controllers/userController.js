@@ -89,4 +89,9 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { login, signup };
+//profileImageUpload Endpoint
+const uploadProfileImage = async (req, res) => {};
+
+module.exports = { login,
+  signup,
+uploadProfileImage };
