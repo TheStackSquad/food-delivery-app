@@ -7,16 +7,24 @@
   align-items: center;
   justify-content: center;
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 .header{
   font-family: var(--Alte-Text);
   font-size: 2rem;
   text-align: center;
 }
+<<<<<<< Updated upstream
 .signupForm{
   width: 100%;
   max-width: 450px;
   overflow: hidden;
 }
+=======
+
+>>>>>>> Stashed changes
 @media (max-width: 575.98px){
   .signupForm{
     width: 95%;
@@ -30,21 +38,32 @@
   position: relative;
   margin: 15px 0px;
   height: auto;
+<<<<<<< Updated upstream
   width: 95%;
   overflow: hidden;
 }
 
+=======
+}
+>>>>>>> Stashed changes
 .label {
   font-size: 1.1rem;
   color: #333;
   position: absolute;
+<<<<<<< Updated upstream
   top: 0;
+=======
+  top: -9px;
+>>>>>>> Stashed changes
   left: 0;
   transition: all 0.3s ease;
   font-family: var(--fontfamilyMacondo);
 }
+<<<<<<< Updated upstream
 
 input,
+=======
+>>>>>>> Stashed changes
 input[type="text"],
 input[type="tel"],
 input[type="email"],
@@ -58,7 +77,6 @@ input[type="password"] {
   height: 50px;
   background-color: transparent;
 }
-
 input:focus {
   outline: none;
   border-bottom: 2px solid #0056b3;

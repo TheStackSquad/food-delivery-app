@@ -25,7 +25,6 @@ import RiderPayout from "./Pages/RiderRoutes/RiderPayout";
 import RiderDelivery from "./Pages/RiderRoutes/RiderDeliveries";
 import RiderInsight from "./Pages/RiderRoutes/RiderInsight";
 import RiderLayout from './GlobalLayout/RiderLayout';
-
 import { LayoutProvider } from './GlobalLayout/LayoutContext';
 import GlobalLayout from './GlobalLayout/layout';
 

@@ -20,8 +20,8 @@ function Signup() {
     password: '',
     confirmPassword: '',
   });
+
   const [errors, setErrors] = useState({});
- // const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, messageType, showMessage] = useFlashMessage(5000);
 
@@ -79,8 +79,7 @@ function Signup() {
       });
       setErrors({});
     } catch (error) {
-      showMessage(
-        error.message || 'Registration failed. Please try again.',
+      showMessage(error.message || 'Registration failed. Please try again.',
       );
     } finally {
       setLoading(false);
@@ -94,8 +93,9 @@ function Signup() {
   return (
     <div className={`${styles.gridContainer} ${isSignup ? styles.signup : styles.login}`}>
       <div className={styles.formWrap}>
-         {/* Flash message with dynamic styling */}
-         {message && (
+         {/* Flash message */}
+         
+        {message && (
           <div 
             className={`
               ${styles.flashMessage} 
@@ -105,8 +105,8 @@ function Signup() {
             {message}
           </div>
         )}
-        <h2>{isSignup ? 'Sign Up' : 'Login'}</h2>
 
+        <h2>{isSignup ? 'Sign Up' : 'Login'}</h2>
 
         <form className={styles.formGrid} onSubmit={handleSubmit}>
           {isSignup && (
