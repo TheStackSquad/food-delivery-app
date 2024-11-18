@@ -101,8 +101,6 @@ const login = async (req, res) => {
     console.error('Error during login:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
-};
-
 
 // Get to profile after logging in
 const getProfile = async (req, res) => {
