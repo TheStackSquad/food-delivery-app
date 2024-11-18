@@ -41,7 +41,6 @@ const signup = async (req, res) => {
       phone,
       address,
       city,
-      deliveryTime,
       password: hashedPassword
     });
 
