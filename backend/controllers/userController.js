@@ -1,5 +1,6 @@
 // backend/controllers/userController.js
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const userValidators = require('../utils/validators');
 
@@ -74,19 +75,50 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
+
     // Fetch user from the database
     const user = await User.findOne({ username });
     if (user && await bcrypt.compare(password, user.password)) {
-      // Fetch user's address and log it to the terminal (optional)
-      // const address = await Address.findOne({ userId: user._id });
-      // console.log('User Address:', address);
-      res.status(200).json({ success: true, user });
+      // Generate JWT token
+      const token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET, // Ensure you have a strong JWT_SECRET in your environment variables
+        { expiresIn: '1h' } // Token expires in 1 hour
+      );
+
+      res.status(200).json({
+        success: true,
+        message: 'Login successful',
+        token,
+        user: {
+          username: user.username,
+          email: user.email
+        }
+      });
     } else {
       res.status(401).json({ success: false, message: 'Invalid username or password' });
     }
   } catch (error) {
+    console.error('Error during login:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
 
-module.exports = { login, signup };
+
+// Get to profile after logging in
+const getProfile = async (req, res) => {
+  try {
+    // `req.user` contains the decoded token info (e.g., userId)
+    const user = await User.findById(req.user.userId).select('-password'); // Exclude password
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to retrieve profile' });
+  }
+};
+
+module.exports = { getProfile, signup, login };

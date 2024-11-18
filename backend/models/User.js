@@ -1,4 +1,3 @@
-
 // backend/models/User.js
 const mongoose = require('mongoose');
 const validator = require('validator');
@@ -48,10 +47,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'City is required'],
     trim: true
-  },
-  deliveryTime: {
-    type: String,
-    required: [true, 'Delivery time preference is required']
   },
   profilePic: {
     type: String,
