@@ -18,7 +18,7 @@ const Login = () => {
       if (response.success) {
         setTimeout(() => {
           alert('Login Successful');
-          navigate('/menu'); // Redirect to /menu after 2-second delay
+          navigate('/login/dashboard'); // Redirect to /menu after 2-second delay
         }, 2000); // 2-second delay before redirection
       } else {
         setTimeout(() => {
