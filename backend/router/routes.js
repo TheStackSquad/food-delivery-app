@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const { signup, login } = userController;
 const authMiddleware = require('../middleware/authMiddleware');
 const path = require('path');
+const multer = require('multer');
 
 // POST /api/signup
 router.post('/signup', signup);
