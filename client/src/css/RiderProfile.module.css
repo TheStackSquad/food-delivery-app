@@ -1,23 +1,35 @@
 /* RiderProfile.module.css */
 .profileContainer {
   padding: 1rem;
-  max-width: 500px;
+  width: 100%;
   min-height: 100vh;
-  margin: 0 auto;
-  font-family: var(--fontfamilyMacondo);
+  font-family: var(--Alte-Text);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-.profileWrap {
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  width: 100%;
+.profileWrap{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+@media (max-width: 575.98px){
+  .profileWrap {
+    background: white;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 95%;
+   
+  }
+}
+
+
 
 .profilePictureSection {
   display: flex;
@@ -46,8 +58,11 @@
   padding: 5px;
 }
 
-.riderInfoSection {
-  margin-bottom: 1.5rem;
+@media (max-width: 575.98px){
+  .riderInfoSection {
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
 }
 
 label {
@@ -84,8 +99,74 @@ input::placeholder {
   font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-bottom: 1.5rem;
 }
 
 .saveButton:hover {
   background-color: #45a049;
+}
+
+@media (min-width: 576px){
+  .profileContainer {
+    margin: 0;
+    padding: 0;
+  }
+  .profileWrap {
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+.profilePictureSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+}
+.cameraIcon {
+  font-size: 30px;
+}
+.riderInfoSection {
+  margin-bottom: 1.5rem;
+  width: 90%;
+  max-width: 500px;
+}
+
+label {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+select {
+  box-sizing: border-box;
+  font-size: 1.3rem;
+  height: 50px;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+.saveButton {
+  width: 200px;
+  padding: var(--padding);
+  border-radius: .5rem;
+  font-size: 1.3rem;
+}
+
+.saveButton:hover {
+  background-color: #45a049;
+}
+
+
 }

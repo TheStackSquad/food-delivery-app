@@ -1,0 +1,148 @@
+.customSignupContainer {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.customHeader {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.customSignupForm {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 575.98px){
+  .customSignupForm{
+    max-width: 370px;
+    position: relative;
+    margin-top: 9rem;
+  }
+}
+
+
+.customInputGroup {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.customSignupForm .customInput{
+  font-size: 1.2rem;
+  height: 60px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #ccc;
+  margin: .5rem 0px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  border-radius: 0px;
+}
+
+.customInput:focus {
+  border-color: #0056b3;
+}
+
+.customLabel {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  font-size: 1rem;
+  color: black;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.customInput:focus + .customLabel,
+.customInput:not(:placeholder-shown) + .customLabel {
+  top: -10px;
+  left: 5px;
+  font-size: 0.75rem;
+  color: #0056b3;
+}
+
+.customErrorInput {
+  border-color: red;
+}
+
+.customErrorLabel {
+  color: red;
+}
+
+.customErrorText {
+  font-size: 0.9rem;
+  color: red;
+  margin-top: 5px;
+}
+
+.customSubmitButton {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: var(--padding);
+  font-size: 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.customSubmitButton:hover {
+  background-color: #003d80;
+}
+
+.customToggleLink {
+  margin: 1rem 0px;
+  font-size: 0.9rem;
+  color: #0056b3;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.customToggleLink:hover {
+  text-decoration: underline;
+}
+
+
+@media (min-width: 575.98px){
+  .customSignupForm{
+    max-width: 600px;
+    position: relative;
+    margin-top: 3rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  .customSignupForm .customInput{
+    font-size: 1.4rem;
+    height: 60px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    margin: .5rem 0px;
+  }
+  .customLabel {
+    font-size: 1.2rem;
+  }
+  .customSubmitButton {
+    width: 150px;
+    padding: var(--padding);
+    font-size: 1.2rem;
+    border-radius: .4rem;
+  }
+  .customToggleLink {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+  }
+}

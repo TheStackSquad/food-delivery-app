@@ -96,15 +96,6 @@
   width: 95%;
 }
 
-
-  
-
-  
-
-  
-  
- 
-  
 .ratingDisplay {
   display: flex;
   align-items: center;
@@ -152,4 +143,45 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
+}
+
+@media (min-width: 576px){
+  .card{
+    width: 95%;
+    max-width: 700px;
+    max-height: 500px;
+    height: 100%;
+    padding: var(--paddingRegular);
+  }
+  
+.title {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.statLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.statValue {
+  gap: .9rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.chart {
+  height: 300px;
+  width: 95%;
+}
+.badgeTitle {
+  font-size: 1.6rem;
+}
+.statLabel {
+  font-size: 1.3rem;
+}
+.iconGreen,
+.iconBlue,
+.iconYellow {
+  font-size: 1.4rem;
+}
+
 }
