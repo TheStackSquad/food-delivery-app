@@ -8,6 +8,7 @@ import food1 from '../asset/img/food1.jpg';
 import food2 from '../asset/img/food2.jpg';
 import food3 from '../asset/img/food3.jpg';
 import food4 from '../asset/img/food4.jpg';
+import ProfilePictureUpload from './UploadProfilePicture';
 
 //axios API logic
 import { uploadImage } from '../API/upload';
@@ -100,6 +101,7 @@ const Dashboard = () => {
 
       <div className={styles.vendorsSection}>
         <h2 className={styles.vendorsTitle}>Favorite Vendors</h2>
+        <ProfilePictureUpload />
         <div className={styles.vendorsGrid}>
           {[
             { name: 'Vendor 1', image: food1 },

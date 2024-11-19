@@ -99,8 +99,9 @@ const login = async (req, res) => {
     }
   } catch (error) {
     console.error('Error during login:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+  };
 
 // Get to profile after logging in
 const getProfile = async (req, res) => {
@@ -118,4 +119,4 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, signup, login };
+module.exports = { getProfile, signup, login }

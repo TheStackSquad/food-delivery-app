@@ -1,12 +1,13 @@
 //src/API/signIn.js
 import axios from 'axios';
 
-const signIn = async (username, password) => {
+const signIn = async (username, password, navigate) => {
   try {
     const response = await axios.post('/api/login', {
       username,
       password,
     });
+    navigate('/login/dashboard')
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
