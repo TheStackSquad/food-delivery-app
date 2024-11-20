@@ -1,6 +1,6 @@
 // client/src/Pages/Dashboard.js
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { DashboardCard, DashboardCardContent } from '../components/UI/dashboardCard';
 import styles from '../css/Dashboard.module.css';
@@ -8,15 +8,28 @@ import food1 from '../asset/img/food1.jpg';
 import food2 from '../asset/img/food2.jpg';
 import food3 from '../asset/img/food3.jpg';
 import food4 from '../asset/img/food4.jpg';
-
-//axios API logic
 import { uploadImage } from '../API/upload';
+import axios from 'axios';
 
 const Dashboard = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
   const [uploadBorderColor, setUploadBorderColor] = useState('');
   const [previewUrl, setPreviewUrl] = useState('/api/placeholder/120/120');
+  const [profilePicture, setProfilePicture] = useState('');
+
+  useEffect(() => {
+    const fetchProfilePicture = async () => {
+      try {
+        const response = await axios.get('/api/profile');
+        setProfilePicture(response.data.user.profilePicture);
+      } catch (error) {
+        console.error('Error fetching profile picture', error);
+      }
+    };
+
+    fetchProfilePicture();
+  }, []);
 
   const handleFileChange = useCallback((e) => {
     const file = e.target.files[0];
@@ -56,6 +69,7 @@ const Dashboard = () => {
       const response = await uploadImage(selectedFile);
       setUploadStatus('Image uploaded successfully!');
       setUploadBorderColor('green');
+      setProfilePicture(response.filePath);
 
       setTimeout(() => {
         setUploadBorderColor('');
@@ -78,7 +92,7 @@ const Dashboard = () => {
           className={styles.profileImageContainer}
           style={{ border: uploadBorderColor ? `2px solid ${uploadBorderColor}` : 'none' }}
         >
-          <img src={previewUrl} alt="Profile" className={styles.profileImage} />
+          <img src={profilePicture || previewUrl} alt="Profile" className={styles.profileImage} />
           <label htmlFor="fileInput" className={styles.cameraButton}>
             <FaCamera className={styles.cameraIcon} />
             <input
