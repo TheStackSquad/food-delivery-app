@@ -1,3 +1,4 @@
+//client/src/Pages/Account.js
 import React, { useState } from "react";
 import styles from "../css/Account.module.css";
 import {
@@ -6,7 +7,7 @@ import {
   validatePhone,
   validatePassword,
 } from "../frontendUtils/validation";
-import signUpUser from "../API/signup";
+import { signUpUser } from "../API/signup";
 
 const Account = () => {
   const [formData, setFormData] = useState({

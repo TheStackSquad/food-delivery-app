@@ -12,12 +12,15 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "debug": "^4.3.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.7",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "validator": "^13.12.0"
   }
 }

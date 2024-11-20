@@ -1,4 +1,19 @@
 // src/utils/validation.js
+export const validateFullname = (fullName) => {
+  if (!fullName || typeof fullName !== 'string') {
+    return { isValid: false, error: 'Full name is required' };
+  }
+  if (fullName.length < 2 || fullName.length > 50) {
+    return { isValid: false, error: 'Full name must be between 2 and 50 characters' };
+  }
+  if (!/^[a-zA-Z\s]+$/.test(fullName)) {
+    return { isValid: false, error: 'Full name can only contain letters and spaces' };
+  }
+  return { isValid: true };
+};
+
+// Similarly, create validateEmail, validatePhone, and validatePassword
+
 export const validateUsername = (username) => {
     if (!username || typeof username !== 'string') {
       return { isValid: false, error: 'Username is required' };
