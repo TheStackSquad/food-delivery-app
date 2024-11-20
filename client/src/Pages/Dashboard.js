@@ -56,6 +56,7 @@ const Dashboard = () => {
     }
   }, []);
 
+  // eslint-disable-next-line
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 

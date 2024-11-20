@@ -1,7 +1,7 @@
 //src/API/signIn.js
 import axios from 'axios';
 
-export const signIn = async (username, password) => {
+export const signIn = async (username, password, navigate) => {
   try {
     const response = await axios.post('/api/login', {
       username,
