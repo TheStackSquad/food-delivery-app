@@ -2,6 +2,17 @@
 const validator = require('validator');
 
 const userValidators = {
+  validateFullname: (fullname) => {
+    const nameRegex = /^[a-zA-Z\s]+$/; // Only letters and spaces
+    if (!fullname || fullname.trim().length < 2) {
+      return { isValid: false, error: 'Fullname must be at least 2 characters long.' };
+    }
+    if (!nameRegex.test(fullname)) {
+      return { isValid: false, error: 'Fullname can only contain letters and spaces.' };
+    }
+    return { isValid: true };
+  },
+
   validateUsername: (username) => {
     if (!username || typeof username !== 'string') {
       return { isValid: false, error: 'Username is required' };
@@ -63,3 +74,4 @@ const userValidators = {
 };
 
 module.exports = userValidators;
+

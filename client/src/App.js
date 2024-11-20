@@ -20,6 +20,7 @@ import VendorInsight from "./Pages/VendorRoutes/VendorInsight";
 import VendorLayout from './GlobalLayout/VendorLayout';
 
 import RiderSignUp from "./Pages/RiderRoutes/RiderSignUp";
+import RiderLogin from "./Pages/RiderRoutes/RiderLogin";
 import RiderProfile from "./Pages/RiderRoutes/RiderProfile";
 import RiderPayout from "./Pages/RiderRoutes/RiderPayout";
 import RiderDelivery from "./Pages/RiderRoutes/RiderDeliveries";
@@ -55,6 +56,7 @@ function App() {
 
             <Route path="/rider" element={<Rider />} />
             <Route path="/rider" element={<RiderLayout />}>
+            <Route path="/rider/login" element={<RiderLogin />} />
             <Route path="/rider/signup" element={<RiderSignUp />} />
             <Route path="/rider/profile" element={<RiderProfile />} />
             <Route path="/rider/payout" element={<RiderPayout />} />

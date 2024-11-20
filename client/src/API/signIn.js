@@ -1,7 +1,7 @@
 //src/API/signIn.js
 import axios from 'axios';
 
-const signIn = async (username, password, navigate) => {
+export const signIn = async (username, password) => {
   try {
     const response = await axios.post('/api/login', {
       username,
@@ -18,4 +18,18 @@ const signIn = async (username, password, navigate) => {
   }
 };
 
-export default signIn;
+export const riderLogin =  async (email, password) => {
+  try {
+    const response = await axios.post('/api/rider/login', {
+      email,
+      password,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data) {
+      throw error.response.data;
+    } else {
+      throw error;
+    }
+  }
+};

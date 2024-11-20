@@ -1,18 +1,39 @@
 // backend/router/routes.js
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
-const { signup, login } = userController;
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/authMiddleware'); // For protected routes
+const debug = require('debug')('app:routes'); // Debug instance for logging
 const path = require('path');
 const multer = require('multer');
 
-// POST /api/signup
-router.post('/signup', signup);
+const riderController = require('../controllers/riderController');
+const userController = require('../controllers/userController');
+const { signup, login } = userController;
+// Destructure rider-related controller functions
+const { riderSignup, riderLogin, updateRiderProfile, updateRiderPayout, updateRiderAchievements } = riderController;
 
-// POST /api/login
-router.post('/login', login);
+/**
+ * Routes for rider-related operations
+ */
 
+
+// Rider signup route
+router.post('/rider/signup', riderSignup);
+
+//Rider Login router
+router.post("/rider/login", riderLogin);
+
+
+// Route to update rider profile (address, phone, delivery mode)
+router.patch('/rider/updateProfile', authMiddleware, updateRiderProfile);
+
+// Route to update rider payout information
+router.patch('/rider/updatePayout', authMiddleware, updateRiderPayout);
+
+// Route to update rider achievements (topRated, speedKing)
+router.patch('/rider/updateAchievements', authMiddleware, updateRiderAchievements);
+
+debug('Routes initialized.');
 
 // user image upload
 const storage = multer.diskStorage({

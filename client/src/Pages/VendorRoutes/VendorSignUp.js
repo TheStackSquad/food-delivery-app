@@ -8,7 +8,7 @@ import {
   validatePhone,
   validatePassword,
 } from "../../frontendUtils/validation";
-import signUpUser from "../../API/signup";
+import { signUpUser } from "../../API/signup";
 import useFlashMessage from '../../hooks/flashMessage';
 
 function Signup() {

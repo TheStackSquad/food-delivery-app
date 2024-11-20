@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import styles from '../css/Login.module.css';
-import signIn from '../API/signIn';
+import { signIn } from '../API/signIn';
 
 const Login = () => {
   // Initialize state for username, password, and error message
