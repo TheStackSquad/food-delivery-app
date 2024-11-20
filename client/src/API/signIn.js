@@ -7,6 +7,7 @@ export const signIn = async (username, password) => {
       username,
       password,
     });
+    navigate('/login/dashboard')
     return response.data;
   } catch (error) {
     if (error.response && error.response.data) {
