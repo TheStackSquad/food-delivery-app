@@ -1,103 +1,105 @@
-/* src/css/Signup.module.css */
-
-.gridContainer {
+.gridContainer{
+  width: 100%;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  color: white;
-  transition: background 0.5s ease-in-out;
-  position: relative;
-  background-color: none;
-  margin-top: -7rem;
   font-family: var(--Alte-Text);
 }
-/* Styling for the form container to sit on top */
-.formWrap {
-  border-radius: 8px;
-  text-align: center;
-  max-width: 350px;
-  width: 100vw;
-  min-height: 100%;
-  position: absolute;
-  top: 3rem;
+.formWrap{
+  width: 95%;
+  max-width: 500px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 6px 10px rgba(0, 0, 0, 0.05);
+  padding: 2rem 0px;
+  transition: box-shadow 0.3s ease;
+  margin-bottom: 5rem;
+  margin-top: auto;
 }
-@media (max-width: 575.98px) {
-  .formWrap {
-    max-width: 370px;
+
+.formWrap:hover {
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.12), 
+    0 8px 15px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 575.98px){
+  .formWrap{
     width: 95%;
-    margin: 0 auto;
+    max-width: 370px;
   }
 }
 .formWrap h2{
-  font-family: var(--fontfamilyMacondo);
+  text-align: center;
   color: black;
 }
-
-/* Backgrounds for Signup and Login states */
-.signup, .login {
-width: 95%;
-height: fit-content;
-border: 2px solid rgb(70, 46, 3);
-}
-
-.formBox {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  font-family: var(--Alte-Text);
-}
-
 @media (max-width: 575.98px) {
-  .formBox {
-    width: 90%;
-    max-width: 350px;
+  .formGrid {
+    width: 95%;
+    max-width: 370px;
+    margin-bottom: .2rem;
   }
 }
-
 .inputGroup {
   position: relative;
   margin-bottom: 1.5rem;
 }
+
 .inputGroup label {
   position: absolute;
   left: 0;
-  top: 0;
-  padding-bottom: .5rem;
-  margin-bottom: .7rem;
-  font-size: 1.2rem;
+  top: 50%;
   transform: translateY(-50%);
-  color: #888;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
+  color: #666;
+  font-size: 1rem;
   pointer-events: none;
-  color: black;
+  transition: 
+    top 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    font-size 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    color 0.3s ease;
+  transform-origin: left center;
 }
+
 
 .inputGroup input[type="email"],
 .inputGroup input[type="text"],
 .inputGroup input[type="tel"],
-.inputGroup input[type="password"]{
+.inputGroup input[type="password"] {
   width: 100%;
   height: 50px;
-  font-size: 1rem;
   padding: 0.5rem 0;
+  font-size: 1rem;
   border: none;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #e0e0e0;
   outline: none;
-  border-radius: 0px;
   background: transparent;
-  transition: all 0.3s ease;
-  color: black;
+  transition: 
+    border-color 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+    color 0.3s ease;
+  color: #333;
   font-family: var(--fontfamilyMacondo);
+}
+.inputGroup input:not(:placeholder-shown),
+.inputGroup input:focus {
+  border-bottom-color: #7c0778;
 }
 
-input::placeholder{
-  position: absolute;
-  right: 0;
-  color: black;
-  font-family: var(--fontfamilyMacondo);
+.inputGroup input:not(:placeholder-shown) + label,
+.inputGroup input:focus + label {
+  top: -20px;
+  font-size: 0.75rem;
+  color: #7c0778;
+  transform: scale(0.9);
 }
+
 .inputGroup input:focus + label,
 .inputGroup input:hover + label {
   top: -8px;
@@ -108,90 +110,50 @@ input::placeholder{
 .inputGroup input:focus {
   border-bottom-color: #7c0778;
 }
-
-/* Flash Message Styling*/
-.flashMessage {
+input::placeholder{
   position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  z-index: 1000;
-  opacity: 0;
-  animation: fadeInOut 5s ease-in-out;
+  right: 0;
+  bottom: 0;
+  color: black;
+  font-family: var(--fontfamilyMacondo);
+}
+.inputGroup input::placeholder {
+  color: transparent;
 }
 
-.successMessage {
-  background-color: #4CAF50;
-  color: white;
+/* Add subtle focus effect */
+.inputGroup input:focus {
+  box-shadow: 0 1px 0 0 #7c0778;
 }
-
-.errorMessage {
-  background-color: #FF5722;
-  color: white;
-}
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
-}
-
-
-.flashMessage {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  z-index: 1000;
-  opacity: 0;
-  animation: fadeInOut 5s ease-in-out;
-}
-
-.successMessage {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.errorMessage {
-  background-color: #FF5722;
-  color: white;
-}
-
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
-}
-
-
-
-
 .btnWrap{
-  margin-top: 1rem;
+  margin: 1rem 0px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .btnsubmit{
-  background-color: rgb(31, 20, 1);
-  color: wheat;
+  background-color: lightcoral;
+  color: white;
   font-size: 1.4rem;
-  padding: .5rem 0px;
+  padding: .9rem 0px;
   width: 200px;
   height: fit-content;
   border-radius: .5rem;
+  outline: none;
+  border: none;
   font-family: var(--fontfamilyMacondo);
 }
 .buttonSubmit{
   background-color: none;
   background: none;
-  color: blue;
-  font-size: 1.1rem;
-  margin-top: 1rem;
-  border: none;
   outline: none;
+  border: none;
+  font-size: 1.1rem;
+  color: dodgerblue;
+  font-family: var(--fontfamilyMacondo);
+
 }
 
 /* Md Viewport*/
@@ -201,11 +163,18 @@ input::placeholder{
     max-width: 650px;
     width: 95%;
     height: fit-content;
-   
+  }
+  .formWrap h2{
+    font-family: var(--Alte-Text);
+  }
+  .formGrid {
+    width: 95%;
+    max-width: 450px;
+    margin-bottom: .2rem;
   }
   .inputGroup label {
     margin-bottom: .7rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     pointer-events: none;
     color: black;
   }

@@ -1,3 +1,4 @@
+//client/src/components/UI/Alert
 import React, { useEffect } from 'react';
 import '../../css/Alert.css';
 

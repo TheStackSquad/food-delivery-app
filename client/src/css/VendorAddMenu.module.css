@@ -1,12 +1,12 @@
 .container {
   width: 100%;
-  max-width: 768px;
   margin: 0 auto;
   height: 100vh;
   position: relative;
   margin-top: -7rem;
   background-color: blanchedalmond;
 }
+
 .vendorContainer{
   background-color: blanchedalmond;
   padding-top: 3rem;
@@ -58,8 +58,6 @@
   margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 @media (max-width: 575.98px) {
   .formContainer {
@@ -68,16 +66,7 @@
     margin: 0 auto;
   }
 }
-@media (max-width: 575.98px){
-  .inputGroup{
-    width: 100%;
-  }
-}
-@media (max-width: 575.98px){
-  .coverImageSection{
-    width: 100%;
-  }
-}
+
 .inputGroup {
   margin-bottom: 1.5rem;
 }
@@ -290,4 +279,41 @@ input[type="number"] {
 
 .submitButton:hover {
   background-color: #005540;
+}
+
+
+/*Medium & Large Viewports*/
+@media (min-width: 576px){
+  .container {
+    margin-top: -10rem;
+  }
+.foodIcon {
+  width: 400px;
+  height: 400px;
+  margin-bottom: 2rem;
+}
+.message {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.button {
+  font-size: 1.5rem;
+}
+
+.formContainer {
+  font-family: var(--Alte-Text);
+  margin-bottom: 3rem;
+  width: 90%;
+  max-width: 600px;
+}
+.inputGroup {
+  margin-bottom: 1.5rem;
+}
+.inputGroup label {
+  font-size: 1.2rem;
+}
+.inputGroupForPrice {
+  width: 95%;
+}
+
 }

@@ -104,12 +104,61 @@
 
   @media screen and (min-width: 576px){
     .container {
-      padding: .2px;
-      margin-top: -8rem;
+      padding: 2rem;
+      margin-top: -10rem;
     }
     .payoutWrapper{
-      padding-top:5rem;
+      padding:5rem 1rem 1rem 1rem;
       background-color: #f5f8f7;
       min-height: 100vh;
     }
+      
+  .header {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+  }
+  .historyTitle {
+    font-size: 1.7rem;
+    font-weight: 700;
+  }
+  
+  .filterButton {
+    gap: .5rem;
+    font-size: 1.3rem;
+    padding: var(--padding);
+  }
+  
+  .filterIcon {
+    font-size: 1.3rem;
+  }
+  .imageContainer {
+    width: 250px;
+    height: 250px;
+  }
+    
+  .moneyIcon {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .noPayoutText {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+  
+  .subText {
+    font-size: 1.4rem;
+  }
+  .chatButton {
+    bottom: 150px;
+    right: 50px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  .chatIcon {
+    color: white;
+    font-size: 2rem;
+  }
   }
