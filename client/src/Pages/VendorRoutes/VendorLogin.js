@@ -1,24 +1,19 @@
-// src/VendorRoutes/VendorSignUp.js
+// src/VendorRoutes/VendorLogin.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../css/vendorLogin.module.css';
 import Alert from '../../components/UI/Alert';
 import {
   validateUsername,
-  validateEmail,
-  validatePhone,
   validatePassword,
 } from "../../frontendUtils/validation";
-import { signUpUser } from "../../API/signup";
+import { loginUser } from "../../API/signIn";
 
-function VendorSignup() {
+function VendorLogin() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
-    phone: '',
     password: '',
-    confirmPassword: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -50,13 +45,9 @@ function VendorSignup() {
     // Validate inputs and set errors if any
     const newErrors = {};
     const usernameCheck = validateUsername(formData.username);
-    const emailCheck = validateEmail(formData.email);
-    const phoneCheck = validatePhone(formData.phone);
-    const passwordCheck = validatePassword(formData.password, formData.confirmPassword);
+    const passwordCheck = validatePassword(formData.password);
 
     if (!usernameCheck.isValid) newErrors.username = usernameCheck.error;
-    if (!emailCheck.isValid) newErrors.email = emailCheck.error;
-    if (!phoneCheck.isValid) newErrors.phone = phoneCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
 
     if (Object.keys(newErrors).length > 0) {
@@ -66,48 +57,34 @@ function VendorSignup() {
     }
 
     try {
-      const formattedData = {
-        ...formData,
-        phone: formData.phone.replace(/\D/g, ''), // Remove non-numeric characters
-      };
-      await signUpUser(formattedData);
+      await loginUser(formData);
 
       setAlertInfo({
         isVisible: true,
         type: 'success',
-        message: 'Registration successful!',
+        message: 'Login successful!',
       });
 
-      setFormData({
-        username: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: '',
-      });
-      setErrors({});
-
-      // Optional: Redirect to login after successful signup
       setTimeout(() => {
-        navigate('/vendor/login');
+        navigate('/vendor/dashboard'); // redirect to user dashboard
       }, 2000);
     } catch (error) {
       setAlertInfo({
         isVisible: true,
         type: 'error',
-        message: error.message || 'Registration failed. Please try again.',
+        message: error.message || 'Login failed. Please try again.',
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLoginRedirect = () => {
-    navigate('/vendor/login');
+  const handleSignupRedirect = () => {
+    navigate('/vendor/signup');
   };
 
   return (
-    <div className={`${styles.gridContainer} ${styles.signup}`}>
+    <div className={`${styles.gridContainer} ${styles.login}`}>
       <div className={styles.formWrap}>
         <Alert 
           isVisible={alertInfo.isVisible}
@@ -116,7 +93,7 @@ function VendorSignup() {
           onClose={() => setAlertInfo({ ...alertInfo, isVisible: false })}
         />
 
-        <h2>Sign Up</h2>
+        <h2>Login</h2>
 
         <form className={styles.formGrid} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
@@ -134,69 +111,30 @@ function VendorSignup() {
 
           <div className={styles.inputGroup}>
             <input
-              type="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-              required
-            />
-            <label htmlFor="email">Email</label>
-            {errors.email && <div className={styles.error}>{errors.email}</div>}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <input
-              type="tel"
-              id="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Phone Number"
-              required
-            />
-            <label htmlFor="phone">Phone Number</label>
-            {errors.phone && <div className={styles.error}>{errors.phone}</div>}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <input
               type="password"
               id="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Create a password"
+              placeholder="Enter your password"
               required
             />
             <label htmlFor="password">Password</label>
             {errors.password && <div className={styles.error}>{errors.password}</div>}
           </div>
 
-          <div className={styles.inputGroup}>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm your password"
-              required
-            />
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            {errors.confirmPassword && <div className={styles.error}>{errors.confirmPassword}</div>}
-          </div>
-
           <div className={styles.btnWrap}>
             <button className={styles.btnsubmit} type="submit" disabled={loading}>
-              {loading ? 'Signing Up...' : 'Sign Up'}
+              {loading ? 'Logging In...' : 'Login'}
             </button>
           </div>
         </form>
 
-        <button onClick={handleLoginRedirect} className={styles.buttonSubmit}>
-          Already have an account? Login
+        <button onClick={handleSignupRedirect} className={styles.buttonSubmit}>
+          Don't have an account? Sign Up
         </button>
       </div>
     </div>
   );
 }
 
-export default VendorSignup;
+export default VendorLogin;

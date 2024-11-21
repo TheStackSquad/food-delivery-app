@@ -73,7 +73,7 @@ const VendorInsight = () => {
         <div className={styles.ratingContainer}>
           <div className={styles.ratingLeft}>
             <div className={styles.starRating}>
-              <LuStar size={24} fill="currentColor" />
+              <LuStar size={24} className='iconStar' fill="currentColor" />
               Your Rating
             </div>
           </div>

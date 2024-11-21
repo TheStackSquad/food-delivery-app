@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import styles from '../css/Login.module.css';
-import { signIn } from '../API/signIn';
+import { loginUser } from '../API/signIn';
 
 const Login = () => {
   // Initialize state for username, password, and error message
@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
     try {
-      const response = await signIn(username, password); // Call API to sign in
+      const response = await loginUser(username, password); // Call API to sign in
       if (response.success) {
         setTimeout(() => {
           alert('Login Successful');
