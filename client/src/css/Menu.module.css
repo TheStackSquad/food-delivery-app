@@ -12,7 +12,6 @@
   right: 0;
   bottom: 0;
 }
-
 .menuContainer {
   margin-top: 7rem;
   width: 90%;
@@ -74,6 +73,7 @@ font-family: var(--fontfamilyMacondo);
   color: orange;
 }
 
+
 @media (min-width: 576px) {
   .inputWrapper {
     max-width: 500px;
@@ -85,7 +85,9 @@ font-family: var(--fontfamilyMacondo);
     box-sizing: border-box;
   border: transparent;
   outline: transparent;
+  padding: 1.5rem 0px;
   }
+  
   .input {
     background: blanchedalmond;
     width: 100%;
@@ -103,13 +105,18 @@ font-family: var(--fontfamilyMacondo);
     color: black;
     position: absolute;
     right: 11rem;
-    font-size: 1.3rem;
+    top: 1rem;
+    font-size: 1.5rem;
   }
   .iconLeft,
 .iconRight{
   position: absolute;
   top: 25%;
   font-size: 1.5rem;
+}
+.iconLeft{
+  left: .5rem;
+  color: orangered;
 }
 .iconRight{
   right: .5rem;
@@ -121,5 +128,4 @@ font-family: var(--fontfamilyMacondo);
   box-shadow: .1px .1px gainsboro;
   transform: scale(.9);
 }
-
 }

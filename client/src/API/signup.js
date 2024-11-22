@@ -2,13 +2,6 @@
 import axios from 'axios'; // For making HTTP requests
 const debug = require('debug')('client:api:signup'); // Debug instance for logging
 
-/**
- * Sends sign-up data to the backend.
- * 
- * @param {Object} formData - The form data for the sign-up request.
- * @param {string} endpoint - The endpoint to send the request to (default: '/api/signup').
- * @returns {Object} The response data from the backend.
- */
 export const signUpUser = async (formData, endpoint = '/api/signup') => {
   try {
     debug(`[signUpUser] Called with formData to endpoint: ${endpoint}`, formData);
@@ -48,5 +41,4 @@ export const riderSignUpUser = async (formData, endpoint = '/api/rider/signup') 
     );
   }
 };
-
 

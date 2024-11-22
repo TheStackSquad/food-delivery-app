@@ -1,72 +1,45 @@
-// src/GlobalLayout/LayoutContext.js
-import React, { createContext, useState, useRef, useEffect } from 'react';
+// src/GlobalLayout/Layout.js
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDropdown, toggleChat, updateInteraction } from '../redux/actions/layoutActions';
 
-export const LayoutContext = createContext();
-
-export const LayoutProvider = ({ children }) => {
-  // Core state
-  const [isOpen, setIsOpen] = useState(false);
-  const [isChatIconVisible, setIsChatIconVisible] = useState(true);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [lastInteraction, setLastInteraction] = useState(Date.now());
-  const hideIconTimerRef = useRef(null);
-
-
+const Layout = ({ children }) => {
+  const dispatch = useDispatch();
+  const { isOpen, isChatIconVisible, isChatOpen, lastInteraction } = useSelector((state) => state.layout);
 
 
   useEffect(() => {
-    // Only start the hide timer if the chat is not open
-    if (!isChatOpen) {
-      if (hideIconTimerRef.current) {
-        clearTimeout(hideIconTimerRef.current);
-      }
+    // Set up the timer to hide the chat icon if the chat is closed
+    let hideIconTimer;
 
-      hideIconTimerRef.current = setTimeout(() => {
-        console.log("Timer triggered - hiding chat icon");
-        setIsChatIconVisible(false);
-      }, 10000);
+    if (!isChatOpen) {
+      hideIconTimer = setTimeout(() => {
+        dispatch({ type: 'TOGGLE_CHAT' }); // Manually trigger the hide of the chat icon
+      }, 10000); // 10 seconds
+
+      return () => clearTimeout(hideIconTimer);
     }
 
-    return () => {
-      if (hideIconTimerRef.current) {
-        clearTimeout(hideIconTimerRef.current);
-      }
-    };
-  }, [isChatOpen, lastInteraction]);
+  }, [isChatOpen, lastInteraction, dispatch]);
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-  console.log(toggleDropdown);
-  
+  const handleDropdownToggle = () => {
+    dispatch(toggleDropdown());
+  };
 
- const toggleChat = () => {
-  console.log("toggleChat called - current states:", { isChatOpen, isChatIconVisible });
-  setIsChatIconVisible(true); // Ensure icon is visible when toggling
-  setIsChatOpen(prev => !prev);
-  setLastInteraction(Date.now());
-};
-  
+  const handleChatToggle = () => {
+    dispatch(toggleChat());
+  };
 
-const updateInteraction = () => {
-  setLastInteraction(Date.now());
-  setIsChatIconVisible(true); // Ensure icon is visible on interaction
-};
-
-  const layoutState = {
-    isOpen,
-    isChatIconVisible,
-    isChatOpen,
-    lastInteraction,
-    setIsOpen,
-    setIsChatIconVisible,
-    setIsChatOpen,
-    toggleDropdown: () => setIsOpen(!isOpen),
-    toggleChat,
-    updateInteraction,
+  const handleInteractionUpdate = () => {
+    dispatch(updateInteraction());
   };
 
   return (
-    <LayoutContext.Provider value={layoutState}>
+    <div>
+      {/* Other layout components */}
       {children}
-    </LayoutContext.Provider>
+    </div>
   );
 };
+
+export default Layout;

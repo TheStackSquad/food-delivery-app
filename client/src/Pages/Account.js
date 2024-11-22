@@ -1,247 +1,246 @@
-//client/src/Pages/Account.js
-import React, { useState } from "react";
-import styles from "../css/Account.module.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import styles from '../css/Account.module.css';
+import Alert from '../components/UI/Alert';
 import {
   validateUsername,
   validateEmail,
   validatePhone,
   validatePassword,
-} from "../frontendUtils/validation";
-import { signUpUser } from "../API/signup";
+} from '../frontendUtils/validation';
+import { signUpUser } from '../API/signup';
 
 const Account = () => {
+  const navigate = useNavigate(); 
+  // Form data state
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    deliveryTime: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    password: '',
+    confirmPassword: '',
   });
+console.log('Form Data', formData);
 
+  // Error and alert management states
   const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
+  const [alertConfig, setAlertConfig] = useState({
+    isVisible: false,
+    type: 'info',
+    message: '',
+    userName: '',
+  });
   const [loading, setLoading] = useState(false);
 
-  // Handle input changes and reset specific field errors
+  /**
+   * Handles input changes and clears specific field errors
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
+   */
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [id]: value,
     }));
+    
+    // Clear specific field error when user starts typing
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [id]: "",
+      [id]: '',
     }));
   };
 
-  // Handle form submission
+  /**
+   * Displays an alert with given configuration
+   * @param {Object} config - Alert configuration
+   */
+  const showAlert = (config) => {
+    setAlertConfig({
+      isVisible: true,
+      type: config.type || 'info',
+      message: config.message,
+      userName: config.userName || '',
+    });
+  };
+
+  /**
+   * Closes the alert
+   */
+  const closeAlert = () => {
+    setAlertConfig((prev) => ({ ...prev, isVisible: false }));
+  };
+
+  /**
+   * Handles form submission with comprehensive validation
+   * @param {React.FormEvent<HTMLFormElement>} e - Form submission event
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("[handleSubmit] Form submission started");
-
-    setSuccess("");
+    
+    // Reset previous states
+    setErrors({});
     setLoading(true);
 
-    // Validate inputs and set errors if any
-    const newErrors = {};
-    console.log("[handleSubmit] Validating inputs");
+    // Perform input validations
+    const validationChecks = {
+      username: validateUsername(formData.username),
+      email: validateEmail(formData.email),
+      phone: validatePhone(formData.phone),
+      password: validatePassword(formData.password, formData.confirmPassword),
+    };
 
-    const usernameCheck = validateUsername(formData.username);
-    const emailCheck = validateEmail(formData.email);
-    const phoneCheck = validatePhone(formData.phone);
-    const passwordCheck = validatePassword(
-      formData.password,
-      formData.confirmPassword
-    );
+    // Collect validation errors
+    const newErrors = Object.entries(validationChecks)
+      .filter(([, result]) => !result.isValid)
+      .reduce((acc, [key, result]) => {
+        acc[key] = result.error;
+        return acc;
+      }, {});
 
-    if (!usernameCheck.isValid) newErrors.username = usernameCheck.error;
-    if (!emailCheck.isValid) newErrors.email = emailCheck.error;
-    if (!phoneCheck.isValid) newErrors.phone = phoneCheck.error;
-    if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
-
-    // If there are errors, update state and stop loading
+    // If validation fails, show errors and stop submission
     if (Object.keys(newErrors).length > 0) {
-      console.log("[handleSubmit] Validation errors:", newErrors);
       setErrors(newErrors);
       setLoading(false);
+      
+      // Show error alert
+      showAlert({
+        type: 'error',
+        message: 'Please correct the errors in the form.',
+      });
       return;
     }
 
     try {
+      // Format data for submission
       const formattedData = {
         ...formData,
-        phone: formData.phone.replace(/\D/g, ""), // Remove non-numeric characters
+        phone: formData.phone.replace(/\D/g, ''), // Remove non-numeric characters
       };
-      console.log("[handleSubmit] Formatted data ready:", formattedData);
 
-      // Call signUpUser and wait for response
-      console.log("[handleSubmit] Calling signUpUser...");
+      // Attempt user registration
       await signUpUser(formattedData);
 
-      // if successful
-      console.log("[handleSubmit] Registration successful");
-      setSuccess("Registration successful!");
+      // Reset form on successful registration
       setFormData({
-        username: "",
-        email: "",
-        phone: "",
-        address: "",
-        city: "",
-        deliveryTime: "",
-        password: "",
-        confirmPassword: "",
+        username: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        password: '',
+        confirmPassword: '',
       });
-      setErrors({});
 
-      // Display success message for 5 seconds
-      setTimeout(() => {
-        setSuccess("");
-      }, 5000); // 5000 ms = 5 seconds
+      // Show success alert
+      showAlert({
+        type: 'success',
+        message: 'Registration successful!',
+        userName: formData.username,
+      });
+      navigate('/login'); // Redirect to /login
     } catch (error) {
-      console.error("[handleSubmit] Registration error:", error.message);
-      setErrors({
-        form: error.message || "Registration failed. Please try again.",
+      // Handle registration errors
+      showAlert({
+        type: 'error',
+        message: error.message || 'Registration failed. Please try again.',
       });
     } finally {
       setLoading(false);
-      console.log("[handleSubmit] Form submission process complete");
     }
   };
 
+  // Input configuration for dynamic rendering
+  const inputConfigs = [
+    { 
+      id: 'username', 
+      label: 'Username', 
+      type: 'text', 
+      placeholder: 'John Doe' 
+    },
+    { 
+      id: 'email', 
+      label: 'Email Address', 
+      type: 'email', 
+      placeholder: 'you@example.com' 
+    },
+    { 
+      id: 'phone', 
+      label: 'Phone Number', 
+      type: 'tel', 
+      placeholder: '1234567890' 
+    },
+    { 
+      id: 'address', 
+      label: 'Delivery Address', 
+      type: 'text', 
+      placeholder: '123 Main St, Apt 1' 
+    },
+    { 
+      id: 'city', 
+      label: 'City/State', 
+      type: 'text', 
+      placeholder: 'City, State' 
+    },
+    { 
+      id: 'password', 
+      label: 'Password', 
+      type: 'password', 
+      placeholder: 'Create a password' 
+    },
+    { 
+      id: 'confirmPassword', 
+      label: 'Confirm Password', 
+      type: 'password', 
+      placeholder: 'Confirm your password' 
+    },
+  ];
+
   return (
     <div className={styles.wrapper}>
+      {/* Alert Component */}
+      <Alert
+        isVisible={alertConfig.isVisible}
+        type={alertConfig.type}
+        message={alertConfig.message}
+        userName={alertConfig.userName}
+        onClose={closeAlert}
+      />
+
       <div className={styles.contentContainer}>
         <div className={styles.formHeader}>
-          <h2 className={styles.title}>
-            Sign-Up Here!
-          </h2>
+          <h2 className={styles.title}>Sign Up Here!</h2>
         </div>
-        {/* Display global form errors */}
-        {errors.form && <div className={styles.error}>{errors.form}</div>}
-        {success && <div className={styles.success}>{success}</div>}
 
-        {/* Animated blob for background */}
         <div className={styles.blob}></div>
 
         <form className={styles.formBox} onSubmit={handleSubmit}>
-          {/* Username */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="username">Full Name</label>
-            <input
-              type="text"
-              id="username"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="John Doe"
-              required
-            />
-            {errors.username && (
-              <div className={styles.error}>{errors.username}</div>
-            )}
-          </div>
+          {inputConfigs.map(({ id, label, type, placeholder }) => (
+            <div key={id} className={styles.inputGroup}>
+              <input
+                type={type}
+                id={id}
+                value={formData[id]}
+                onChange={handleChange}
+                placeholder={placeholder}
+                className={styles.input}
+                required
+              />
+              <label htmlFor={id} className={styles.label}>
+                {label}
+              </label>
+              {errors[id] && <div className={styles.error}>{errors[id]}</div>}
+            </div>
+          ))}
 
-          {/* Email Address */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              required
-            />
-            {errors.email && <div className={styles.error}>{errors.email}</div>}
-          </div>
-
-          {/* Phone Number */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="phone">Phone Number</label>
-            <input
-              type="tel"
-              id="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="1234567890"
-              required
-            />
-            {errors.phone && <div className={styles.error}>{errors.phone}</div>}
-          </div>
-
-          {/* Delivery Address */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="address">Delivery Address</label>
-            <input
-              type="text"
-              id="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="123 Main St, Apt 1"
-              required
-            />
-            {errors.address && (
-              <div className={styles.error}>{errors.address}</div>
-            )}
-          </div>
-
-          {/* City/State */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="city">City/State</label>
-            <input
-              type="text"
-              id="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="City, State"
-              required
-            />
-            {errors.city && <div className={styles.error}>{errors.city}</div>}
-          </div>
-
-          {/* Password */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Create a password"
-              required
-            />
-            {errors.password && (
-              <div className={styles.error}>{errors.password}</div>
-            )}
-          </div>
-
-          {/* Confirm Password */}
-          <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm your password"
-              required
-            />
-            {errors.confirmPassword && (
-              <div className={styles.error}>{errors.confirmPassword}</div>
-            )}
-          </div>
-
-          {/* Submit Button */}
           <div className={styles.buttonContainer}>
             <button
               type="submit"
               className={styles.submitButton}
               disabled={loading}
             >
-              {loading ? "Registering..." : "Register"}
+              {loading ? 'Registering...' : 'Register'}
             </button>
           </div>
         </form>

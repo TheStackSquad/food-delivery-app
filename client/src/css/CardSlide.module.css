@@ -51,6 +51,18 @@
   max-width: 600px;
   margin: 0 auto;
   font-family: var(--fontfamilyMacondo);
-  border: 2px solid red;
+  margin-top: -7rem;
+}
+.card p {
+  font-size: 1.5rem;
+  margin: 0;
+}
+.card button{
+  margin-top: 1rem;
+  padding: var(--paddingRegular);
+  font-family: var(--fontfamilyMacondo);
+  border-radius: .5rem;
+  background-color: lightcyan;
+  font-size: 1.6rem;
 }
   }

@@ -7,7 +7,7 @@
   background-color: rgba(203, 219, 236, 0.3);
   overflow-y: auto;
   scroll-behavior: smooth;
-  margin-top: -8rem;
+
 
 }
 
@@ -59,14 +59,22 @@
 }
 
 /* Responsive design */
-@media (min-width: 768px) {
-  /* For larger screens, make adjustments if needed */
+@media (min-width: 576px) {
+  .home{
+    margin-top: -10rem;
+  }
   .section1, .section3 {
-    max-width: 800px; /* Center alignment within viewport */
-    margin: 0 auto;   /* Center horizontally */
+    width: 100%;
+    margin: 0 auto;
+  }
+  .HomeImg {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .section2 {
-    background-size: cover; /* Ensures full-width background on larger screens */
+    background-size: cover;
     background-position: center;
+    margin-top: -2rem;
   }
 }
