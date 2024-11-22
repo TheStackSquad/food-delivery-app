@@ -111,8 +111,30 @@
   max-width: 650px;
   width: 90%;
   height: 350px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+.cardContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Optional: Customize scrollbar (Webkit-based browsers like Chrome, Edge) */
+.cardContainer::-webkit-scrollbar {
+  width: .1px;
+}
+
+.cardContainer::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.cardContainer::-webkit-scrollbar-track {
+  background-color: transparent; /* Transparent background for the track */
 }
 .card {
+  scroll-snap-align: start;
   max-width: 100%;
   width: 95%;
   padding: 16px;

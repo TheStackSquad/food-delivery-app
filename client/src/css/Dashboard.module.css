@@ -108,4 +108,33 @@
     font-weight: 500;
     color: #333;
   }
-  
+  /* Dashboard.module.css */
+
+/* Container for the logout icon */
+.logoutContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  color: #333;
+  transition: color 0.3s;
+}
+
+/* Icon styles */
+.logoutIcon {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+/* Text styles */
+.logoutText {
+  display: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: display 0.3s;
+}
+
+/* Show text when hovering over the logout icon */
+.logoutContainer:hover .logoutText {
+  display: inline-block;
+}

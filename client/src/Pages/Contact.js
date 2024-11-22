@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
-import { LayoutContext } from "../GlobalLayout/LayoutContext"; // Import the context
+//client/src/Pages/Contact.js
+// client/src/Pages/Contact.js
+import React from "react";
+import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from Redux
+import { toggleChat } from "../redux/actions/layoutActions"; // Ensure this is the correct action
 import { Link } from "react-router-dom";
 import user1 from "../asset/img/user1.webp";
 import user2 from "../asset/img/user2.webp";
@@ -11,16 +14,14 @@ import { FaArrowRight, FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 import styles from "../css/Contact.module.css";
 
 function Contact() {
-  const { toggleChat, isChatOpen, setIsChatIconVisible } = useContext(LayoutContext);
+  // Accessing Redux state
+  const { isChatOpen, isChatIconVisible } = useSelector((state) => state.layout);
+  const dispatch = useDispatch();
 
-  console.log("Contact component rendered:", { isChatOpen });
-
+  // Handle the chat toggle by dispatching the Redux action
   const handleToggleChat = () => {
-    console.log("handleToggleChat called");
-    setIsChatIconVisible(true); // Ensure icon is visible when toggling from contact page
-    toggleChat();
+    dispatch(toggleChat()); // This will toggle the chat open/closed and its visibility
   };
-  console.log('HandleToggleChat', handleToggleChat);
 
   return (
     <div className={`contact ${styles.contact}`}>
@@ -43,8 +44,10 @@ function Contact() {
             </p>
           </div>
           {/* Toggle Chat Widget */}
-          <div className={styles["chat-widget-toggle"]}
-          onClick={handleToggleChat}>
+          <div
+            className={styles["chat-widget-toggle"]}
+            onClick={handleToggleChat}
+          >
             <h3 className={styles["widget-toggler"]}>Start a conversation</h3>
             <FaArrowRight className={styles["arrow-icon"]} />
           </div>

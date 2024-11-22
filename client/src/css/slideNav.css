@@ -2,7 +2,7 @@
 .navbar-container {
   width: 95%;
   height: 100%;
-  background-color: rgba(223, 228, 231, 0.7);
+  background-color: rgb(247, 170, 29, .4);
   border-radius: 1rem;
   position: absolute;
   top: 60%;
@@ -45,6 +45,7 @@
   border-radius: .5rem;
   background-color: rgba(223, 228, 231, 0.7);
 }
+
 @media screen and (max-width: 575.98px) {
   .card-container {
     width: 90%;
@@ -121,23 +122,27 @@
   }
   .navbar{
     height: 80px;
-    padding: var(--padding);
-    justify-content: space-evenly;
+    width: 100%;
+    justify-content: space-between;
     background-color: rgb(231, 211, 172, .9);
     border-radius: 0.5rem;
   }
   .navbar-item{
     font-size: 1.7rem;
     position: relative;
+    padding: 0px 2rem;
+    font-family: var(--Alte-Text);
   }
   .card-container{
     background-color: rgb(231, 211, 172, .2);
   }
   .card-content{
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    font-weight: 700;
+    font-family: var(--Alte-Text);
   }
   .navbar-background {
-    height: 110px;
+    height: 80px;
     background-color: orange;
   }
   .btn-1, .btn-2 {

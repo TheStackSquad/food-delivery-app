@@ -1,36 +1,32 @@
-import React, { useState, useContext, useEffect } from 'react';
+// client/src/components/ChatWidget.js
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutContext } from '../GlobalLayout/LayoutContext';
 import devImage from '../asset/img/mandela.webp';
 import '../css/chatWidget.css';
 import { chatBoxAnimation, chatIconAnimation } from '../animations/chatMotion';
 import useSocket from '../hooks/useSocket';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleChat, updateInteraction } from '../redux/actions/layoutActions'; // Redux actions
 
 const ChatWidget = () => {
   // Local state
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  
+
+  // Redux state
+  const { isChatIconVisible, isChatOpen } = useSelector(state => state.layout);
+  const dispatch = useDispatch();
+
   // Socket state
   const { isConnected, isTyping, sendMessage, startTyping, stopTyping } = useSocket();
-  
-  // Context
-  const { 
-    isChatIconVisible, 
-    isChatOpen, 
-    toggleChat, 
-    updateInteraction 
-  } = useContext(LayoutContext);
-
-
 
   // Effect to handle user interactions
   useEffect(() => {
     const handleUserActivity = () => {
       if (isChatIconVisible && !isChatOpen) {
-        updateInteraction();
+        dispatch(updateInteraction());
       }
     };
 
@@ -42,7 +38,7 @@ const ChatWidget = () => {
       window.removeEventListener('mousemove', handleUserActivity);
       window.removeEventListener('keydown', handleUserActivity);
     };
-  }, [isChatIconVisible, isChatOpen, updateInteraction]);
+  }, [isChatIconVisible, isChatOpen, dispatch]);
 
   // Message handling
   const handleSendMessage = () => {
@@ -50,7 +46,7 @@ const ChatWidget = () => {
       sendMessage({ sender: 'You', text: input });
       setMessages(prev => [...prev, { sender: 'You', text: input }]);
       setInput('');
-      updateInteraction();
+      dispatch(updateInteraction());
     }
   };
 
@@ -59,7 +55,7 @@ const ChatWidget = () => {
     setInput(e.target.value);
     if (e.target.value) {
       startTyping();
-      updateInteraction();
+      dispatch(updateInteraction());
     } else {
       stopTyping();
     }
@@ -70,9 +66,6 @@ const ChatWidget = () => {
     return null;
   }
 
-
-
-
   return (
     <div className="chat-widget">
       {/* Chat icon */}
@@ -80,11 +73,10 @@ const ChatWidget = () => {
         {!isChatOpen && isChatIconVisible && (
           <motion.div
             className="chat-icon"
-             
-           Chat icon  {...chatIconAnimation}
+            {...chatIconAnimation}
             onClick={() => {
-              toggleChat();
-              updateInteraction();
+              dispatch(toggleChat());
+              dispatch(updateInteraction());
             }}
           >
             <FontAwesomeIcon icon={faEnvelope} className="envelope-icon" />
@@ -95,23 +87,20 @@ const ChatWidget = () => {
       {/* Chat box */}
       <AnimatePresence mode="wait">
         {isChatOpen && (
-          <motion.div className="chat-box"
-            
-          {...chatBoxAnimation}
-          layoutId='chat'>
+          <motion.div className="chat-box" {...chatBoxAnimation} layoutId="chat">
             <div className="chat-header">
               <img src={devImage} alt="Alyson Smith" className="profile-pic" />
               <div>
                 <h4>Dev Kitchen</h4>
                 <p>The Stack Squad</p>
               </div>
-              <div className='user-profile'></div>
+              <div className="user-profile"></div>
 
               <button 
                 className="close" 
                 onClick={() => {
-                  toggleChat();
-                  updateInteraction();
+                  dispatch(toggleChat());
+                  dispatch(updateInteraction());
                 }}
               >
                 Close
@@ -150,7 +139,7 @@ const ChatWidget = () => {
                 onChange={handleInputChange}
                 onBlur={() => {
                   stopTyping();
-                  updateInteraction();
+                  dispatch(updateInteraction());
                 }}
                 placeholder="Type a message..."
               />

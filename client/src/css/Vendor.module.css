@@ -27,10 +27,13 @@
     font-family: var(--fontfamilyMacondo);
     text-align: center;
 }
-@media screen and z(min-width: 576px){
+@media screen and (min-width: 576px){
+    .vendor{
+        margin-top: -10rem;
+    }
     .vendorContainer{
         width: 100%;
-        max-width: 650px;
+        max-width: 800px;
         min-height: 100vh;
         padding-top: 10rem;
         transition: transform 0.3s ease;
