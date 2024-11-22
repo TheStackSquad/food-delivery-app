@@ -8,9 +8,14 @@ const multer = require('multer');
 
 const riderController = require('../controllers/riderController');
 const userController = require('../controllers/userController');
+const vendorController = require('../controllers/vendorController');
+
 const { signup, login } = userController;
+
 // Destructure rider-related controller functions
 const { riderSignup, riderLogin, updateRiderProfile, updateRiderPayout, updateRiderAchievements } = riderController;
+// Desctructure vendor-related controller functions
+const { registerVendor, loginVendor, getVendorProfile, updateVendorProfile, addMealToMenu, getVendorMenu } = vendorController;
 
 /**
  * Routes for rider-related operations
@@ -32,6 +37,28 @@ router.patch('/rider/updatePayout', authMiddleware, updateRiderPayout);
 
 // Route to update rider achievements (topRated, speedKing)
 router.patch('/rider/updateAchievements', authMiddleware, updateRiderAchievements);
+
+/**
+ * Routes for vendor-related operations
+ */
+
+// Vendor signup route
+router.post('/vendor/register', registerVendor);
+
+// Vendor login route
+router.post('/vendor/login', loginVendor);
+
+// Get vendor profile
+router.get('/vendor/profile', authMiddleware, getVendorProfile);
+
+// Update vendor profile
+router.put('/vendor/profile', authMiddleware, updateVendorProfile);
+
+// Add meal to vendor's menu
+router.post('/vendor/menu', authMiddleware, addMealToMenu);
+
+// Get vendor menu
+router.get('/vendor/menu', authMiddleware, getVendorMenu);
 
 debug('Routes initialized.');
 
