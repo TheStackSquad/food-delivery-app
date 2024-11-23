@@ -50,7 +50,7 @@ router.patch('/rider/updateAchievements', authMiddleware, updateRiderAchievement
  */
 
 // Vendor signup route
-router.post('/vendor/register', registerVendor);
+router.post('/vendor/signup', registerVendor);
 
 // Vendor login route
 router.post('/vendor/login', loginVendor);

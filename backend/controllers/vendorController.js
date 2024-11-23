@@ -7,11 +7,11 @@ const userValidators = require('../utils/validators');
 // Register a new vendor
 const registerVendor = async (req, res) => {
     try {
-        const { username, email, phone, password, confirmPassword, storeName, vendorType } = req.body;
+        const { fullname, email, phone, password, confirmPassword } = req.body;
 
         // Validate inputs using validators
         const validations = [
-            userValidators.validateUsername(username),
+            userValidators.validateFullname(fullname),
             userValidators.validateEmail(email),
             userValidators.validatePhone(phone),
             userValidators.validatePassword(password, confirmPassword),
@@ -33,12 +33,10 @@ const registerVendor = async (req, res) => {
 
         // Create new vendor
         const newVendor = new Vendor({
-            username,
+            fullname,
             email: email.toLowerCase(),
             phone,
             password: hashedPassword,
-            storeName,
-            vendorType,
         });
 
         // Save vendor to database
@@ -47,10 +45,8 @@ const registerVendor = async (req, res) => {
         res.status(201).json({
             message: 'Vendor registration successful!',
             vendor: {
-                username: newVendor.username,
+                fullname: newVendor.fullname,
                 email: newVendor.email,
-                storeName: newVendor.storeName,
-                vendorType: newVendor.vendorType,
             },
         });
     } catch (error) {

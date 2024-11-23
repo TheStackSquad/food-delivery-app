@@ -26,7 +26,7 @@ const ReviewSchema = new Schema({
 });
 
 const VendorSchema = new Schema({
-  username: {
+  fullname: {
     type: String,
     required: [true, 'Username is required'],
     unique: true,
@@ -60,7 +60,8 @@ const VendorSchema = new Schema({
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
   },
-  storeName: { type: String, required: [true, 'Store name is required'] },
+  // commented out till we figure out how to merge  
+  /*storeName: { type: String, required: [true, 'Store name is required'] },
   storeDescription: { type: String },
   coverImage: { type: String }, // URL for the cover image
   vendorType: { type: String },
@@ -88,7 +89,7 @@ const VendorSchema = new Schema({
   totalOrders: { type: Number, default: 0 },
   totalAmount: { type: Number, default: 0 },
   averageOrderAmount: { type: Number, default: 0 },
-  reviews: [ReviewSchema], // Array of reviews from customers
+  reviews: [ReviewSchema], // Array of reviews from customers */
 }, {
   timestamps: true, // Adds createdAt and updatedAt fields
 });
