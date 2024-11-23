@@ -2,7 +2,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-//const Rider = require('../models/Rider');
 const userValidators = require('../utils/validators');
 
 const signup = async (req, res) => {
@@ -25,12 +24,28 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: validationError.error });
     }
 
-    // Check for existing user
-    try {
-      await User.checkExisting(email, username);
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+ // Check for existing username
+ const existingUser = await User.findOne({ username });
+ if (existingUser) {
+   // Generate alternative username suggestions
+   const suggestions = [
+     `${username}_${Math.floor(Math.random() * 1000)}`,
+     `${username}.${Math.floor(Math.random() * 1000)}`,
+     `${username}${Math.floor(Math.random() * 1000)}`
+   ];
+
+   return res.status(400).json({
+     error: 'Username already taken.',
+     suggestions
+   });
+ }
+
+ // Check for existing email (optional if unique)
+ const existingEmail = await User.findOne({ email: email.toLowerCase() });
+ if (existingEmail) {
+   return res.status(400).json({ error: 'Email already in use.' });
+ }
+
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -72,81 +87,11 @@ const signup = async (req, res) => {
   }
 };
 
-/*const riderSignup = async (req, res) => {
-  console.log('Received sign-up request:', req.body);
-  
-  try {
-    const { name: fullname, email, phone, password, confirmPassword } = req.body;
-
-    // Validate all fields
-    const validations = [
-      userValidators.validateFullname(fullname),
-      userValidators.validateEmail(email),
-      userValidators.validatePhone(phone),
-      userValidators.validatePassword(password, confirmPassword)
-    ];
-
-    // Log validation results for debugging
-    validations.forEach((validation, index) => {
-      console.log(`Validation ${index + 1}:`, validation);
-    });
-
-    // Check for validation errors
-    const validationError = validations.find(v => !v.isValid);
-    if (validationError) {
-      console.log('Validation failed:', validationError);
-      return res.status(400).json({ error: validationError.error });
-    }
-
-    // Check for existing user
-    try {
-      await User.checkExisting(email, fullname);
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create new user
-    const newUser = new User({
-      fullname,
-      email: email.toLowerCase(),
-      phone,
-      password: hashedPassword
-    });
-
-    // Save user
-    await newUser.save();
-    
-    // Log success but don't include sensitive data
-    console.log('User created successfully:', {
-      fullname: newUser.fullname,
-      email: newUser.email,
-      createdAt: newUser.createdAt
-    });
-
-    res.status(201).json({
-      message: 'Sign-up successful!',
-      user: {
-        fullname: newUser.fullname,
-        email: newUser.email
-      }
-    });
-
-  } catch (error) {
-    console.error('Error during sign-up:', error);
-    res.status(500).json({
-      error: 'Sign-up failed. Please try again.',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-};*/
-
-
 const login = async (req, res) => {
+  console.log('login controller Hit');
   try {
     const { username, password } = req.body;
+    console.log('login Data Recieved:', req.body.username);
 
     // Fetch user from the database
     const user = await User.findOne({ username });
@@ -164,7 +109,12 @@ const login = async (req, res) => {
         token,
         user: {
           username: user.username,
-          email: user.email
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+          city: user.city,
+          profilePic: user.profilePic,
+
         }
       });
     } else {
