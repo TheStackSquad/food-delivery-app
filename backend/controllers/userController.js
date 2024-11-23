@@ -4,11 +4,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const userValidators = require('../utils/validators');
 
+// Sign-up endpoint to create a new user
 const signup = async (req, res) => {
   console.log('Received sign-up request:', req.body);
-  
+
   try {
-    const { username, email, phone, address, city, password, confirmPassword } = req.body;
+    const {
+      username, email, phone, address, city, password, confirmPassword
+    } = req.body;
 
     // Validate all fields
     const validations = [
@@ -21,9 +24,11 @@ const signup = async (req, res) => {
     // Check for validation errors
     const validationError = validations.find(v => !v.isValid);
     if (validationError) {
+      console.error('Validation failed:', validationError.error);
       return res.status(400).json({ error: validationError.error });
     }
 
+<<<<<<< Updated upstream
  // Check for existing username
  const existingUser = await User.findOne({ username });
  if (existingUser) {
@@ -46,11 +51,21 @@ const signup = async (req, res) => {
    return res.status(400).json({ error: 'Email already in use.' });
  }
 
+=======
+    // Check for existing user (email or username)
+    try {
+      await User.checkExisting(email, username);
+    } catch (error) {
+      console.error('Existing user check failed:', error.message);
+      return res.status(400).json({ error: error.message });
+    }
+>>>>>>> Stashed changes
 
-    // Hash password
+    // Hash password before saving to DB
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Password hashed successfully.');
 
-    // Create new user
+    // Create new user object
     const newUser = new User({
       username,
       email: email.toLowerCase(),
@@ -60,16 +75,15 @@ const signup = async (req, res) => {
       password: hashedPassword
     });
 
-    // Save user
+    // Save user to the database
     await newUser.save();
-    
-    // Log success but don't include sensitive data
     console.log('User created successfully:', {
       username: newUser.username,
       email: newUser.email,
       createdAt: newUser.createdAt
     });
 
+    // Respond with success and user details (excluding password)
     res.status(201).json({
       message: 'Sign-up successful!',
       user: {
@@ -87,22 +101,24 @@ const signup = async (req, res) => {
   }
 };
 
+<<<<<<< Updated upstream
+=======
+// Login endpoint to authenticate users
+>>>>>>> Stashed changes
 const login = async (req, res) => {
   console.log('login controller Hit');
   try {
     const { username, password } = req.body;
+<<<<<<< Updated upstream
     console.log('login Data Recieved:', req.body.username);
+=======
+    console.log(`Login attempt for username: ${username}`);
+>>>>>>> Stashed changes
 
     // Fetch user from the database
     const user = await User.findOne({ username });
-    if (user && await bcrypt.compare(password, user.password)) {
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user._id, username: user.username },
-        process.env.JWT_SECRET, // Ensure you have a strong JWT_SECRET in your environment variables
-        { expiresIn: '1h' } // Token expires in 1 hour
-      );
 
+<<<<<<< Updated upstream
       res.status(200).json({
         success: true,
         message: 'Login successful',
@@ -117,29 +133,71 @@ const login = async (req, res) => {
 
         }
       });
+=======
+    if (user) {
+      console.log(`User found: ${user.username}`);
+
+      // Compare provided password with the stored hash
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        console.log(`Password match for username: ${username}`);
+
+        // Generate JWT token for the authenticated user
+        const token = jwt.sign(
+          { userId: user._id, username: user.username },
+          process.env.JWT_SECRET, // Ensure you have a strong JWT_SECRET in your environment variables
+          { expiresIn: '1h' } // Token expires in 1 hour
+        );
+        console.log(`Token generated successfully for ${username}`);
+
+        // Respond with success, token, and user details (excluding password)
+        res.status(200).json({
+          success: true,
+          message: 'Login successful',
+          token,
+          user: {
+            username: user.username,
+            email: user.email
+          }
+        });
+      } else {
+        console.error(`Invalid password for username: ${username}`);
+        return res.status(401).json({ success: false, message: 'Invalid username or password' });
+      }
+>>>>>>> Stashed changes
     } else {
-      res.status(401).json({ success: false, message: 'Invalid username or password' });
+      console.error(`User not found for username: ${username}`);
+      return res.status(401).json({ success: false, message: 'Invalid username or password' });
     }
   } catch (error) {
     console.error('Error during login:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    return res.status(500).json({ success: false, message: 'Internal server error' });
   }
-}
+};
 
-// Get to profile after logging in
+//const uploadProfileImage = async (req, res) = {}
+
+// Get profile after successful login (protected route)
 const getProfile = async (req, res) => {
   try {
     // `req.user` contains the decoded token info (e.g., userId)
-    const user = await User.findById(req.user.userId).select('-password'); // Exclude password
+    console.log('Fetching user profile for user ID:', req.user.userId);
+
+    // Fetch user from the database excluding the password
+    const user = await User.findById(req.user.userId).select('-password'); // Exclude password for security
 
     if (!user) {
+      console.error('User not found for user ID:', req.user.userId);
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Respond with the user profile data
     res.status(200).json({ user });
   } catch (error) {
+    console.error('Failed to retrieve profile:', error);
     res.status(500).json({ message: 'Failed to retrieve profile' });
   }
 };
 
-module.exports = { getProfile, signup, login};
+module.exports = { getProfile, signup, login };

@@ -26,6 +26,20 @@ router.post('/signup', signup);
 // User login route
 router.post("/login", login);
 
+
+
+/**
+ * Routes for user-related operations
+ */
+
+//User signup route
+router.post('/signup', signup);
+
+
+//User signup route
+router.post('/login', login);
+
+
 /**
  * Routes for rider-related operations
  */
