@@ -13,10 +13,17 @@ const { signup, login } = userController;
 const { riderSignup, riderLogin, updateRiderProfile, updateRiderPayout, updateRiderAchievements } = riderController;
 
 /**
- * Routes for rider-related operations
+ * Routes for user-related operations
  */
 
+// User signup route
+router.post('/signup', signup);
+// User login route
+router.post("/login", login);
 
+/**
+ * Routes for rider-related operations
+ */
 // Rider signup route
 router.post('/rider/signup', riderSignup);
 
