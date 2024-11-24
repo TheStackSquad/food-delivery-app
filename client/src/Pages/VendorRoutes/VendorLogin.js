@@ -1,3 +1,4 @@
+//client/src/Pages/VendorRoutes/VendorLogin.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -15,6 +16,8 @@ function VendorLogin() {
     email: '',
     password: '',
   });
+  console.log('Login Data:', formData.email);
+
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -46,54 +49,62 @@ function VendorLogin() {
   };
 
   const handleSubmit = async (e) => {
+    console.log('Submit Hit');
     e.preventDefault();
     setLoading(true);
-    
+  
     // Destructure email and password from formData
     const { email, password } = formData;
-
+    console.log('Login Data Inside HandleSubmit:', formData.email);
+  
     // Validate inputs
     const newErrors = {};
     const emailCheck = validateEmail(email);
     const passwordCheck = validatePassword(password);
-
     if (!emailCheck.isValid) newErrors.email = emailCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
       return;
     }
-
+  
     try {
       const response = await vendorLogin(email, password);
       
-      if (!response || !response.token) {
+      // Check if response exists and has required data
+      if (!response || !response.data) {
         throw new Error('Invalid response from server');
       }
-
-      // Assuming response has structure: { success: true, user: {...}, token: '...' }
+  
+      const { token, user } = response.data;
+  
+      if (!token) {
+        throw new Error('No token received from server');
+      }
+  
+      // Dispatch login action with user data and token
       dispatch(loginVendorAction({
-        ...response.user,
-        token: response.token,
+        ...user,
+        token,
       }));
-
+  
       // Store token in localStorage
-      localStorage.setItem('token', response.token);
-
+      localStorage.setItem('token', token);
+      
       showAlert('success', 'Login successful!');
-
+      
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/vendor/dashboard');
       }, 1500);
-      
+  
     } catch (error) {
       console.error('Login error:', error);
       showAlert(
         'error',
-        error.message || 'Login failed. Please check your credentials and try again.'
+        error.response?.data?.message || error.message || 'Login failed. Please check your credentials and try again.'
       );
     } finally {
       setLoading(false);
@@ -101,7 +112,7 @@ function VendorLogin() {
   };
 
   const handleSignupRedirect = () => {
-    navigate('/vendor/signup');
+    navigate('/vendor/profile');
   };
 
   return (

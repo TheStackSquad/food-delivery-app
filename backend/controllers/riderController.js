@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const userValidators = require('../utils/validators');
 
 // Rider Signup Controller
-console.log("Rider model keys:", Object.keys(Rider)); 
 const riderSignup = async (req, res) => {
   console.log('Received sign-up request:', req.body);
   try {

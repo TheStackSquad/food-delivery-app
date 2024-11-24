@@ -1,38 +1,21 @@
-// backend/models/Vendor.js
 const mongoose = require('mongoose');
+const validator = require("validator");
 const { Schema } = mongoose;
-
-const MealSchema = new Schema({
-  mealName: { type: String, required: true },
-  description: { type: String },
-  image: { type: String }, // URL of the meal image
-  price: { type: Number, required: true },
-  priceDescription: { type: String },
-  pack: { type: String },
-  inStock: { type: Boolean, default: true },
-});
-
-const PayoutSchema = new Schema({
-  amount: { type: Number, required: true },
-  date: { type: Date, default: Date.now },
-  status: { type: String, default: 'Pending' }, // Status of the payout
-});
-
-const ReviewSchema = new Schema({
-  rating: { type: Number, min: 1, max: 5, required: true },
-  comment: { type: String },
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  date: { type: Date, default: Date.now },
-});
 
 const VendorSchema = new Schema({
   fullname: {
     type: String,
-    required: [true, 'Username is required'],
-    unique: true,
+    required: [true, 'Fullname is required'],
     trim: true,
-    minlength: [3, 'Username must be at least 3 characters long'],
-    maxlength: [30, 'Username cannot exceed 30 characters'],
+    minlength: [3, 'Fullname must be at least 3 characters long'],
+    maxlength: [30, 'Fullname cannot exceed 30 characters'],
+    match: [/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces'],
+    validate: {
+      validator: function(v) {
+        return v && v.trim().length > 0;
+      },
+      message: 'Fullname cannot be empty or just whitespace'
+    }
   },
   email: {
     type: String,
@@ -40,61 +23,59 @@ const VendorSchema = new Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    validate: {
-      validator: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-      message: 'Invalid email format',
-    },
+    validate: [
+      {
+        validator: validator.isEmail,
+        message: 'Invalid email format'
+      },
+      {
+        validator: function(v) {
+          return v && v.length <= 254; // Maximum email length standard
+        },
+        message: 'Email is too long'
+      }
+    ]
   },
   phone: {
     type: String,
     required: [true, 'Phone number is required'],
     validate: {
-      validator: function (v) {
+      validator: function(v) {
         return /^\d{10}$/.test(v);
       },
-      message: 'Phone number must be 10 digits',
+      message: 'Phone number must be 10 digits'
     },
+    index: true // Add index for phone queries
   },
   password: {
     type: String,
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
-  },
-  // commented out till we figure out how to merge all schemas into one collection.
-  /*storeName: { type: String, required: [true, 'Store name is required'] },
-  storeDescription: { type: String },
-  coverImage: { type: String }, // URL for the cover image
-  vendorType: { type: String },
-  officialEmail: {
-    type: String,
-    trim: true,
-    lowercase: true,
     validate: {
-      validator: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-      message: 'Invalid email format',
-    },
-  },
-  officialPhoneNumber: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        return /^\d{10}$/.test(v);
+      validator: function(v) {
+        return v && v.length >= 8;
       },
-      message: 'Phone number must be 10 digits',
-    },
-  },
-  address: { type: String },
-  menu: [MealSchema], // Array of meals offered by the vendor
-  payouts: [PayoutSchema], // Array of payouts
-  totalOrders: { type: Number, default: 0 },
-  totalAmount: { type: Number, default: 0 },
-  averageOrderAmount: { type: Number, default: 0 },
-  reviews: [ReviewSchema], // Array of reviews from customers */
+      message: 'Password must be at least 8 characters long'
+    }
+  }
 }, {
-  timestamps: true, // Adds createdAt and updatedAt fields
+  timestamps: true,
+  collection: 'vendors' // Explicitly set collection name
 });
 
-// Create index for faster queries based on email or phone
-VendorSchema.index({ email: 1, phone: 1 });
+// Pre-save middleware for hashing passwords
+VendorSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
 
-module.exports = mongoose.model('Vendor', VendorSchema);
+// Static method to find a vendor by email or phone
+VendorSchema.statics.findByEmailOrPhone = async function (email) {
+  return this.findOne({ email: email.toLowerCase() });
+};
+
+const Vendor = mongoose.model('Vendor', VendorSchema);
+
+module.exports = Vendor;

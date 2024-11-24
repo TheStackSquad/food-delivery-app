@@ -21,22 +21,11 @@ const { registerVendor, loginVendor, getVendorProfile, updateVendorProfile, addM
  * Routes for user-related operations
  */
 
-// User signup route
-router.post('/signup', signup);
-// User login route
-router.post("/login", login);
-
-
-
-/**
- * Routes for user-related operations
- */
-
 //User signup route
 router.post('/signup', signup);
 
 
-//User signup route
+//User login route
 router.post('/login', login);
 
 

@@ -27,8 +27,6 @@ const signup = async (req, res) => {
       console.error('Validation failed:', validationError.error);
       return res.status(400).json({ error: validationError.error });
     }
-
-<<<<<<< Updated upstream
  // Check for existing username
  const existingUser = await User.findOne({ username });
  if (existingUser) {
@@ -50,16 +48,6 @@ const signup = async (req, res) => {
  if (existingEmail) {
    return res.status(400).json({ error: 'Email already in use.' });
  }
-
-=======
-    // Check for existing user (email or username)
-    try {
-      await User.checkExisting(email, username);
-    } catch (error) {
-      console.error('Existing user check failed:', error.message);
-      return res.status(400).json({ error: error.message });
-    }
->>>>>>> Stashed changes
 
     // Hash password before saving to DB
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -101,82 +89,80 @@ const signup = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
-=======
 // Login endpoint to authenticate users
->>>>>>> Stashed changes
 const login = async (req, res) => {
-  console.log('login controller Hit');
+  console.log('Login controller hit');
+  
   try {
     const { username, password } = req.body;
-<<<<<<< Updated upstream
-    console.log('login Data Recieved:', req.body.username);
-=======
-    console.log(`Login attempt for username: ${username}`);
->>>>>>> Stashed changes
+    
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Username and password are required'
+      });
+    }
+
+    console.log('Login data received:', username);
 
     // Fetch user from the database
     const user = await User.findOne({ username });
 
-<<<<<<< Updated upstream
-      res.status(200).json({
-        success: true,
-        message: 'Login successful',
-        token,
-        user: {
-          username: user.username,
-          email: user.email,
-          phone: user.phone,
-          address: user.address,
-          city: user.city,
-          profilePic: user.profilePic,
-
-        }
-      });
-=======
-    if (user) {
-      console.log(`User found: ${user.username}`);
-
-      // Compare provided password with the stored hash
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (isMatch) {
-        console.log(`Password match for username: ${username}`);
-
-        // Generate JWT token for the authenticated user
-        const token = jwt.sign(
-          { userId: user._id, username: user.username },
-          process.env.JWT_SECRET, // Ensure you have a strong JWT_SECRET in your environment variables
-          { expiresIn: '1h' } // Token expires in 1 hour
-        );
-        console.log(`Token generated successfully for ${username}`);
-
-        // Respond with success, token, and user details (excluding password)
-        res.status(200).json({
-          success: true,
-          message: 'Login successful',
-          token,
-          user: {
-            username: user.username,
-            email: user.email
-          }
-        });
-      } else {
-        console.error(`Invalid password for username: ${username}`);
-        return res.status(401).json({ success: false, message: 'Invalid username or password' });
-      }
->>>>>>> Stashed changes
-    } else {
+    if (!user) {
       console.error(`User not found for username: ${username}`);
-      return res.status(401).json({ success: false, message: 'Invalid username or password' });
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      });
     }
+
+    // Compare provided password with the stored hash
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      console.error(`Invalid password for username: ${username}`);
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      });
+    }
+
+    console.log(`Password match for username: ${username}`);
+
+    // Generate JWT token for the authenticated user
+    const token = jwt.sign(
+      { 
+        userId: user._id, 
+        username: user.username 
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    console.log(`Token generated successfully for ${username}`);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      token,
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        profilePic: user.profilePic,
+      },
+    });
+
   } catch (error) {
-    console.error('Error during login:', error);
-    return res.status(500).json({ success: false, message: 'Internal server error' });
+    console.error('Error during login:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error'
+    });
   }
 };
-
-//const uploadProfileImage = async (req, res) = {}
 
 // Get profile after successful login (protected route)
 const getProfile = async (req, res) => {
