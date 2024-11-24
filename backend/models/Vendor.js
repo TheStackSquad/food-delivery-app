@@ -60,7 +60,7 @@ const VendorSchema = new Schema({
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
   },
-  // commented out till we figure out how to merge  
+  // commented out till we figure out how to merge all schemas into one collection.
   /*storeName: { type: String, required: [true, 'Store name is required'] },
   storeDescription: { type: String },
   coverImage: { type: String }, // URL for the cover image
