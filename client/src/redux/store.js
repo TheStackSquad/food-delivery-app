@@ -1,18 +1,25 @@
-// src/redux/store.js
+//client/src/redux/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import layoutReducer from './reducers/layoutReducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import authReducer from './reducers/authReducer';
+import layoutReducer from './reducers/layoutReducer';
 
-// Combine reducers
-const rootReducer = {
-  layout: layoutReducer,
-  auth: authReducer,
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['user', 'isAuthenticated'],
 };
 
-// Create store with configureStore
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production', // Enable Redux DevTools in development mode
+  reducer: {
+    auth: persistedAuthReducer,
+    layout: layoutReducer,
+  },
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
+export const persistor = persistStore(store);
 export default store;

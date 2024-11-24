@@ -42,3 +42,24 @@ export const riderSignUpUser = async (formData, endpoint = '/api/rider/signup') 
   }
 };
 
+export const vendorSignUpUser = async (formData, endpoint = '/api/vendor/signup') => {
+  try {
+    debug(`[vendorSignUpUser] Called with formData to endpoint: ${endpoint}`, formData);
+
+    const response = await axios.post(endpoint, formData, {
+      headers: {
+        'Content-Type': 'application/json', // Ensure JSON payload
+      },
+      withCredentials: true, // Allow cookies for session management
+    });
+
+    debug('[vendorSignUpUser] Response received:', response.data);
+    return response.data;
+  } catch (error) {
+    // Log detailed error information
+    debug(`[vendorSignUpUser] Signup error to ${endpoint}:`, error.response || error);
+
+    // Rethrow a user-friendly error message
+    throw new Error(error.response?.data?.error || 'Sign-up failed. Please try again.');
+  }
+};

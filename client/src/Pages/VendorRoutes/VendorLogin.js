@@ -1,18 +1,18 @@
-// src/VendorRoutes/VendorLogin.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from '../../css/vendorLogin.module.css';
 import Alert from '../../components/UI/Alert';
-import {
-  validateUsername,
-  validatePassword,
-} from "../../frontendUtils/validation";
-import { loginUser } from "../../API/signIn";
+import { validateEmail, validatePassword } from '../../frontendUtils/validation';
+import { vendorLogin } from '../../API/signIn';
+import { loginVendor as loginVendorAction } from '../../redux/actions/authActions';
 
 function VendorLogin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -24,30 +24,40 @@ function VendorLogin() {
     message: '',
   });
 
-  // Handle input changes and reset specific field errors
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [id]: value,
     }));
+    // Clear the error for the field being changed
     setErrors((prevErrors) => ({
       ...prevErrors,
       [id]: '',
     }));
   };
 
-  // Handle form submission
+  const showAlert = (type, message) => {
+    setAlertInfo({
+      isVisible: true,
+      type,
+      message,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
+    // Destructure email and password from formData
+    const { email, password } = formData;
 
-    // Validate inputs and set errors if any
+    // Validate inputs
     const newErrors = {};
-    const usernameCheck = validateUsername(formData.username);
-    const passwordCheck = validatePassword(formData.password);
+    const emailCheck = validateEmail(email);
+    const passwordCheck = validatePassword(password);
 
-    if (!usernameCheck.isValid) newErrors.username = usernameCheck.error;
+    if (!emailCheck.isValid) newErrors.email = emailCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
 
     if (Object.keys(newErrors).length > 0) {
@@ -57,23 +67,34 @@ function VendorLogin() {
     }
 
     try {
-      await loginUser(formData);
+      const response = await vendorLogin(email, password);
+      
+      if (!response || !response.token) {
+        throw new Error('Invalid response from server');
+      }
 
-      setAlertInfo({
-        isVisible: true,
-        type: 'success',
-        message: 'Login successful!',
-      });
+      // Assuming response has structure: { success: true, user: {...}, token: '...' }
+      dispatch(loginVendorAction({
+        ...response.user,
+        token: response.token,
+      }));
 
+      // Store token in localStorage
+      localStorage.setItem('token', response.token);
+
+      showAlert('success', 'Login successful!');
+
+      // Redirect after a short delay
       setTimeout(() => {
-        navigate('/vendor/dashboard'); // redirect to user dashboard
-      }, 2000);
+        navigate('/vendor/dashboard');
+      }, 1500);
+      
     } catch (error) {
-      setAlertInfo({
-        isVisible: true,
-        type: 'error',
-        message: error.message || 'Login failed. Please try again.',
-      });
+      console.error('Login error:', error);
+      showAlert(
+        'error',
+        error.message || 'Login failed. Please check your credentials and try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -93,20 +114,20 @@ function VendorLogin() {
           onClose={() => setAlertInfo({ ...alertInfo, isVisible: false })}
         />
 
-        <h2>Login</h2>
+        <h2>Vendor Login</h2>
 
         <form className={styles.formGrid} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <input
-              type="text"
-              id="username"
-              value={formData.username}
+              type="email"
+              id="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="Full Name"
+              placeholder="Enter your email"
               required
             />
-            <label htmlFor="username">Full Name</label>
-            {errors.username && <div className={styles.error}>{errors.username}</div>}
+            <label htmlFor="email">Email</label>
+            {errors.email && <div className={styles.error}>{errors.email}</div>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -123,13 +144,21 @@ function VendorLogin() {
           </div>
 
           <div className={styles.btnWrap}>
-            <button className={styles.btnsubmit} type="submit" disabled={loading}>
-              {loading ? 'Logging In...' : 'Login'}
+            <button 
+              type="submit" 
+              className={styles.btnSubmit} 
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </div>
         </form>
 
-        <button onClick={handleSignupRedirect} className={styles.buttonSubmit}>
+        <button 
+          onClick={handleSignupRedirect} 
+          className={styles.buttonSubmit}
+          type="button"
+        >
           Don't have an account? Sign Up
         </button>
       </div>

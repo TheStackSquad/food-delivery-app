@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../../css/vendorLogin.module.css';
 import Alert from '../../components/UI/Alert';
 import {
-  validateUsername,
+  validateFullname,
   validateEmail,
   validatePhone,
   validatePassword,
 } from "../../frontendUtils/validation";
-import { signUpUser } from "../../API/signup";
+import { vendorSignUpUser } from "../../API/signup";
 
 function VendorSignup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: '',
+    fullname: '',
     email: '',
     phone: '',
     password: '',
@@ -49,12 +49,12 @@ function VendorSignup() {
 
     // Validate inputs and set errors if any
     const newErrors = {};
-    const usernameCheck = validateUsername(formData.username);
+    const fullnameCheck = validateFullname(formData.fullname);
     const emailCheck = validateEmail(formData.email);
     const phoneCheck = validatePhone(formData.phone);
     const passwordCheck = validatePassword(formData.password, formData.confirmPassword);
 
-    if (!usernameCheck.isValid) newErrors.username = usernameCheck.error;
+    if (!fullnameCheck.isValid) newErrors.username = fullnameCheck.error;
     if (!emailCheck.isValid) newErrors.email = emailCheck.error;
     if (!phoneCheck.isValid) newErrors.phone = phoneCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
@@ -70,7 +70,7 @@ function VendorSignup() {
         ...formData,
         phone: formData.phone.replace(/\D/g, ''), // Remove non-numeric characters
       };
-      await signUpUser(formattedData);
+      await vendorSignUpUser(formattedData);
 
       setAlertInfo({
         isVisible: true,
@@ -79,7 +79,7 @@ function VendorSignup() {
       });
 
       setFormData({
-        username: '',
+        fullname: '',
         email: '',
         phone: '',
         password: '',
@@ -122,8 +122,8 @@ function VendorSignup() {
           <div className={styles.inputGroup}>
             <input
               type="text"
-              id="username"
-              value={formData.username}
+              id="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               placeholder="Full Name"
               required

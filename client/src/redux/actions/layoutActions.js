@@ -1,8 +1,10 @@
 // src/redux/actions/layoutActions.js
-export const TOGGLE_DROPDOWN = 'TOGGLE_DROPDOWN';
-export const TOGGLE_CHAT = 'TOGGLE_CHAT';
-export const UPDATE_INTERACTION = 'UPDATE_INTERACTION';
-export const HIDE_CHAT_ICON = 'HIDE_CHAT_ICON';
+import {
+  TOGGLE_DROPDOWN,
+  TOGGLE_CHAT,
+  UPDATE_INTERACTION,
+  HIDE_CHAT_ICON,
+} from '../constants/actionTypes';
 
 export const toggleDropdown = () => ({
   type: TOGGLE_DROPDOWN,

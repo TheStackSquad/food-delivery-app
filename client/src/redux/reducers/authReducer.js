@@ -1,43 +1,44 @@
-// client/src/redux/reducers/authReducer.js
+//client/src/reducers/authReducer.js
+import {
+  LOGIN,
+  LOGOUT,
+  VENDOR_LOGIN_SUCCESS,
+  VENDOR_LOGOUT,
+  UPDATE_PROFILE_IMAGE,
+} from '../constants/actionTypes';
+
 const initialState = {
   user: {
-    username: '',      // default username
-    token: '',         // default token
-    profileImage: '',  // default profileImage, empty string until uploaded
+    username: '',
+    email: '',
+    address: '',
+    city: '',
+    profileImage: '',
+    token: '',
   },
   isAuthenticated: false,
+  loading: false,
+  error: null,
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case LOGIN:
+    case VENDOR_LOGIN_SUCCESS:
       return {
         ...state,
-        user: {
-          ...action.payload,  // action.payload should now include user data like username and token
-          profileImage: '',   // ensure profileImage is part of the user object, default to ''
-        },
+        user: { ...action.payload },
         isAuthenticated: true,
       };
 
-    case 'LOGOUT':
-      return {
-        ...state,
-        user: {
-          username: '',
-          token: '',
-          profileImage: '',
-        },
-        isAuthenticated: false,
-      };
+    case LOGOUT:
+    case VENDOR_LOGOUT:
+      return { ...initialState };
 
-    case 'UPDATE_PROFILE_IMAGE':
+    case UPDATE_PROFILE_IMAGE:
       return {
         ...state,
-        user: {
-          ...state.user,
-          profileImage: action.payload,  // Update the profile image within the user object
-        },
+        user: { ...state.user, profileImage: action.payload },
       };
 
     default:

@@ -15,7 +15,10 @@ import styles from "../css/Contact.module.css";
 
 function Contact() {
   // Accessing Redux state
+  // eslint-disable-next-line 
   const { isChatOpen, isChatIconVisible } = useSelector((state) => state.layout);
+  console.log(isChatOpen, isChatIconVisible);
+  
   const dispatch = useDispatch();
 
   // Handle the chat toggle by dispatching the Redux action

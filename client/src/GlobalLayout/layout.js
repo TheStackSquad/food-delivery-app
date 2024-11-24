@@ -13,6 +13,7 @@ function GlobalLayout({ children }) {
   const slideRef = useRef(null);
 
   // Accessing state from Redux store
+   // eslint-disable-next-line
   const { isOpen, isChatIconVisible } = useSelector((state) => state.layout);  // Select state
   const dispatch = useDispatch();
 

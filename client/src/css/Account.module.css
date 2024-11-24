@@ -165,6 +165,34 @@
   margin-bottom: 1rem;
 }
 
+.suggestions {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  color: #555; /* Adjust to your theme */
+  font-size: 0.9rem;
+}
+
+.suggestions h4 {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.suggestions ul {
+  list-style: disc;
+  margin-left: 1rem;
+}
+
+.suggestions li {
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  text-decoration: underline;
+}
+
+
 /* Responsive adjustments */
 @media screen and (min-width: 576px) {
   .contentContainer {

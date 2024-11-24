@@ -11,7 +11,8 @@ import {
 import { signUpUser } from '../API/signup';
 
 const Account = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
   // Form data state
   const [formData, setFormData] = useState({
     username: '',
@@ -22,7 +23,7 @@ const Account = () => {
     password: '',
     confirmPassword: '',
   });
-console.log('Form Data', formData);
+  console.log('Form Data', formData);
 
   // Error and alert management states
   const [errors, setErrors] = useState({});
@@ -34,6 +35,9 @@ console.log('Form Data', formData);
   });
   const [loading, setLoading] = useState(false);
 
+  // Suggestions state for available username suggestions
+  const [suggestions, setSuggestions] = useState([]); // Added state for suggestions
+
   /**
    * Handles input changes and clears specific field errors
    * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
@@ -44,7 +48,7 @@ console.log('Form Data', formData);
       ...prevState,
       [id]: value,
     }));
-    
+
     // Clear specific field error when user starts typing
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -78,7 +82,7 @@ console.log('Form Data', formData);
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Reset previous states
     setErrors({});
     setLoading(true);
@@ -103,7 +107,7 @@ console.log('Form Data', formData);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
-      
+
       // Show error alert
       showAlert({
         type: 'error',
@@ -141,7 +145,26 @@ console.log('Form Data', formData);
       });
       navigate('/login'); // Redirect to /login
     } catch (error) {
-      // Handle registration errors
+      // Handle username uniqueness error with suggestions
+      if (error.response && error.response.status === 400) {
+        const { error: errorMessage, suggestions: suggestedUsernames } = error.response.data;
+
+        // Check if the error is related to username
+        if (errorMessage.includes('Username already taken')) {
+          // Update the UI with suggestions
+          setSuggestions(suggestedUsernames || []);
+
+          // Show alert for username conflict
+          showAlert({
+            type: 'error',
+            message: `${errorMessage}. Suggested usernames: ${suggestedUsernames.join(', ')}`,
+          });
+          setLoading(false);
+          return;
+        }
+      }
+
+      // General registration error handling
       showAlert({
         type: 'error',
         message: error.message || 'Registration failed. Please try again.',
@@ -153,48 +176,13 @@ console.log('Form Data', formData);
 
   // Input configuration for dynamic rendering
   const inputConfigs = [
-    { 
-      id: 'username', 
-      label: 'Username', 
-      type: 'text', 
-      placeholder: 'John Doe' 
-    },
-    { 
-      id: 'email', 
-      label: 'Email Address', 
-      type: 'email', 
-      placeholder: 'you@example.com' 
-    },
-    { 
-      id: 'phone', 
-      label: 'Phone Number', 
-      type: 'tel', 
-      placeholder: '1234567890' 
-    },
-    { 
-      id: 'address', 
-      label: 'Delivery Address', 
-      type: 'text', 
-      placeholder: '123 Main St, Apt 1' 
-    },
-    { 
-      id: 'city', 
-      label: 'City/State', 
-      type: 'text', 
-      placeholder: 'City, State' 
-    },
-    { 
-      id: 'password', 
-      label: 'Password', 
-      type: 'password', 
-      placeholder: 'Create a password' 
-    },
-    { 
-      id: 'confirmPassword', 
-      label: 'Confirm Password', 
-      type: 'password', 
-      placeholder: 'Confirm your password' 
-    },
+    { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
+    { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com' },
+    { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '1234567890' },
+    { id: 'address', label: 'Delivery Address', type: 'text', placeholder: '123 Main St, Apt 1' },
+    { id: 'city', label: 'City/State', type: 'text', placeholder: 'City, State' },
+    { id: 'password', label: 'Password', type: 'password', placeholder: 'Create a password' },
+    { id: 'confirmPassword', label: 'Confirm Password', type: 'password', placeholder: 'Confirm your password' },
   ];
 
   return (
@@ -214,7 +202,6 @@ console.log('Form Data', formData);
         </div>
 
         <div className={styles.blob}></div>
-
         <form className={styles.formBox} onSubmit={handleSubmit}>
           {inputConfigs.map(({ id, label, type, placeholder }) => (
             <div key={id} className={styles.inputGroup}>
@@ -231,6 +218,18 @@ console.log('Form Data', formData);
                 {label}
               </label>
               {errors[id] && <div className={styles.error}>{errors[id]}</div>}
+
+              {/* Add suggestions below the username field */}
+              {id === 'username' && suggestions.length > 0 && (
+                <div className={styles.suggestions}>
+                  <h4>Suggestions for Username:</h4>
+                  <ul>
+                    {suggestions.map((suggestion, index) => (
+                      <li key={index}>{suggestion}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
 
