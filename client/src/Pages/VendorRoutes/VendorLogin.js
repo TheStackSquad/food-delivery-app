@@ -1,20 +1,26 @@
-//client/src/Pages/VendorRoutes/VendorLogin.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import styles from '../../css/vendorLogin.module.css';
-import Alert from '../../components/UI/Alert';
-import { validateEmail, validatePassword } from '../../frontendUtils/validation';
-import { vendorLogin } from '../../API/signIn';
-import { loginVendor as loginVendorAction } from '../../redux/actions/authActions';
+//client/src/Pages/VendorRoutes/Vendorlogin.js
+// VendorLogin Component
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "../../css/vendorLogin.module.css";
+import Alert from "../../components/UI/Alert";
+import { validateEmail, validatePassword } from "../../frontendUtils/validation";
+import { vendorLogin } from "../../API/signIn";
+import { loginVendor as loginVendorAction } from "../../redux/actions/authActions";
+
 
 function VendorLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
+  // Access Redux state
+  const vendorState = useSelector((state) => state.auth.user.sessionData);
+  console.log('vendor state:', vendorState);
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   console.log('Login Data:', formData.email);
 
@@ -23,8 +29,8 @@ function VendorLogin() {
   const [loading, setLoading] = useState(false);
   const [alertInfo, setAlertInfo] = useState({
     isVisible: false,
-    type: 'info',
-    message: '',
+    type: "info",
+    message: "",
   });
 
   const handleChange = (e) => {
@@ -33,10 +39,9 @@ function VendorLogin() {
       ...prevState,
       [id]: value,
     }));
-    // Clear the error for the field being changed
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [id]: '',
+      [id]: "",
     }));
   };
 
@@ -72,38 +77,39 @@ function VendorLogin() {
   
     try {
       const response = await vendorLogin(email, password);
-      
-      // Check if response exists and has required data
+
       if (!response || !response.data) {
-        throw new Error('Invalid response from server');
+        throw new Error("Invalid response from server");
       }
-  
+
       const { token, user } = response.data;
-  
+
       if (!token) {
-        throw new Error('No token received from server');
+        throw new Error("No token received from server");
       }
-  
-      // Dispatch login action with user data and token
-      dispatch(loginVendorAction({
-        ...user,
+
+      const vendorData = {
+        vendor: user,
         token,
-      }));
-  
-      // Store token in localStorage
-      localStorage.setItem('token', token);
-      
-      showAlert('success', 'Login successful!');
-      
-      // Redirect after a short delay
+        sessionData: response.data.sessionData,
+      };
+
+      // Dispatch Redux action
+      dispatch(loginVendorAction(vendorData));
+
+      // Save to localStorage
+      localStorage.setItem("vendorData", JSON.stringify(vendorData));
+
+      showAlert("success", "Login successful!");
+
+      // Redirect after login
       setTimeout(() => {
-        navigate('/vendor/dashboard');
+        navigate("/vendor/dashboard");
       }, 1500);
-  
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       showAlert(
-        'error',
+        "error",
         error.response?.data?.message || error.message || 'Login failed. Please check your credentials and try again.'
       );
     } finally {
@@ -118,7 +124,7 @@ function VendorLogin() {
   return (
     <div className={`${styles.gridContainer} ${styles.login}`}>
       <div className={styles.formWrap}>
-        <Alert 
+        <Alert
           isVisible={alertInfo.isVisible}
           type={alertInfo.type}
           message={alertInfo.message}
@@ -151,22 +157,24 @@ function VendorLogin() {
               required
             />
             <label htmlFor="password">Password</label>
-            {errors.password && <div className={styles.error}>{errors.password}</div>}
+            {errors.password && (
+              <div className={styles.error}>{errors.password}</div>
+            )}
           </div>
 
           <div className={styles.btnWrap}>
-            <button 
-              type="submit" 
-              className={styles.btnSubmit} 
+            <button
+              type="submit"
+              className={styles.btnSubmit}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>
 
-        <button 
-          onClick={handleSignupRedirect} 
+        <button
+          onClick={handleSignupRedirect}
           className={styles.buttonSubmit}
           type="button"
         >

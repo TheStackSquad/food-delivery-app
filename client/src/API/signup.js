@@ -8,7 +8,7 @@ export const signUpUser = async (formData, endpoint = '/api/signup') => {
 
     const response = await axios.post(endpoint, formData, {
       headers: {
-        'Content-Type': 'application/json', // Ensure JSON payload
+        'Content-Type': 'application/json',
       },
       withCredentials: true, // Allow cookies for session management
     });
@@ -45,7 +45,7 @@ export const riderSignUpUser = async (formData, endpoint = '/api/rider/signup') 
 export const vendorSignUpUser = async (formData, endpoint = '/api/vendor/signup') => {
   try {
     debug(`[vendorSignUpUser] Called with formData to endpoint: ${endpoint}`, formData);
-
+    
     const response = await axios.post(endpoint, formData, {
       headers: {
         'Content-Type': 'application/json', // Ensure JSON payload
@@ -61,5 +61,52 @@ export const vendorSignUpUser = async (formData, endpoint = '/api/vendor/signup'
 
     // Rethrow a user-friendly error message
     throw new Error(error.response?.data?.error || 'Sign-up failed. Please try again.');
+  }
+};
+
+//client/ src/API/signup.js
+export const vendorProfile = async (formData, endpoint = '/api/vendor/profile', token) => {
+  console.log('vendorProfile Hit');
+  try {
+    debug(`[vendorProfile] Called with formData to endpoint: ${endpoint}`, formData);
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`, // Include the token for authentication
+      },
+      withCredentials: true, // Allow cookies for session management
+    };
+
+    // Debug request details
+    console.group('[API] Vendor Profile Update');
+    console.log('Request Payload:', {
+      profileData: formData.get('profile'),
+      profileImageSize: formData.get('profileImage')?.size,
+      coverImage: formData.get('coverImage')?.size,
+    });
+
+
+    // Send POST request
+    const response = await axios.post(endpoint, formData, config);
+
+    console.log('Response Data:', response.data);
+    console.groupEnd();
+
+    debug('[vendorProfile] Response received:', response.data);
+    return response.data;
+  } catch (error) {
+    // Log detailed error information
+    debug(`[vendorProfile] Error from ${endpoint}:`, error.response || error);
+    console.group('[API] Vendor Profile Update Error');
+    console.error('ERROR Details:', {
+      status: error.response?.status,
+      message: error.response?.data?.message,
+      errors: error.response?.data?.errors,
+    });
+    console.groupEnd();
+
+    // Rethrow a user-friendly error message
+    throw new Error(error.response?.data?.message || 'Profile update failed. Please try again.');
   }
 };

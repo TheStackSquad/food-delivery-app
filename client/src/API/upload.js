@@ -28,3 +28,14 @@ export const fetchProfileImage = async () => {
     throw error;
   }
 };
+
+// upoad vendor Image
+export const uploadVendorImage = (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return axios.post("api/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+

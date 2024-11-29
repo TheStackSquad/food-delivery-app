@@ -1,7 +1,7 @@
 // backend/controllers/userController.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/userSchema/User');
 const userValidators = require('../utils/validators');
 
 // Sign-up endpoint to create a new user
@@ -27,6 +27,7 @@ const signup = async (req, res) => {
       console.error('Validation failed:', validationError.error);
       return res.status(400).json({ error: validationError.error });
     }
+
  // Check for existing username
  const existingUser = await User.findOne({ username });
  if (existingUser) {
@@ -91,56 +92,64 @@ const signup = async (req, res) => {
 
 // Login endpoint to authenticate users
 const login = async (req, res) => {
-  console.log('Login controller hit');
-  
+  console.log('[Login] Controller hit');
+
   try {
     const { username, password } = req.body;
-    
+    console.log('[Login] Data Received:', username);
+
+    // Validate input
     if (!username || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Username and password are required'
+        message: 'Username and password are required',
       });
     }
-
-    console.log('Login data received:', username);
 
     // Fetch user from the database
     const user = await User.findOne({ username });
-
     if (!user) {
-      console.error(`User not found for username: ${username}`);
+      console.error(`[Login] User not found for username: ${username}`);
       return res.status(401).json({
         success: false,
-        message: 'Invalid username or password'
+        message: 'Invalid username or password',
       });
     }
+
+    console.log(`[Login] User found: ${user.username}`);
 
     // Compare provided password with the stored hash
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      console.error(`Invalid password for username: ${username}`);
+      console.error(`[Login] Password mismatch for username: ${username}`);
       return res.status(401).json({
         success: false,
-        message: 'Invalid username or password'
+        message: 'Invalid username or password',
       });
     }
 
-    console.log(`Password match for username: ${username}`);
+    console.log(`[Login] Password match for username: ${username}`);
 
     // Generate JWT token for the authenticated user
-    const token = jwt.sign(
-      { 
-        userId: user._id, 
-        username: user.username 
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    let token;
+    try {
+      token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET, // Ensure a strong JWT_SECRET is in your environment variables
+        { expiresIn: '24h' } // Token expires in 24 hours
+      );
+    } catch (jwtError) {
+      console.error('[Login] Error generating token:', jwtError.message);
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to generate authentication token',
+      });
+    }
 
-    console.log(`Token generated successfully for ${username}`);
+    console.log(`[Login] Token generated successfully for ${username}`);
 
+    // Respond with success, token, and minimal user details
     return res.status(200).json({
       success: true,
       message: 'Login successful',
@@ -154,12 +163,38 @@ const login = async (req, res) => {
         profilePic: user.profilePic,
       },
     });
-
   } catch (error) {
-    console.error('Error during login:', error.message);
+    console.error('[Login] Error during login:', error.message);
     return res.status(500).json({
       success: false,
-      message: 'Internal server error'
+      message: 'Internal server error',
+    });
+  }
+};
+
+//profile image controller
+const uploadProfileImage = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.profilePicture = req.file.path;
+    await user.save();
+
+    res.status(200).json({ 
+      message: 'Profile picture uploaded successfully', 
+      filePath: req.file.path 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error saving profile picture', 
+      error 
     });
   }
 };
@@ -186,4 +221,4 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, signup, login };
+module.exports = { getProfile, signup, login, uploadProfileImage };

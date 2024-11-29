@@ -19,6 +19,7 @@ import Menu from "./Pages/Menu";
 import Dashboard from "./Pages/Dashboard";
 import VendorSignup from "./Pages/VendorRoutes/VendorSignUp";
 import VendorLogin from "./Pages/VendorRoutes/VendorLogin";
+import VendorDashboard from "./Pages/VendorRoutes/VendorDashboard";
 import VendorProfile from "./Pages/VendorRoutes/VendorProfile";
 import VendorPayout from "./Pages/VendorRoutes/VendorPayout";
 import VendorAddMenu from "./Pages/VendorRoutes/VendorAddMenu";
@@ -37,43 +38,44 @@ function App() {
     // Wrap the entire app with both the Redux Provider and Layout Provider
     <Provider store={store}> {/* Adding Redux store */}
       <Router>
-       
-        {/** <LayoutProvider>  */}
-          <GlobalLayout>
-            <ChatWidget />
-            <Routes> {/* Correct placement of Routes component */}
-              <Route path="/" element={<Home />} />
-              <Route path="/account" element={<Account />} />
-              <Route path="/menu" element={<Menu />} />
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/login/dashboard" element={<Dashboard />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/vendor" element={<Vendor />} />
+        <GlobalLayout>
+          <ChatWidget />
+          
+          <Routes> {/* Correct placement of Routes component */}
+            {/* General Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/login/dashboard" element={<Dashboard />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/vendor" element={<Vendor />} />
 
-              {/* Vendor Nested Routes */}
-              <Route path="/vendor" element={<VendorLayout />} />
-              <Route path="/vendor/signup" element={<VendorSignup />} />
-              <Route path="/vendor/login" element={<VendorLogin />} />
-              <Route path="/vendor/profile" element={<VendorProfile />} />
-              <Route path="/vendor/payout" element={<VendorPayout />} />
-              <Route path="/vendor/addmenu" element={<VendorAddMenu />} />
-              <Route path="/vendor/insight" element={<VendorInsight />} />
-             
-              <Route path="/rider" element={<Rider />} />
+            {/* Vendor Routes */}
+            <Route path="/vendor" element={<VendorLayout />}>
+              <Route path="signup" element={<VendorSignup />} />
+              <Route path="login" element={<VendorLogin />} />
+              <Route path="profile" element={<VendorProfile />} />
+              <Route path="dashboard" element={<VendorDashboard />} />
+              <Route path="payout" element={<VendorPayout />} />
+              <Route path="addmenu" element={<VendorAddMenu />} />
+              <Route path="insight" element={<VendorInsight />} />
+            </Route>
 
-              {/* Rider Nested Routes */}
-              <Route path="/rider" element={<RiderLayout />} />
-              <Route path="/rider/login" element={<RiderLogin />} />
-              <Route path="/rider/signup" element={<RiderSignUp />} />
-              <Route path="/rider/profile" element={<RiderProfile />} />
-              <Route path="/rider/payout" element={<RiderPayout />} />
-              <Route path="/rider/delivery" element={<RiderDelivery />} />
-              <Route path="/rider/insight" element={<RiderInsight />} />
-            </Routes>
-          </GlobalLayout>
-       
-          {/** </LayoutProvider> */}
+            <Route path="/rider" element={<Rider />} />
+            {/* Rider Routes */}
+            <Route path="/rider" element={<RiderLayout />}>
+              <Route path="login" element={<RiderLogin />} />
+              <Route path="signup" element={<RiderSignUp />} />
+              <Route path="profile" element={<RiderProfile />} />
+              <Route path="payout" element={<RiderPayout />} />
+              <Route path="delivery" element={<RiderDelivery />} />
+              <Route path="insight" element={<RiderInsight />} />
+            </Route>
+            
+          </Routes>
+        </GlobalLayout>
       </Router>
     </Provider>
   );

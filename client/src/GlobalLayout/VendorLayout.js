@@ -1,7 +1,14 @@
 //src/GlobalLayout/VendorLayout.js
 import React from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import { FaUserPlus, FaUser, FaWallet, FaHamburger, FaChartBar } from 'react-icons/fa';
+import { FaUserPlus,
+  FaUser,
+  FaWallet,
+  FaHamburger,
+  FaChartBar,
+  FaTachometerAlt
+} from 'react-icons/fa';
+
 import styles from '../css/VendorLayout.module.css';
 
 const navigation = [
@@ -15,6 +22,12 @@ const navigation = [
     to: '/vendor/profile',
     icon: FaUser,
   },
+  {
+    name: 'Dashboard', 
+    to: '/vendor/dashboard', 
+    icon: FaTachometerAlt,
+  },
+  
   {
     name: 'Payout',
     to: '/vendor/payout',

@@ -1,6 +1,7 @@
 //src/API/signIn.js
 import axios from 'axios';
 
+
 export const vendorLogin = async (email, password) => {
   console.log('vendorLogin Hit');
   try {
@@ -60,3 +61,6 @@ export const riderLogin =  async (email, password) => {
     }
   }
 };
+
+
+

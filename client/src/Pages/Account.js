@@ -56,10 +56,6 @@ const Account = () => {
     }));
   };
 
-  /**
-   * Displays an alert with given configuration
-   * @param {Object} config - Alert configuration
-   */
   const showAlert = (config) => {
     setAlertConfig({
       isVisible: true,

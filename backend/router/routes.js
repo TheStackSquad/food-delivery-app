@@ -1,25 +1,42 @@
-// backend/router/routes.js
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware'); // For protected routes
-const debug = require('debug')('app:routes'); // Debug instance for logging
 const path = require('path');
-const multer = require('multer');
+const debug = require('debug')('app:routes'); // Debug for logging
 
-const riderController = require('../controllers/riderController');
+// Middleware
+const authMiddleware = require('../middleware/authMiddleware'); // For protected routes
+const { vendorProfileUpload } = require('../middleware/multer');  // Correctly import the middleware
+
+
+// Controllers
 const userController = require('../controllers/userController');
+const riderController = require('../controllers/riderController');
 const vendorController = require('../controllers/vendorController');
 
-const { signup, login } = userController;
+// Destructure user-related controller functions
+const { signup, login, getProfile } = userController;
 
 // Destructure rider-related controller functions
-const { riderSignup, riderLogin, updateRiderProfile, updateRiderPayout, updateRiderAchievements } = riderController;
-// Desctructure vendor-related controller functions
-const { registerVendor, loginVendor, getVendorProfile, updateVendorProfile, addMealToMenu, getVendorMenu } = vendorController;
+const { 
+    riderSignup, 
+    riderLogin, 
+    updateRiderProfile, 
+    updateRiderPayout, 
+    updateRiderAchievements 
+} = riderController;
 
-/**
- * Routes for user-related operations
- */
+// Destructure vendor-related controller functions
+const { 
+    registerVendor, 
+    loginVendor, 
+    getVendorProfile, 
+    updateVendorProfile, 
+    addMealToMenu, 
+    getVendorMenu 
+} = vendorController;
+
+// Multer setup for user profile picture upload
+const multer = require('multer');
 
 //User signup route
 router.post('/signup', signup);
@@ -78,33 +95,59 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-        cb(null, `${req.user.id} -${Date.now()}${path.extname(file.originalname)}`);
+        cb(null, `${req.user.id}-${Date.now()}${path.extname(file.originalname)}`);
     }
 });
-
 const upload = multer({ storage });
 
-router.post('/uploadProfilePicture', authMiddleware, upload.single('profilePicture'), async (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ message: 'No file uploaded' });
-    }
+/**
+ * ==========================
+ * User-Related Routes
+ * ==========================
+ */
+router.post('/signup', signup); // User signup
+router.post('/login', login);   // User login
+router.get('/profile', authMiddleware, getProfile); // Get user profile (protected route)
+//router.post('/login/dashboard', updateProfilePicture); // User profile picture upload
 
-    try {
-        const user = await User.findById(req.user.userId);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+/**
+ * ==========================
+ * Rider-Related Routes
+ * ==========================
+ */
+router.post('/rider/signup', riderSignup); // Rider signup
+router.post('/rider/login', riderLogin);   // Rider login
 
-        user.profilePicture = req.file.path;
-        await user.save();
+// Rider profile updates
+router.patch('/rider/updateProfile', authMiddleware, updateRiderProfile); // Update profile
+router.patch('/rider/updatePayout', authMiddleware, updateRiderPayout);   // Update payout
+router.patch('/rider/updateAchievements', authMiddleware, updateRiderAchievements); // Update achievements
 
-        res.status(200).json({ message: 'Profile picture uploaded successfully', filePath: req.file.path });
-    } catch (error) {
-        res.status(500).json({ message: 'Error saving profile picture', error });
-    }
-});
+/**
+ * ==========================
+ * Vendor-Related Routes
+ * ==========================
+ */
+router.post('/vendor/signup', registerVendor); // Vendor signup
+router.post('/vendor/login', loginVendor);     // Vendor login
+router.get('/vendor/profile',
+    authMiddleware,
+    vendorProfileUpload,
+    getVendorProfile); // Get vendor profile
 
-// Protected route
-router.get('/profile', authMiddleware, userController.getProfile);
+// Vendor profile update
+router.post(
+    '/vendor/profile', 
+    authMiddleware, 
+    vendorProfileUpload, 
+    updateVendorProfile
+); // Post vendor profile
+
+// Vendor menu management
+router.post('/vendor/menu', authMiddleware, addMealToMenu); // Add meal
+router.get('/vendor/menu', authMiddleware, getVendorMenu);  // Get menu
+
+// Initialize debug logging
+debug('Routes initialized.');
 
 module.exports = router;

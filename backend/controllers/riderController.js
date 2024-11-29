@@ -1,5 +1,5 @@
 // backend/controller/riderController.js
-const Rider = require('../models/Rider');
+const Rider = require('../models/riderSchema/Rider');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userValidators = require('../utils/validators');
