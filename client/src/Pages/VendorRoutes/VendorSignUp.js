@@ -20,6 +20,7 @@ function VendorSignup() {
     password: '',
     confirmPassword: '',
   });
+  console.log(formData.fullname);
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,7 @@ function VendorSignup() {
     const phoneCheck = validatePhone(formData.phone);
     const passwordCheck = validatePassword(formData.password, formData.confirmPassword);
 
-    if (!fullnameCheck.isValid) newErrors.username = fullnameCheck.error;
+    if (!fullnameCheck.isValid) newErrors.fullname = fullnameCheck.error;
     if (!emailCheck.isValid) newErrors.email = emailCheck.error;
     if (!phoneCheck.isValid) newErrors.phone = phoneCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
@@ -70,7 +71,9 @@ function VendorSignup() {
         ...formData,
         phone: formData.phone.replace(/\D/g, ''), // Remove non-numeric characters
       };
+      console.log('Formatted Data:', formattedData);
       await vendorSignUpUser(formattedData);
+      
 
       setAlertInfo({
         isVisible: true,

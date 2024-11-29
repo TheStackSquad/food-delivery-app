@@ -1,6 +1,33 @@
 //src/API/signIn.js
 import axios from 'axios';
 
+
+export const vendorLogin = async (email, password) => {
+  console.log('vendorLogin Hit');
+  try {
+    const response = await axios.post('/api/vendor/login', {
+      email,
+      password,
+    });
+
+    // Return the entire response
+    return response;
+
+  } catch (error) {
+    // Throw the error with more detailed information
+    if (error.response?.data) {
+      // eslint-disable-next-line
+      throw {
+        message: error.response.data.message || 'Login failed',
+        status: error.response.status,
+        data: error.response.data
+      };
+    }
+    throw error;
+  }
+};
+
+
 export const loginUser = async (username, password) => {
   console.log('loginUser Api Hit');
   try {
@@ -32,31 +59,6 @@ export const riderLogin =  async (email, password) => {
     } else {
       throw error;
     }
-  }
-};
-
-export const vendorLogin = async (email, password) => {
-  console.log('vendorLogin Hit');
-  try {
-    const response = await axios.post('/api/vendor/login', {
-      email,
-      password,
-    });
-
-    // Return the entire response
-    return response;
-
-  } catch (error) {
-    // Throw the error with more detailed information
-    if (error.response?.data) {
-      // eslint-disable-next-line
-      throw {
-        message: error.response.data.message || 'Login failed',
-        status: error.response.status,
-        data: error.response.data
-      };
-    }
-    throw error;
   }
 };
 

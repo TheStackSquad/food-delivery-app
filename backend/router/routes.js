@@ -37,6 +37,59 @@ const {
 
 // Multer setup for user profile picture upload
 const multer = require('multer');
+
+//User signup route
+router.post('/signup', signup);
+
+
+//User login route
+router.post('/login', login);
+
+
+/**
+ * Routes for rider-related operations
+ */
+// Rider signup route
+router.post('/rider/signup', riderSignup);
+
+//Rider Login router
+router.post("/rider/login", riderLogin);
+
+
+// Route to update rider profile (address, phone, delivery mode)
+router.patch('/rider/updateProfile', authMiddleware, updateRiderProfile);
+
+// Route to update rider payout information
+router.patch('/rider/updatePayout', authMiddleware, updateRiderPayout);
+
+// Route to update rider achievements (topRated, speedKing)
+router.patch('/rider/updateAchievements', authMiddleware, updateRiderAchievements);
+
+/**
+ * Routes for vendor-related operations
+ */
+
+// Vendor signup route
+router.post('/vendor/signup', registerVendor);
+
+// Vendor login route
+router.post('/vendor/login', loginVendor);
+
+// Get vendor profile
+router.get('/vendor/profile', authMiddleware, getVendorProfile);
+
+// Update vendor profile
+router.put('/vendor/profile', authMiddleware, updateVendorProfile);
+
+// Add meal to vendor's menu
+router.post('/vendor/menu', authMiddleware, addMealToMenu);
+
+// Get vendor menu
+router.get('/vendor/menu', authMiddleware, getVendorMenu);
+
+debug('Routes initialized.');
+
+// user image upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');

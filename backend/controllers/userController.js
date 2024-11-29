@@ -92,54 +92,83 @@ const signup = async (req, res) => {
 
 // Login endpoint to authenticate users
 const login = async (req, res) => {
-  console.log('login controller Hit');
+  console.log('[Login] Controller hit');
+
   try {
     const { username, password } = req.body;
-    console.log('login Data Recieved:', req.body.username);
+    console.log('[Login] Data Received:', username);
+
+    // Validate input
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Username and password are required',
+      });
+    }
 
     // Fetch user from the database
     const user = await User.findOne({ username });
-
-    if (user) {
-      console.log(`User found: ${user.username}`);
-
-      // Compare provided password with the stored hash
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (isMatch) {
-        console.log(`Password match for username: ${username}`);
-
-        // Generate JWT token for the authenticated user
-        const token = jwt.sign(
-          { userId: user._id, username: user.username },
-          process.env.JWT_SECRET, // Ensure you have a strong JWT_SECRET in your environment variables
-          { expiresIn: '1h' } // Token expires in 1 hour
-        );
-        console.log(`Token generated successfully for ${username}`);
-
-        // Respond with success, token, and user details (excluding password)
-        res.status(200).json({
-          success: true,
-          message: 'Login successful',
-          token,
-          user: {
-            username: user.username,
-            email: user.email,
-            phone: user.phone,
-            address: user.address,
-            city: user.city,
-            profilePic: user.profilePic,
-  
-          }
-        });
-      }
-    } else {
-      console.error(`User not found for username: ${username}`);
-      return res.status(401).json({ success: false, message: 'Invalid username or password' });
+    if (!user) {
+      console.error(`[Login] User not found for username: ${username}`);
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password',
+      });
     }
+
+    console.log(`[Login] User found: ${user.username}`);
+
+    // Compare provided password with the stored hash
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      console.error(`[Login] Password mismatch for username: ${username}`);
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password',
+      });
+    }
+
+    console.log(`[Login] Password match for username: ${username}`);
+
+    // Generate JWT token for the authenticated user
+    let token;
+    try {
+      token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET, // Ensure a strong JWT_SECRET is in your environment variables
+        { expiresIn: '24h' } // Token expires in 24 hours
+      );
+    } catch (jwtError) {
+      console.error('[Login] Error generating token:', jwtError.message);
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to generate authentication token',
+      });
+    }
+
+    console.log(`[Login] Token generated successfully for ${username}`);
+
+    // Respond with success, token, and minimal user details
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      token,
+      user: {
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        profilePic: user.profilePic,
+      },
+    });
   } catch (error) {
-    console.error('Error during login:', error);
-    return res.status(500).json({ success: false, message: 'Internal server error' });
+    console.error('[Login] Error during login:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
   }
 };
 
@@ -169,7 +198,6 @@ const uploadProfileImage = async (req, res) => {
     });
   }
 };
-
 
 // Get profile after successful login (protected route)
 const getProfile = async (req, res) => {

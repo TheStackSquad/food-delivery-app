@@ -17,7 +17,8 @@ const path = require('path');
 const registerVendor = async (req, res) => {
     try {
         const { fullname, email, phone, password, confirmPassword } = req.body;
-
+        console.log('fullname', req.body.fullname);
+        
         // Validate inputs using validators
         const validations = [
             userValidators.validateFullname(fullname),
@@ -42,10 +43,12 @@ const registerVendor = async (req, res) => {
 
         // Create new vendor
         const newVendor = new Vendor({
+           
             fullname,
             email: email.toLowerCase(),
             phone,
             password: hashedPassword,
+
         });
 
         // Save vendor to database
@@ -69,23 +72,23 @@ const registerVendor = async (req, res) => {
 
         res.status(201).json({
             message: 'Vendor registration successful!',
-            vendor: {
-                fullname: newVendor.fullname,
-                email: newVendor.email,
-            },
+           vendor: newVendor.toPublicJSON()
         });
     } catch (error) {
         console.error('Error registering vendor:', error);
-        res.status(500).json({ error: 'Internal server error. Please try again.' });
+        res.status(error.code === 11000 ? 400 : 500).json({
+            error: error.message || 'Internal server error. Please try again.' });
     }
 };
 
 
 // Vendor login
 const loginVendor = async (req, res) => {
+    console.log("vendor login endpoint hit with data:", req.body);
     try {
         // Extract email and password from the request body
         const { email, password } = req.body;
+        console.log('Login request body:', req.body.email);
 
         // Step 1: Validate inputs
         const emailValidation = userValidators.validateEmail(email); // Check email format
@@ -103,7 +106,7 @@ const loginVendor = async (req, res) => {
 
         // Step 2: Find the vendor by email (case insensitive)
         const vendor = await Vendor.findOne({ email: email.toLowerCase() });
-        
+
         // If vendor does not exist, return unauthorized error
         if (!vendor) {
             return res.status(401).json({ error: 'Invalid email or password' });
@@ -147,13 +150,33 @@ const loginVendor = async (req, res) => {
                 vendorType: vendor.vendorType,
             },
             sessionData: vendorSession, // Populated session data
+
         });
+
+        // Optional: Log performance metrics
+        console.log(`Login time for ${email}: ${new Date() - loginTime}ms`);
+
     } catch (error) {
         // Log the error for debugging purposes
         console.error('Error during vendor login:', error);
-        
-        // Return a generic error response
-        res.status(500).json({ error: 'Internal server error. Please try again' });
+        // Enhanced error handling
+        if (error.name === 'MongoError' && error.code === 11000) {
+            return res.status(400).json({ 
+                error: 'Database conflict. Please try again.' 
+            });
+        }
+
+        // If it's an index-related error
+        if (error.name === 'MongoError' && error.codeName === 'IndexNotFound') {
+            console.error('Index not found:', error);
+            return res.status(500).json({ 
+                error: 'Database configuration error' 
+            });
+        }
+
+        res.status(500).json({ 
+            error: 'Internal server error. Please try again' 
+        });
     }
 };
 

@@ -22,6 +22,8 @@ function VendorLogin() {
     email: "",
     password: "",
   });
+  console.log('Login Data:', formData.email);
+
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -52,23 +54,27 @@ function VendorLogin() {
   };
 
   const handleSubmit = async (e) => {
+    console.log('Submit Hit');
     e.preventDefault();
     setLoading(true);
-
+  
+    // Destructure email and password from formData
     const { email, password } = formData;
+    console.log('Login Data Inside HandleSubmit:', formData.email);
+  
+    // Validate inputs
     const newErrors = {};
     const emailCheck = validateEmail(email);
     const passwordCheck = validatePassword(password);
-
     if (!emailCheck.isValid) newErrors.email = emailCheck.error;
     if (!passwordCheck.isValid) newErrors.password = passwordCheck.error;
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
       return;
     }
-
+  
     try {
       const response = await vendorLogin(email, password);
 
@@ -104,7 +110,7 @@ function VendorLogin() {
       console.error("Login error:", error);
       showAlert(
         "error",
-        error.response?.data?.message || error.message || "Login failed."
+        error.response?.data?.message || error.message || 'Login failed. Please check your credentials and try again.'
       );
     } finally {
       setLoading(false);
@@ -112,7 +118,7 @@ function VendorLogin() {
   };
 
   const handleSignupRedirect = () => {
-    navigate("/vendor/signup");
+    navigate('/vendor/profile');
   };
 
   return (
