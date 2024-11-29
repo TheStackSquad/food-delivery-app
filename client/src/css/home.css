@@ -7,8 +7,7 @@
   background-color: rgba(203, 219, 236, 0.3);
   overflow-y: auto;
   scroll-behavior: smooth;
-
-
+  margin-top: -10rem;
 }
 
 /* Section 1 */
@@ -36,6 +35,7 @@
     radial-gradient(circle at 50% 70%, rgba(200, 200, 255, 0.7), transparent 70%);
   background-color: #f0f0f0;
   position: relative;
+  margin-top: -3rem;
 }
 
 /* Section 3 */
@@ -61,7 +61,7 @@
 /* Responsive design */
 @media (min-width: 576px) {
   .home{
-    margin-top: -10rem;
+    margin-top: -11rem;
   }
   .section1, .section3 {
     width: 100%;
@@ -75,6 +75,6 @@
   .section2 {
     background-size: cover;
     background-position: center;
-    margin-top: -2rem;
+    margin-top: -5rem;
   }
 }

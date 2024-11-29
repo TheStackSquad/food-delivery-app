@@ -170,6 +170,11 @@ const Account = () => {
     }
   };
 
+  //redirect fnction
+  const handleLoginRedirect = () => {
+    navigate('/login');
+  };
+
   // Input configuration for dynamic rendering
   const inputConfigs = [
     { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
@@ -237,6 +242,12 @@ const Account = () => {
             >
               {loading ? 'Registering...' : 'Register'}
             </button>
+            <p className={styles.footerText}>
+          Already have an account?{' '}
+          <span onClick={handleLoginRedirect} className={styles.linkText}>
+            Sign in
+          </span>
+        </p>
           </div>
         </form>
       </div>

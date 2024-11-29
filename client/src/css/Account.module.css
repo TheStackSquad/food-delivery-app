@@ -77,12 +77,12 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  overflow-x: hidden;
 }
 
 .inputGroup {
   position: relative;
   margin-bottom: 1rem;
+  overflow-x: hidden;
 }
 
 .input,
@@ -151,6 +151,21 @@
 .submitButton:active {
   transform: translateY(1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.footerText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.linkText {
+  color: orchid;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.linkText:hover {
+  text-decoration: underline;
 }
 
 .error {
