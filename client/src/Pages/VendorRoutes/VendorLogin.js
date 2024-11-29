@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import styles from '../../css/vendorLogin.module.css';
-import Alert from '../../components/UI/Alert';
-import { validateEmail, validatePassword } from '../../frontendUtils/validation';
-import { vendorLogin } from '../../API/signIn';
-import { loginVendor as loginVendorAction } from '../../redux/actions/authActions';
+//client/src/Pages/VendorRoutes/Vendorlogin.js
+// VendorLogin Component
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "../../css/vendorLogin.module.css";
+import Alert from "../../components/UI/Alert";
+import { validateEmail, validatePassword } from "../../frontendUtils/validation";
+import { vendorLogin } from "../../API/signIn";
+import { loginVendor as loginVendorAction } from "../../redux/actions/authActions";
+
 
 function VendorLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
+  // Access Redux state
+  const vendorState = useSelector((state) => state.auth.user.sessionData);
+  console.log('vendor state:', vendorState);
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [alertInfo, setAlertInfo] = useState({
     isVisible: false,
-    type: 'info',
-    message: '',
+    type: "info",
+    message: "",
   });
 
   const handleChange = (e) => {
@@ -30,10 +37,9 @@ function VendorLogin() {
       ...prevState,
       [id]: value,
     }));
-    // Clear the error for the field being changed
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [id]: '',
+      [id]: "",
     }));
   };
 
@@ -48,11 +54,8 @@ function VendorLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
-    // Destructure email and password from formData
-    const { email, password } = formData;
 
-    // Validate inputs
+    const { email, password } = formData;
     const newErrors = {};
     const emailCheck = validateEmail(email);
     const passwordCheck = validatePassword(password);
@@ -68,32 +71,40 @@ function VendorLogin() {
 
     try {
       const response = await vendorLogin(email, password);
-      
-      if (!response || !response.token) {
-        throw new Error('Invalid response from server');
+
+      if (!response || !response.data) {
+        throw new Error("Invalid response from server");
       }
 
-      // Assuming response has structure: { success: true, user: {...}, token: '...' }
-      dispatch(loginVendorAction({
-        ...response.user,
-        token: response.token,
-      }));
+      const { token, user } = response.data;
 
-      // Store token in localStorage
-      localStorage.setItem('token', response.token);
+      if (!token) {
+        throw new Error("No token received from server");
+      }
 
-      showAlert('success', 'Login successful!');
+      const vendorData = {
+        vendor: user,
+        token,
+        sessionData: response.data.sessionData,
+      };
 
-      // Redirect after a short delay
+      // Dispatch Redux action
+      dispatch(loginVendorAction(vendorData));
+
+      // Save to localStorage
+      localStorage.setItem("vendorData", JSON.stringify(vendorData));
+
+      showAlert("success", "Login successful!");
+
+      // Redirect after login
       setTimeout(() => {
-        navigate('/vendor/dashboard');
+        navigate("/vendor/dashboard");
       }, 1500);
-      
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       showAlert(
-        'error',
-        error.message || 'Login failed. Please check your credentials and try again.'
+        "error",
+        error.response?.data?.message || error.message || "Login failed."
       );
     } finally {
       setLoading(false);
@@ -101,13 +112,13 @@ function VendorLogin() {
   };
 
   const handleSignupRedirect = () => {
-    navigate('/vendor/signup');
+    navigate("/vendor/signup");
   };
 
   return (
     <div className={`${styles.gridContainer} ${styles.login}`}>
       <div className={styles.formWrap}>
-        <Alert 
+        <Alert
           isVisible={alertInfo.isVisible}
           type={alertInfo.type}
           message={alertInfo.message}
@@ -140,22 +151,24 @@ function VendorLogin() {
               required
             />
             <label htmlFor="password">Password</label>
-            {errors.password && <div className={styles.error}>{errors.password}</div>}
+            {errors.password && (
+              <div className={styles.error}>{errors.password}</div>
+            )}
           </div>
 
           <div className={styles.btnWrap}>
-            <button 
-              type="submit" 
-              className={styles.btnSubmit} 
+            <button
+              type="submit"
+              className={styles.btnSubmit}
               disabled={loading}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>
 
-        <button 
-          onClick={handleSignupRedirect} 
+        <button
+          onClick={handleSignupRedirect}
           className={styles.buttonSubmit}
           type="button"
         >

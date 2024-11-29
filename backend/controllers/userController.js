@@ -1,7 +1,7 @@
 // backend/controllers/userController.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/userSchema/User');
 const userValidators = require('../utils/validators');
 
 // Sign-up endpoint to create a new user
@@ -28,7 +28,6 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: validationError.error });
     }
 
-<<<<<<< Updated upstream
  // Check for existing username
  const existingUser = await User.findOne({ username });
  if (existingUser) {
@@ -50,16 +49,6 @@ const signup = async (req, res) => {
  if (existingEmail) {
    return res.status(400).json({ error: 'Email already in use.' });
  }
-
-=======
-    // Check for existing user (email or username)
-    try {
-      await User.checkExisting(email, username);
-    } catch (error) {
-      console.error('Existing user check failed:', error.message);
-      return res.status(400).json({ error: error.message });
-    }
->>>>>>> Stashed changes
 
     // Hash password before saving to DB
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -101,39 +90,16 @@ const signup = async (req, res) => {
   }
 };
 
-<<<<<<< Updated upstream
-=======
 // Login endpoint to authenticate users
->>>>>>> Stashed changes
 const login = async (req, res) => {
   console.log('login controller Hit');
   try {
     const { username, password } = req.body;
-<<<<<<< Updated upstream
     console.log('login Data Recieved:', req.body.username);
-=======
-    console.log(`Login attempt for username: ${username}`);
->>>>>>> Stashed changes
 
     // Fetch user from the database
     const user = await User.findOne({ username });
 
-<<<<<<< Updated upstream
-      res.status(200).json({
-        success: true,
-        message: 'Login successful',
-        token,
-        user: {
-          username: user.username,
-          email: user.email,
-          phone: user.phone,
-          address: user.address,
-          city: user.city,
-          profilePic: user.profilePic,
-
-        }
-      });
-=======
     if (user) {
       console.log(`User found: ${user.username}`);
 
@@ -158,14 +124,15 @@ const login = async (req, res) => {
           token,
           user: {
             username: user.username,
-            email: user.email
+            email: user.email,
+            phone: user.phone,
+            address: user.address,
+            city: user.city,
+            profilePic: user.profilePic,
+  
           }
         });
-      } else {
-        console.error(`Invalid password for username: ${username}`);
-        return res.status(401).json({ success: false, message: 'Invalid username or password' });
       }
->>>>>>> Stashed changes
     } else {
       console.error(`User not found for username: ${username}`);
       return res.status(401).json({ success: false, message: 'Invalid username or password' });
@@ -176,7 +143,33 @@ const login = async (req, res) => {
   }
 };
 
-//const uploadProfileImage = async (req, res) = {}
+//profile image controller
+const uploadProfileImage = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.profilePicture = req.file.path;
+    await user.save();
+
+    res.status(200).json({ 
+      message: 'Profile picture uploaded successfully', 
+      filePath: req.file.path 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error saving profile picture', 
+      error 
+    });
+  }
+};
+
 
 // Get profile after successful login (protected route)
 const getProfile = async (req, res) => {
@@ -200,4 +193,4 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, signup, login };
+module.exports = { getProfile, signup, login, uploadProfileImage };
