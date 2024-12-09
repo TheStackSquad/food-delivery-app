@@ -339,7 +339,7 @@ const getVendorMenu = async (req, res) => {
         const vendorId = req.vendor.vendorId;
 
         // Find vendor and get menu
-        const vendor = await Vendor.findById(VendorId).select('menu');
+        const vendor = await Vendor.findById(vendorId).select('menu');
         if (!vendor) {
             return res.status(404).json({ error: 'Vendor not found.' });
         }
