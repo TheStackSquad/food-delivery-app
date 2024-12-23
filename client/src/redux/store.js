@@ -14,11 +14,21 @@ const authPersistConfig = {
   whitelist: ['user', 'isAuthenticated'],
 };
 
+// Persist configuration for vendorReducer
+const vendorPersistConfig = {
+  key: 'vendor',
+  storage, // e.g., localStorage or AsyncStorage for React Native
+  whitelist: ['isAuthenticated', 'vendorData'], // Persist vendorData as a single object
+};
+
+
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedVendorReducer = persistReducer(vendorPersistConfig, vendorReducer);
 
 // Logger setup
 const logger = createLogger({
-  collapsed: true, // Collapse actions in the log for better readability
+  collapsed: true,
 });
 
 // Middleware array
@@ -32,12 +42,16 @@ const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     layout: layoutReducer,
-    vendor: vendorReducer, 
+    vendor: persistedVendorReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }).concat(middleware),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
-// Persistor setup
 export const persistor = persistStore(store);
 export default store;

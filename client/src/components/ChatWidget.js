@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
-import devImage from '../asset/img/mandela.webp';
+import devImage from '../asset/img/vendorProfile/mandela.webp';
 import '../css/chatWidget.css';
 import { chatBoxAnimation, chatIconAnimation } from '../animations/chatMotion';
 import useSocket from '../hooks/useSocket';

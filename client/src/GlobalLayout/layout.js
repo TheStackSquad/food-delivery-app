@@ -56,10 +56,12 @@ function GlobalLayout({ children }) {
 
   return (
     <div className="global-layout">
-      <div className="header">
+      <div className="header-brand">
         <Link to="/">
           <h3 className="brand">Dev-Kitchen</h3>
         </Link>
+      
+        
 
         <div className="iconsGrid">
           <div ref={slideRef} className="relative z-50">
@@ -115,7 +117,8 @@ function GlobalLayout({ children }) {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+   
 
       {children}
     </div>

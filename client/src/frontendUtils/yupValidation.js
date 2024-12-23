@@ -1,3 +1,4 @@
+// client/src/frontendUtils/yupValidation.js
 import * as Yup from 'yup';
 
 // Custom validation for phone number
@@ -59,6 +60,73 @@ export const validateVendorProfile = async (values) => {
   try {
     // Validate the entire schema
     await vendorProfileSchema.validate(values, { abortEarly: false });
+    return { 
+      isValid: true, 
+      errors: {} 
+    };
+  } catch (error) {
+    // Organize errors by field
+    const errors = error.inner.reduce((acc, curr) => {
+      acc[curr.path] = curr.message;
+      return acc;
+    }, {});
+
+    return { 
+      isValid: false, 
+      errors 
+    };
+  }
+};
+
+// Validation schema for vendor addMenu
+export const addMenuValidationSchema = Yup.object().shape({
+  category: Yup.string()
+    .required('Category is required')
+    .max(50, 'Category must be at most 50 characters'),
+  
+  mealName: Yup.string()
+    .required('Meal name is required')
+    .min(2, 'Meal name must be at least 2 characters')
+    .max(100, 'Meal name must be at most 100 characters'),
+  
+  description: Yup.string()
+    .optional()
+    .max(500, 'Description must be at most 500 characters'),
+  
+  image: Yup.mixed()
+    .test('fileSize', 'Image must be less than 5MB', (value) => {
+      if (!value) return true; // Skip if no file
+      return value.size <= 5 * 1024 * 1024; // 5MB
+    })
+    .test('fileType', 'Invalid file type', (value) => {
+      if (!value) return true; // Skip if no file
+      const supportedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+      return supportedTypes.includes(value.type);
+    }),
+  
+  price: Yup.number()
+    .required('Price is required')
+    .positive('Price must be a positive number')
+    .typeError('Price must be a number')
+    .max(1000000, 'Price is too high'),
+
+  priceDescription: Yup.string()
+    .optional()
+    .max(100, 'Price description must be at most 100 characters'),
+  
+  pack: Yup.string()
+    .optional()
+    .max(100, 'Pack description must be at most 100 characters'),
+  
+  inStock: Yup.boolean()
+    .default(true)
+});
+
+// Function to handle form validation with toast notifications
+export const validateAddMenuSchema = async (values) => {
+  try {
+    // Validate the entire schema
+    await addMenuValidationSchema.validate(values, { abortEarly: false });
     return { 
       isValid: true, 
       errors: {} 

@@ -1,0 +1,60 @@
+/** FallBack UI Styling */
+.protected-route-container{
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  width: 90%;
+  height: fit-content;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+.protected-route-image {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.protected-route-message {
+  font-size: 2rem;
+  color: #343a40;
+  margin-bottom: 1rem;
+}
+
+.protected-route-description {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.protected-route-description .linkBtn {
+  width: fit-content;
+  height: fit-content;
+  padding: .2rem;
+  background-color:#0d6efd;
+  border: none;
+  outline: none;
+  border-radius: .3rem;
+  padding: .3rem .4rem;
+}
+.protected-route-description a {
+  color: wheat;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-family: var(--fontFamilyMacondo);
+  font-size: 1.2rem;
+}
+
+.protected-route-description a:hover {
+  color: white;
+  text-decoration: underline;
+}

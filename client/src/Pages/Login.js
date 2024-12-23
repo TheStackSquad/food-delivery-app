@@ -21,53 +21,70 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    console.log('handle submit function hit');
-    e.preventDefault();
-    setIsLoading(true);
+ //handle submit function dispatches to redux and localstorage
+ const handleSubmit = async (e) => {
+  console.log('handleSubmit function hit');
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const response = await loginUser(username, password);
-      setIsLoading(false);
-      console.log('handle submit triggered:', response);
-      if (response.success) {
-        // Dispatch the loginSuccess action to update Redux state
-        dispatch(UserloginSuccess({ 
-          ...response.user, //spread all user data from response
-          token: response.token }));
+  try {
+    const response = await loginUser(username, password);
+    setIsLoading(false);
+    console.log('handleSubmit triggered, full response:', response);
 
-        // Save token in localStorage for persistence across page reloads
-        localStorage.setItem('token', response.token);
+    if (response.success) {
+      console.log('Tokens received on frontend:', response.accessToken, response.refreshToken);
 
-        // Set the alert state to show success
-        setAlert({
-          isVisible: true,
-          type: 'success',
-          message: 'Login Successful!',
-          userName: username,
-        });
+      // Prepare user data for Redux and localStorage
+      const userData = {
+        ...response.user,
+        accessToken: response.accessToken, // Save the access token
+        refreshToken: response.refreshToken, // Save the refresh token
+        profilePic: response.user?.profilePic || 'default-profile-pic.webp', // Ensure profilePic is always set
+      };
 
-        // Redirect to the dashboard after a short delay
-        setTimeout(() => {
-          navigate('/login/dashboard');
-        }, 2000); // 2-second delay before redirection
-      } else {
-        setAlert({
-          isVisible: true,
-          type: 'error',
-          message: 'User Not Recognized, Sign Up For An Account',
-        });
-      }
-    } catch (err) {
-      setIsLoading(false);
+      // Dispatch the loginSuccess action to update Redux state
+      dispatch(UserloginSuccess(userData));
+
+      // Save the user data and tokens in localStorage for persistence
+      localStorage.setItem('user', JSON.stringify(userData));
+     // localStorage.setItem('Token', response.accessToken); 
+    //  localStorage.setItem('refreshToken', response.refreshToken); // Optionally, store refreshToken in localStorage or HttpOnly cookie
+
+      console.log('User data saved to localStorage:', JSON.parse(localStorage.getItem('user')));
+
+      // Set the alert state to show success
+      setAlert({
+        isVisible: true,
+        type: 'success',
+        message: 'Login Successful!',
+        userName: username,
+      });
+
+      // Redirect to the dashboard after a short delay
+      setTimeout(() => {
+        navigate('/login/dashboard');
+      }, 2000); // 2-second delay before redirection
+    } else {
+      console.log('Login failed, response:', response);
       setAlert({
         isVisible: true,
         type: 'error',
-        message: 'Login failed. Please try again.',
+        message: 'User Not Recognized, Sign Up For An Account',
       });
-      console.error(err);
     }
-  };
+  } catch (err) {
+    setIsLoading(false);
+    console.error('Login failed, error:', err);
+    setAlert({
+      isVisible: true,
+      type: 'error',
+      message: 'Login failed. Please try again.',
+    });
+  }
+};
+
+
 
   return (
     <div className={styles.container}>

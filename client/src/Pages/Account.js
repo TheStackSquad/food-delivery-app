@@ -1,3 +1,4 @@
+//client/src/Pages/Account.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import styles from '../css/Account.module.css';
@@ -23,7 +24,6 @@ const Account = () => {
     password: '',
     confirmPassword: '',
   });
-  console.log('Form Data', formData);
 
   // Error and alert management states
   const [errors, setErrors] = useState({});
@@ -35,15 +35,18 @@ const Account = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  // Suggestions state for available username suggestions
-  const [suggestions, setSuggestions] = useState([]); // Added state for suggestions
+  // Suggestions state for username
+  const [suggestions, setSuggestions] = useState([]);
+
+  // Debounced validation timeout reference
+  const [debounceTimer, setDebounceTimer] = useState(null);
 
   /**
    * Handles input changes and clears specific field errors
-   * @param {React.ChangeEvent<HTMLInputElement>} e - Input change event
    */
   const handleChange = (e) => {
     const { id, value } = e.target;
+
     setFormData((prevState) => ({
       ...prevState,
       [id]: value,
@@ -54,8 +57,24 @@ const Account = () => {
       ...prevErrors,
       [id]: '',
     }));
+
+    // Debounced username validation
+    if (id === 'username') {
+      clearTimeout(debounceTimer);
+      setDebounceTimer(
+        setTimeout(() => {
+          const { isValid, error } = validateUsername(value);
+          if (!isValid) {
+            setErrors((prevErrors) => ({ ...prevErrors, username: error }));
+          }
+        }, 300)
+      );
+    }
   };
 
+  /**
+   * Show alerts for validation or API errors
+   */
   const showAlert = (config) => {
     setAlertConfig({
       isVisible: true,
@@ -74,7 +93,6 @@ const Account = () => {
 
   /**
    * Handles form submission with comprehensive validation
-   * @param {React.FormEvent<HTMLFormElement>} e - Form submission event
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,12 +117,9 @@ const Account = () => {
         return acc;
       }, {});
 
-    // If validation fails, show errors and stop submission
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
-
-      // Show error alert
       showAlert({
         type: 'error',
         message: 'Please correct the errors in the form.',
@@ -133,24 +148,17 @@ const Account = () => {
         confirmPassword: '',
       });
 
-      // Show success alert
       showAlert({
         type: 'success',
         message: 'Registration successful!',
         userName: formData.username,
       });
-      navigate('/login'); // Redirect to /login
+      navigate('/login');
     } catch (error) {
-      // Handle username uniqueness error with suggestions
-      if (error.response && error.response.status === 400) {
+      if (error.response?.status === 400) {
         const { error: errorMessage, suggestions: suggestedUsernames } = error.response.data;
-
-        // Check if the error is related to username
         if (errorMessage.includes('Username already taken')) {
-          // Update the UI with suggestions
           setSuggestions(suggestedUsernames || []);
-
-          // Show alert for username conflict
           showAlert({
             type: 'error',
             message: `${errorMessage}. Suggested usernames: ${suggestedUsernames.join(', ')}`,
@@ -159,8 +167,6 @@ const Account = () => {
           return;
         }
       }
-
-      // General registration error handling
       showAlert({
         type: 'error',
         message: error.message || 'Registration failed. Please try again.',
@@ -170,21 +176,18 @@ const Account = () => {
     }
   };
 
-  //redirect fnction
-  const handleLoginRedirect = () => {
-    navigate('/login');
-  };
+  /**
+   * Redirects to login page
+   */
+  const handleLoginRedirect = () => navigate('/login');
 
-  // Input configuration for dynamic rendering
-  const inputConfigs = [
-    { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
-    { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com' },
-    { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '1234567890' },
-    { id: 'address', label: 'Delivery Address', type: 'text', placeholder: '123 Main St, Apt 1' },
-    { id: 'city', label: 'City/State', type: 'text', placeholder: 'City, State' },
-    { id: 'password', label: 'Password', type: 'password', placeholder: 'Create a password' },
-    { id: 'confirmPassword', label: 'Confirm Password', type: 'password', placeholder: 'Confirm your password' },
-  ];
+  /**
+   * Autofill username from suggestions
+   */
+  const autofillSuggestion = (suggestion) => {
+    setFormData((prev) => ({ ...prev, username: suggestion }));
+    setSuggestions([]);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -198,14 +201,18 @@ const Account = () => {
       />
 
       <div className={styles.contentContainer}>
-        <div className={styles.formHeader}>
-          <h2 className={styles.title}>Sign Up Here!</h2>
-        </div>
-
-        <div className={styles.blob}></div>
+        <h2 className={styles.title}>Sign Up Here!</h2>
         <form className={styles.formBox} onSubmit={handleSubmit}>
-          {inputConfigs.map(({ id, label, type, placeholder }) => (
-            <div key={id} className={styles.inputGroup}>
+          {[
+            { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
+            { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com' },
+            { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '1234567890' },
+            { id: 'address', label: 'Delivery Address', type: 'text', placeholder: '123 Main St' },
+            { id: 'city', label: 'City/State', type: 'text', placeholder: 'City, State' },
+            { id: 'password', label: 'Password', type: 'password', placeholder: 'Create a password' },
+            { id: 'confirmPassword', label: 'Confirm Password', type: 'password', placeholder: 'Confirm password' },
+          ].map(({ id, label, type, placeholder }) => (
+            <div key={id} className={`${styles.inputGroup} ${errors[id] ? styles.inputError : ''}`}>
               <input
                 type={type}
                 id={id}
@@ -219,36 +226,27 @@ const Account = () => {
                 {label}
               </label>
               {errors[id] && <div className={styles.error}>{errors[id]}</div>}
-
-              {/* Add suggestions below the username field */}
               {id === 'username' && suggestions.length > 0 && (
-                <div className={styles.suggestions}>
-                  <h4>Suggestions for Username:</h4>
-                  <ul>
-                    {suggestions.map((suggestion, index) => (
-                      <li key={index}>{suggestion}</li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className={styles.suggestions}>
+                  {suggestions.map((suggestion, index) => (
+                    <li key={index} onClick={() => autofillSuggestion(suggestion)}>
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
               )}
             </div>
           ))}
 
-          <div className={styles.buttonContainer}>
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={loading}
-            >
-              {loading ? 'Registering...' : 'Register'}
-            </button>
-            <p className={styles.footerText}>
-          Already have an account?{' '}
-          <span onClick={handleLoginRedirect} className={styles.linkText}>
-            Sign in
-          </span>
-        </p>
-          </div>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
+          </button>
+          <p className={styles.footerText}>
+            Already have an account?{' '}
+            <span onClick={handleLoginRedirect} className={styles.linkText}>
+              Sign in
+            </span>
+          </p>
         </form>
       </div>
     </div>

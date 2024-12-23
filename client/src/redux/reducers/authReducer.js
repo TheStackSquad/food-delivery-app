@@ -1,9 +1,8 @@
 //client/src/reducers/authReducer.js
 import {
+  SET_LOADING,
   LOGIN,
   LOGOUT,
-  VENDOR_LOGIN_SUCCESS,
-  VENDOR_LOGOUT,
   UPDATE_PROFILE_IMAGE,
 } from '../constants/actionTypes';
 
@@ -13,9 +12,10 @@ const initialState = {
     email: '',
     address: '',
     city: '',
-    profileImage: '',
-    token: '',
+    profilePic: 'default-profile-pic.webp', // Default profile picture
   },
+  token: '',
+  refreshToken: '',
   isAuthenticated: false,
   loading: false,
   error: null,
@@ -23,23 +23,33 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
-    case VENDOR_LOGIN_SUCCESS:
+    case SET_LOADING:
       return {
         ...state,
-        user: { ...action.payload },
-        isAuthenticated: true,
+        loading: action.payload,
       };
-
-    case LOGOUT:
-    case VENDOR_LOGOUT:
-      return { ...initialState };
+      case LOGIN:
+        return {
+          ...state,
+          user: action.payload, // Store the entire user object
+          isAuthenticated: true,
+          loading: false,
+        };
+      case LOGOUT:
+        return {
+          ...state,
+          user: initialState.user,
+          isAuthenticated: false,
+          loading: false,
+        };
 
     case UPDATE_PROFILE_IMAGE:
       return {
         ...state,
-        user: { ...state.user, profileImage: action.payload },
+        user: { ...state.user,
+          profilePic: action.payload.profilePic || 'default-profile-pic.webp', }, // Update only profilePic
       };
+
 
     default:
       return state;
