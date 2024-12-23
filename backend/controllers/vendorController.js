@@ -380,7 +380,6 @@ const addMealToMenu = async (req, res) => {
 const getVendorMenu = async (req, res) => {
   try {
     const vendorId = req.vendor.vendorId;
-
     // Find vendor and get menu
     const vendor = await Vendor.findById(VendorId).select("menu");
     if (!vendor) {
