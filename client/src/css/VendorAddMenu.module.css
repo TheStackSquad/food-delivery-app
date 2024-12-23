@@ -3,13 +3,8 @@
   margin: 0 auto;
   height: 100vh;
   position: relative;
-  margin-top: -7rem;
-  background-color: blanchedalmond;
 }
-
 .vendorContainer{
-  background-color: blanchedalmond;
-  padding-top: 3rem;
   height: fit-content;
 }
 .centeredContainer {
@@ -19,7 +14,6 @@
   justify-content: center;
   height: 100vh;
   text-align: center;
-  padding: 2rem;
   font-family: var(--fontfamilyMacondo);
 }
 .foodIcon {
@@ -141,16 +135,31 @@
   font-size: 0.875rem;
 }
 
+.uploadWrap {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+}
+
 .uploadBox {
   border: 2px dashed #e0e0e0;
   border-radius: 0.5rem;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   cursor: pointer;
   background-color: #f9f9f9;
+  width: 400px;
+  height: 200px;
+  overflow: hidden; /* Hide anything outside the box */
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .uploadBox svg {

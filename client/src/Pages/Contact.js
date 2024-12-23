@@ -4,11 +4,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux"; // Import useSelector and useDispatch from Redux
 import { toggleChat } from "../redux/actions/layoutActions"; // Ensure this is the correct action
 import { Link } from "react-router-dom";
-import user1 from "../asset/img/user1.webp";
-import user2 from "../asset/img/user2.webp";
-import user3 from "../asset/img/user3.webp";
-import user4 from "../asset/img/user4.webp";
-import user5 from "../asset/img/user5.webp";
+import user1 from "../asset/img/vendorProfile/Asa.webp";
+import user2 from "../asset/img/vendorProfile/luffystrawhat.webp";
+import user3 from "../asset/img/vendorProfile/wizkid.webp";
+import user4 from "../asset/img/vendorProfile/samsung.webp";
+import user5 from "../asset/img/vendorProfile/eyo.webp";
 import MenuBook from "../asset/img/menu-book.png";
 import { FaArrowRight, FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
 import styles from "../css/Contact.module.css";

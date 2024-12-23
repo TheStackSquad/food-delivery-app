@@ -1,62 +1,142 @@
-//client/src/Pages/VendorRoutes/VendorDashboard.js
-import React, { useState, useEffect } from 'react';
-import { FaSignOutAlt } from 'react-icons/fa';
-import { useSelector } from "react-redux";
+// client/src/Pages/VendorRoutes/VendorDashboard.js
 
-// UI Components and Styles
-import { DashboardCard, DashboardCardContent } from '../../components/UI/dashboardCard';
-import styles from '../../css/Dashboard.module.css';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
-// Assets
-import defaultProfileImage from '../../asset/img/user5.webp';
-import food1 from '../../asset/img/food1.jpg';
-import food2 from '../../asset/img/food2.jpg';
-import food3 from '../../asset/img/food3.jpg';
-import food4 from '../../asset/img/food4.jpg';
+import { AiOutlineDelete } from "react-icons/ai";
+import { Modal } from "../../components/UI/dashboardCard";
 
-// Sample vendor data for the dashboard
-const VENDORS = [
-  { name: 'Vendor 1', image: food1 },
-  { name: 'Vendor 2', image: food2 },
-  { name: 'Vendor 3', image: food3 },
-  { name: 'Vendor 4', image: food4 },
-];
+// Redux Actions
+import {
+  logoutVendor,
+  deleteMenuItem,
+} from "../../redux/actions/vendorActions";
+
+// Utilities
+import {
+  formatImagePath,
+  formatProfilePicPathVendor,
+} from "../../frontendUtils/pathFormatter";
+
+// UI Components
+import {
+  DashboardCard,
+  DashboardCardContent,
+  DashboardWrap,
+} from "../../components/UI/dashboardCard";
+
+// Styles
+import styles from "../../css/Dashboard.module.css";
+import "../../css/ProtectedRoute.css";
+
+// Constants
+const DEFAULT_PROFILE_IMAGE =
+  "http://localhost:5000/uploads/dashboardDefault/drgnimages.jpeg";
 
 const VendorDashboard = () => {
-  const vendorData = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Extracting sessionData and fullname
-  const sessionData = vendorData?.sessionData || {};
-  console.log('session data:', sessionData);
-  const vendorProfile = sessionData.vendor || {};
-  const { fullname } = vendorProfile;
-  const { profileImage } = vendorProfile;
+  const [activeCardId, setActiveCardId] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Local State for image error handling
-  const [imageError, setImageError] = useState(false);
+  const [dashboardData, setDashboardData] = React.useState({ profile: {}, mealsData: [] });
+  const [accessToken, setAccessToken] = React.useState(null);
+ 
 
-  // Handle image error and use default profile image
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  // Use useSelector to fetch data from the Redux store
+  const vendorData = useSelector((state) => state.vendor.vendorData);
 
-  // Handle logout
-  const handleLogout = () => {
-    // Clear localStorage on logout
-    localStorage.removeItem('vendorFullname');
-    window.location.href = '/login';  // Simplified for this example
-  };
-
-  // Store fullname in localStorage and retrieve it
   useEffect(() => {
-    if (fullname) {
-      localStorage.setItem('vendorFullname', fullname); // Store fullname
+    if (!vendorData) {
+      console.log("No vendor data found in the Redux store.");
+      return;
     }
-  }, [fullname]); // Update only when fullname changes
 
-  // Retrieve fullname from localStorage if not available in vendorData
-  const storedFullname = localStorage.getItem('vendorFullname');
-  const displayName = fullname || storedFullname || 'Hi Vendor';
+    try {
+      // Extracting required data from vendorData
+      const profile = vendorData?.sessionData?.profile || {};
+      const mealsData = vendorData?.sessionData?.meals || [];
+      const token = vendorData?.accessToken || null;
+
+      console.log("Extracted Profile:", profile);
+      console.log("Extracted Meals:", mealsData);
+      console.log("Extracted Token:", token);
+
+      // Setting state with the extracted data
+      setDashboardData({ profile, mealsData });
+      setAccessToken(token);
+    } catch (error) {
+      console.error("Error processing vendor data:", error);
+    }
+  }, [vendorData]);
+
+
+  // Initial delete click handler
+  const handleDeleteClick = (mealId) => {
+    console.log("Delete initiated for meal:", mealId);
+    setActiveCardId(mealId);
+  };
+
+  // Confirmation handler
+  const handleConfirmDelete = async () => {
+    console.log('🚀 [handleConfirmDelete] Starting deletion process');
+    setIsDeleting(true);
+    
+    try {
+      const vendorState = JSON.parse(localStorage.getItem("persist:vendor"));
+   //   const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?._id;
+      const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?.vendor?._id;
+      console.log('Token In Dashboard (From State):', accessToken);
+      console.log('📦 [handleConfirmDelete] Parsed data:', {
+        vendorId,
+        activeCardId,
+        hasToken: accessToken
+      });
+      console.log('✅ [handleConfirmDelete] Deletion result (TOKEN):', accessToken);
+  
+      const result = await dispatch(
+        deleteMenuItem(activeCardId, accessToken, vendorId)
+      );
+      
+      console.log('✅ [handleConfirmDelete] Deletion result:', result);
+      
+      if (result.success) {
+        setActiveCardId(null);
+        console.log('✨ [handleConfirmDelete] Successfully deleted menu item');
+      } else {
+        console.error('❌ [handleConfirmDelete] Failed to delete:', result.error);
+      }
+    } catch (error) {
+      console.error('💥 [handleConfirmDelete] Error:', error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleLogout = () => {
+    [
+      "vendorData",
+      "token",
+      "refreshToken",
+      "vendor",
+      "vendorToken",
+      "persist:vendor",
+    ].forEach((key) => localStorage.removeItem(key));
+
+    dispatch(logoutVendor());
+    navigate("/vendor/login");
+    console.log("Vendor logged out successfully.");
+  };
+
+  const handleImageError = (e) => {
+    console.error("Image Load Error:", e.target.src);
+    e.target.src = DEFAULT_PROFILE_IMAGE;
+  };
 
   return (
     <div className={styles.dashboardContainer}>
@@ -64,40 +144,78 @@ const VendorDashboard = () => {
       <div className={styles.profileSection}>
         <div className={styles.profileImageContainer}>
           <img
-            src={imageError ? defaultProfileImage : profileImage || defaultProfileImage}
+            src={
+              formatProfilePicPathVendor(
+                dashboardData.profile.profileImagePath
+              ) || DEFAULT_PROFILE_IMAGE
+            }
             alt="Profile"
             className={styles.profileImage}
             onError={handleImageError}
           />
+          <p className={styles.storeName}>
+            {dashboardData.profile.storeName || "Vendor Name"}
+          </p>
+          <p className={styles.storeDescription}>
+            {dashboardData.profile.storeDescription || "Store Description"}
+          </p>
         </div>
-        <h2 className={styles.profileName}>
-          {displayName}
-        </h2>
+        <div className={styles.brandSection}>
+          {/* Logout Button */}
+          <div
+            className={styles.logoutContainer}
+            onClick={handleLogout}
+            role="button"
+            tabIndex={0}
+          >
+            <FaSignOutAlt /> Logout
+          </div>
+        </div>
       </div>
 
-      {/* Vendors Section */}
-      <div className={styles.vendorsSection}>
-        <h2 className={styles.vendorsTitle}>Favorite Vendors</h2>
-        <div className={styles.vendorsGrid}>
-          {VENDORS.map((vendor) => (
-            <DashboardCard key={vendor.name}>
-              <img src={vendor.image} alt={vendor.name} className={styles.cardImage} />
+      {/* Meals Section */}
+      <div className={styles.mealsSection}>
+        {dashboardData.mealsData.map((meal) => {
+          console.log("Rendered Meal:", meal);
+          return (
+            <DashboardCard key={meal._id} className={styles.dashboardCard}>
+              <LazyLoadImage
+                src={formatImagePath(meal.image)}
+                alt={meal.mealName}
+                effect="blur"
+                className={styles.cardImage}
+              />
               <DashboardCardContent>
-                <h3>{vendor.name}</h3>
+                <h3 className={styles.mealName}>{meal.mealName}</h3>
+                <p className={styles.mealDesc}>{meal.description}</p>
+                <p className={styles.mealPrice}>Price: ${meal.price}</p>
               </DashboardCardContent>
+              <DashboardWrap>
+                <p>Metric...</p>
+                <div className={styles.iconContainer}>
+                  <AiOutlineDelete
+                    className={styles.deleteIcon}
+                    onClick={() => handleDeleteClick(meal._id)}
+                  />
+                  {activeCardId === meal._id && (
+                    <Modal
+                      isOpen={true}
+                      onClose={() => setActiveCardId(null)}
+                      onConfirm={handleConfirmDelete}
+                      isDeleting={isDeleting}
+                    />
+                  )}
+                </div>
+                <p className={styles.cardSeen}>Sale: </p>
+                <p className={styles.cardSeen}>Seen: </p>
+                <p className={styles.cardInteractions}>Interactions: </p>
+              </DashboardWrap>
             </DashboardCard>
-          ))}
-        </div>
-      </div>
-
-      {/* Logout Button */}
-      <div className={styles.logoutContainer} onClick={handleLogout}>
-        <FaSignOutAlt className={styles.logoutIcon} />
-        <span>Logout</span>
+          );
+        })}
       </div>
     </div>
   );
 };
 
 export default VendorDashboard;
-

@@ -5,8 +5,7 @@ const { Schema } = mongoose;
 const VendorSchema = new Schema({
   fullname: {
     type: String,
-    required: [true, 'Fullname is required'],
-    unique: true,
+    required: [true, 'Fullname is required'], 
     trim: true,
     minlength: [3, 'Username must be at least 3 characters long'],
     maxlength: [30, 'Username cannot exceed 30 characters'],
@@ -37,10 +36,22 @@ const VendorSchema = new Schema({
     required: [true, 'Password is required'],
     minlength: [8, 'Password must be at least 8 characters long'],
   },
-  vendorProfile: { type: Schema.Types.ObjectId, ref: 'VendorProfile' }, // Reference to VendorProfile
+  vendorProfile: { type: Schema.Types.ObjectId, ref: 'VendorProfile' },
+  role: { type: String, default: 'vendor' },
 }, {
   timestamps: true,
 });
+
+// Method to format the public data
+VendorSchema.methods.toPublicJSON = function () {
+  return {
+    id: this._id,
+    fullname: this.fullname,
+    email: this.email, // Include other fields as needed
+    phone: this.phone,
+    password:this.password
+  };
+};
 
 VendorSchema.index({ email: 1, phone: 1 });
 

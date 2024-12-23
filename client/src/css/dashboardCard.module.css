@@ -1,43 +1,159 @@
 /* src/css/dashboardCard.module.css */
-
+/* Card Styles */
 .card {
-  position: relative; /* Allow absolute positioning of content */
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   background-color: #fff;
   height: 200px;
+  width: 95%;
+  margin: .75rem 0px;
+  display: flex;
+  padding: .75rem;
+  transition: all 0.3s ease;
+}
+@media (max-width: 575.98px){
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
 }
 
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .cardContent {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 200px;
+  height: 100%;
+  border-radius: .5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  font-family: var(--Josefin);
+}
+
+.cardContent:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+}
+@media (max-width: 575.98px){
+  .cardContent {
+    width: 100%;
+    height: 150px;
+    margin: 0px 0px .7rem 0px;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+.cardMetric {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  border-radius: .5rem;
+  margin: 0px 0px 0px .75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  font-family: var(--Josefin);
+  position: relative;
+}
+
+.cardMetric:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: scale(1.01);
+}
+@media (max-width: 575.98px){
+  .cardMetric {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: .7rem;
+  }
+}
+
+.modalCard {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;  /* Change to 100% to cover entire card */
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  height: 100%;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(63, 20, 5, 0.85);  /* Increased opacity */
+  z-index: 10;
+  overflow: hidden;
+}
+.modalCardWrap{
+  width: 65%;
+  height: fit-content;
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-.card:hover .cardContent,
-.card:focus-within .cardContent {
-  opacity: 1;
+.modalCard h2{
+  font-size: 2rem;
+  color: wheat;
+  margin: 0;
+}
+.modalCard p{
+  font-size: 1.4rem;
+  text-align: center;
+  color: wheat;
+  margin: 0;
+}
+.modalButtons button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
   color: #fff;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-  
+.modalButtons button:hover {
+  background-color: #0056b3;
+}
+
+.modalButtons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 575.98px){
+  .modalCardWrap{
+    width: 95%;
+  }
+}
+@media (min-width: 576px){
+  .modalCardWrap{
+    width: 95%;
+  }
+}

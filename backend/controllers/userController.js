@@ -1,8 +1,13 @@
 // backend/controllers/userController.js
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../models/userSchema/User');
+const jwt = require('jsonwebtoken');
+const { refreshAccessToken } = require('../utils/tokenManager');
+const generateTokens = require('../utils/generateToken');
 const userValidators = require('../utils/validators');
+const fs = require('fs').promises;
+const path = require('path');
+
 
 // Sign-up endpoint to create a new user
 const signup = async (req, res) => {
@@ -20,7 +25,10 @@ const signup = async (req, res) => {
       userValidators.validatePhone(phone),
       userValidators.validatePassword(password, confirmPassword)
     ];
-
+    validations.forEach((v, index) => {
+      console.log(`Validation ${index + 1}:`, v);
+    });
+    
     // Check for validation errors
     const validationError = validations.find(v => !v.isValid);
     if (validationError) {
@@ -90,130 +98,166 @@ const signup = async (req, res) => {
   }
 };
 
-// Login endpoint to authenticate users
+//Login endpoint to validate user
 const login = async (req, res) => {
   console.log('[Login] Controller hit');
+  console.log('[Login] Request body:', req.body);
+
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    console.log('[Login] Missing username or password');
+    return res.status(400).json({
+      success: false,
+      message: 'Username and password are required',
+    });
+  }
 
   try {
-    const { username, password } = req.body;
-    console.log('[Login] Data Received:', username);
-
-    // Validate input
-    if (!username || !password) {
-      return res.status(400).json({
-        success: false,
-        message: 'Username and password are required',
-      });
-    }
-
-    // Fetch user from the database
+    // Find the user in the database
     const user = await User.findOne({ username });
     if (!user) {
-      console.error(`[Login] User not found for username: ${username}`);
-      return res.status(401).json({
+      console.log(`[Login] User not found: ${username}`);
+      return res.status(404).json({
         success: false,
-        message: 'Invalid username or password',
+        message: 'User not found',
       });
     }
 
-    console.log(`[Login] User found: ${user.username}`);
-
-    // Compare provided password with the stored hash
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      console.error(`[Login] Password mismatch for username: ${username}`);
+      console.log(`[Login] Invalid password for user: ${username}`);
       return res.status(401).json({
         success: false,
-        message: 'Invalid username or password',
+        message: 'Invalid credentials',
       });
     }
 
-    console.log(`[Login] Password match for username: ${username}`);
+    // Generate tokens
+    const payload = {
+      userId: user._id,
+      username: user.username,
+      role: user.role, // Include role in the payload
+    };
 
-    // Generate JWT token for the authenticated user
-    let token;
-    try {
-      token = jwt.sign(
-        { userId: user._id, username: user.username },
-        process.env.JWT_SECRET, // Ensure a strong JWT_SECRET is in your environment variables
-        { expiresIn: '24h' } // Token expires in 24 hours
-      );
-    } catch (jwtError) {
-      console.error('[Login] Error generating token:', jwtError.message);
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to generate authentication token',
-      });
-    }
+    const { accessToken, refreshToken } = generateTokens(payload);
+    console.log('Access Token:', accessToken);
+console.log('Access Token Payload:', jwt.decode(accessToken));
+console.log('Refresh Token:', refreshToken);
+console.log('Refresh Token Payload:', jwt.decode(refreshToken));
 
-    console.log(`[Login] Token generated successfully for ${username}`);
 
-    // Respond with success, token, and minimal user details
+    // Respond with tokens and user data
+    console.log(`[Login] Login successful for user: ${username}`);
     return res.status(200).json({
       success: true,
       message: 'Login successful',
-      token,
+      accessToken, // Include accessToken here
+      refreshToken, // Include refreshToken here
       user: {
         username: user.username,
         email: user.email,
         phone: user.phone,
         address: user.address,
         city: user.city,
-        profilePic: user.profilePic,
+        profilePic: user.profilePic || 'default-profile-pic.webp',
+        role: user.role,
       },
     });
   } catch (error) {
-    console.error('[Login] Error during login:', error.message);
+    console.error('[Login] Server error:', error);
     return res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: 'Server error during login',
+      error: error.message,
     });
   }
 };
 
-//profile image controller
-const uploadProfileImage = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded' });
-  }
 
+// Utility function to delete a file
+const deleteFile = async (filePath) => {
   try {
+    await fs.unlink(filePath);
+    console.log(`Deleted file: ${filePath}`);
+  } catch (err) {
+    console.warn(`Failed to delete file: ${filePath}, Error: ${err.message}`);
+  }
+};
+
+// Upload Profile Image Controller
+const uploadProfileImage = async (req, res) => {
+  try {
+    // Check if a file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const fileName = req.file.filename; // Extract the filename from the uploaded file
+    console.log('Uploaded Filename:', fileName);
+
+    // Find the user by ID from the token
     const user = await User.findById(req.user.userId);
     if (!user) {
+      // Delete the uploaded file if the user isn't found
+      await deleteFile(req.file.path);
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.profilePicture = req.file.path;
-    await user.save();
+    // Delete the old profile picture if it exists and isn't the default
+    if (user.profilePic && user.profilePic !== 'default-profile-pic.webp') {
+      const oldImagePath = path.join(__dirname, '../uploads/userProfile', user.profilePic);
+      console.log("Old profile image path to delete:", oldImagePath);
+      await deleteFile(oldImagePath);
+    }
 
-    res.status(200).json({ 
-      message: 'Profile picture uploaded successfully', 
-      filePath: req.file.path 
+    // Update the user's profilePic field in the database
+    user.profilePic = fileName;
+    const updatedUser = await user.save(); // Save the updated user
+    console.log('Updated User:', { id: updatedUser._id, profilePic: updatedUser.profilePic });
+
+    // Send a success response
+    res.status(200).json({
+      message: 'Profile image uploaded successfully',
+      filePath: fileName,
     });
   } catch (error) {
-    res.status(500).json({ 
-      message: 'Error saving profile picture', 
-      error 
+    console.error('Error uploading profile picture:', error);
+
+    // Delete the uploaded file if an error occurs
+    if (req.file) {
+      await deleteFile(req.file.path);
+    }
+
+    res.status(500).json({
+      message: 'Server error during image upload',
+      error: error.message,
     });
   }
 };
 
-// Get profile after successful login (protected route)
+
+// Controller to handle GET /login/dashboard
 const getProfile = async (req, res) => {
   try {
-    // `req.user` contains the decoded token info (e.g., userId)
+    // Log user ID for debugging
     console.log('Fetching user profile for user ID:', req.user.userId);
 
-    // Fetch user from the database excluding the password
-    const user = await User.findById(req.user.userId).select('-password'); // Exclude password for security
-
+    // Find the user by ID, excluding sensitive fields like the password
+    const user = await User.findById(req.user.userId).select('-password');
     if (!user) {
       console.error('User not found for user ID:', req.user.userId);
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Respond with the user profile data
+    // Log the fetched user data (excluding sensitive fields)
+    console.log('User profile fetched:', {
+      id: user._id,
+      profilePic: user.profilePic,
+    });
+
+    // Respond with the user's profile data
     res.status(200).json({ user });
   } catch (error) {
     console.error('Failed to retrieve profile:', error);
@@ -221,4 +265,34 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, signup, login, uploadProfileImage };
+// Refresh Token Controller
+const refreshUserToken = (req, res) => {
+  const { refreshToken } = req.body;
+
+  // If no refresh token is provided
+  if (!refreshToken) {
+    return res.status(400).json({ message: 'Refresh token is required.' });
+  }
+
+  // Call refreshAccessToken to validate and get new tokens
+  const newTokens = refreshAccessToken(refreshToken);
+
+  // If the refresh token is invalid or expired
+  if (!newTokens) {
+    return res.status(403).json({ message: 'Invalid or expired refresh token.' });
+  }
+
+  // Send the new access and refresh tokens back to the frontend
+  res.json(newTokens);
+};
+
+module.exports = {
+  signup,
+  login,
+  uploadProfileImage,
+  getProfile,
+  refreshUserToken
+};
+
+
+

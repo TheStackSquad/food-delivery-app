@@ -48,10 +48,15 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'City is required'],
     trim: true
   },
-  profilePic: {
-    type: String,
-    default: 'default-profile-pic.webp'
-  },
+profilePic: {
+  type: String,
+  default: 'default-profile-pic.webp',
+  trim: true
+},
+role: {  // field for user roles
+  type: String,
+  default: 'user', // Default role
+},
   createdAt: {
     type: Date,
     default: Date.now

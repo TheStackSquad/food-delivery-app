@@ -4,17 +4,18 @@
   position: relative;
   background-color: var(--background-color);
 }
-.header {
+.header-brand{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   position: sticky;
   top: 0;
-  z-index: 1000; 
-  background-color: transparent; /* Remove background color */
+  z-index: 1000;
+  background-color: transparent;
+  margin: 0px .3rem;
 }
 
+/*Brand Styling*/
 .brand {
   width: fit-content;
   height: fit-content;
@@ -28,23 +29,24 @@
   font-family: var(--fontfamilyMacondo);
 }
 
-.iconsGrid{
+/*iconGrid Element Styling*/
+.iconsGrid {
   display: flex;
-  margin: 0px .3rem;
+  width: fit-content;
+  gap: .2rem;;
 }
 .togglebuttonLayout {
   position: relative;
-  z-index: 100;
   font-size: 1rem;
   background-color: orange;
-  padding: var(--padding);
   border-radius: 50%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   transition: background-color 0.3s, box-shadow 0.2s, transform 0.2s;
   cursor: pointer;
   border: none;
+  width: 50px;
+  height: 50px;
 }
-
 .togglebuttonLayout:hover {
   background-color: #ffa500;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
@@ -56,13 +58,13 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   transform: translateY(2px);
 }
-
 .cart-icon{
   background-color: lightblue;
   padding: var(--padding);
   border-radius: 50%;
   margin-left: .5rem;
 }
+
 .menu {
   position: fixed;
   top: 0;
@@ -74,6 +76,7 @@
   z-index: 50;
   padding-top: 4rem;
 }
+
 .navigation-menu{
   margin-top: 3rem;
 }
@@ -90,7 +93,6 @@
   gap: 8px;
   font-family: var(--Alte-Text);
 }
-
 .dropdown-item::before {
   content: '';
   position: absolute;
@@ -102,7 +104,6 @@
   transition: width 0.3s ease; /* Controls the animation speed */
   z-index: -1; /* Keeps the effect behind the text */
 }
-
 .dropdown-item:hover::before {
   width: 100%;
   color: wheat;
@@ -111,24 +112,14 @@
   display: flex;
   align-items: center;
   font-size: 1.2em;
+  border: 2px solid white;
 }
-
 
 
 /*MD & LG VIEWPORTS */
 @media screen and (min-width: 576px) {
   .brand {
-    font-size: 2rem;
-  }
-  .icons-grid{
-    gap: .8rem;
-  }
-  .cart-icon{
-    font-size: 1.5rem;
-  }
-  .togglebuttonLayout {
-    position: relative;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .menu {

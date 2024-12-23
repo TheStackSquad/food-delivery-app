@@ -7,16 +7,19 @@ import styles from "../../css/vendorLogin.module.css";
 import Alert from "../../components/UI/Alert";
 import { validateEmail, validatePassword } from "../../frontendUtils/validation";
 import { vendorLogin } from "../../API/signIn";
-import { loginVendor as loginVendorAction } from "../../redux/actions/authActions";
+import { loginVendorAction } from "../../redux/actions/vendorActions";
 
 
 function VendorLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Access Redux state
-  const vendorState = useSelector((state) => state.auth.user.sessionData);
-  console.log('vendor state:', vendorState);
+  const vendorState = useSelector((state) => state);
+
+  // Log entire Redux state
+  console.log('Full Redux State:', vendorState);
+
+  console.log('Vendor Auth State:', vendorState.auth);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -54,14 +57,12 @@ function VendorLogin() {
   };
 
   const handleSubmit = async (e) => {
-    console.log('Submit Hit');
     e.preventDefault();
     setLoading(true);
   
-    // Destructure email and password from formData
+        // Destructure email and password from formData
     const { email, password } = formData;
-    console.log('Login Data Inside HandleSubmit:', formData.email);
-  
+
     // Validate inputs
     const newErrors = {};
     const emailCheck = validateEmail(email);
@@ -74,43 +75,38 @@ function VendorLogin() {
       setLoading(false);
       return;
     }
-  
+    
     try {
       const response = await vendorLogin(email, password);
-
-      if (!response || !response.data) {
-        throw new Error("Invalid response from server");
-      }
-
-      const { token, user } = response.data;
-
-      if (!token) {
-        throw new Error("No token received from server");
-      }
-
+      console.log('FULL RESPONSE:', response);
+  
       const vendorData = {
-        vendor: user,
-        token,
-        sessionData: response.data.sessionData,
+        vendor: response.vendor,
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+        sessionData: response.sessionData,
       };
-
-      // Dispatch Redux action
-      dispatch(loginVendorAction(vendorData));
-
-      // Save to localStorage
-      localStorage.setItem("vendorData", JSON.stringify(vendorData));
+      
+      console.log('DISPATCH DATA:', vendorData);
+      
+      dispatch(loginVendorAction(vendorData)); // Dispatch full vendorData
+      
+      localStorage.setItem("vendorData", JSON.stringify(vendorData)); // Persist data
 
       showAlert("success", "Login successful!");
-
-      // Redirect after login
+  
       setTimeout(() => {
         navigate("/vendor/dashboard");
       }, 1500);
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("COMPLETE LOGIN ERROR:", {
+        error,
+        fullError: error,
+        responseDetails: error.response
+      });
       showAlert(
         "error",
-        error.response?.data?.message || error.message || 'Login failed. Please check your credentials and try again.'
+        error.response?.data?.message || error.message || 'Login failed'
       );
     } finally {
       setLoading(false);
@@ -118,7 +114,7 @@ function VendorLogin() {
   };
 
   const handleSignupRedirect = () => {
-    navigate('/vendor/profile');
+    navigate('/vendor/signup');
   };
 
   return (
@@ -162,10 +158,10 @@ function VendorLogin() {
             )}
           </div>
 
-          <div className={styles.btnWrap}>
+          <div className={styles.btnWrapLogin}>
             <button
               type="submit"
-              className={styles.btnSubmit}
+              className={styles.button}
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}

@@ -5,7 +5,7 @@ import texts from "../asset/textData/text";
 import SlideNav from "../components/slideNav";
 import Snap from "../components/Snap";
 import Ratings from '../components/Ratings';
-import  BackgroundImage from '../asset/img/noodles.webp';
+import  BackgroundImage from '../asset/img/Menu/noodles.webp';
 import "../css/home.css";
 import "../css/slideNav.css";
 

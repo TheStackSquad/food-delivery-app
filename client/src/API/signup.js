@@ -1,17 +1,19 @@
 //client/ src/API/signup.js
-import axios from 'axios'; // For making HTTP requests
+import apiClient from '../frontendUtils/apiClient';
 const debug = require('debug')('client:api:signup'); // Debug instance for logging
 
-export const signUpUser = async (formData, endpoint = '/api/signup') => {
+
+export const signUpUser = async (formData, endpoint = '/user/signup') => {
   try {
     debug(`[signUpUser] Called with formData to endpoint: ${endpoint}`, formData);
 
-    const response = await axios.post(endpoint, formData, {
+    const response = await apiClient.post(endpoint, formData, {
       headers: {
         'Content-Type': 'application/json',
       },
       withCredentials: true, // Allow cookies for session management
     });
+    console.log('Whats In The Response:', response);
 
     debug('[signUpUser] Response received:', response.data);
     return response.data;
@@ -24,11 +26,11 @@ export const signUpUser = async (formData, endpoint = '/api/signup') => {
   }
 };
 
-export const riderSignUpUser = async (formData, endpoint = '/api/rider/signup') => {
+export const riderSignUpUser = async (formData, endpoint = '/rider/signup') => {
   console.log("API Call Initiated:", { endpoint, formData });
 
   try {
-    const response = await axios.post(endpoint, formData, {
+    const response = await apiClient.post(endpoint, formData, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
@@ -42,11 +44,11 @@ export const riderSignUpUser = async (formData, endpoint = '/api/rider/signup') 
   }
 };
 
-export const vendorSignUpUser = async (formData, endpoint = '/api/vendor/signup') => {
+export const vendorSignUpUser = async (formData, endpoint = '/vendor/signup') => {
   try {
     debug(`[vendorSignUpUser] Called with formData to endpoint: ${endpoint}`, formData);
     
-    const response = await axios.post(endpoint, formData, {
+    const response = await apiClient.post(endpoint, formData, {
       headers: {
         'Content-Type': 'application/json', // Ensure JSON payload
       },
@@ -64,8 +66,7 @@ export const vendorSignUpUser = async (formData, endpoint = '/api/vendor/signup'
   }
 };
 
-//client/ src/API/signup.js
-export const vendorProfile = async (formData, endpoint = '/api/vendor/profile', token) => {
+export const vendorProfile = async (formData, endpoint = '/vendor/profile', token) => {
   console.log('vendorProfile Hit');
   try {
     debug(`[vendorProfile] Called with formData to endpoint: ${endpoint}`, formData);
@@ -88,9 +89,9 @@ export const vendorProfile = async (formData, endpoint = '/api/vendor/profile', 
 
 
     // Send POST request
-    const response = await axios.post(endpoint, formData, config);
+    const response = await apiClient.post(endpoint, formData, config);
 
-    console.log('Response Data:', response.data);
+    console.log('Response Data From SignUp:', response.data);
     console.groupEnd();
 
     debug('[vendorProfile] Response received:', response.data);
@@ -110,3 +111,28 @@ export const vendorProfile = async (formData, endpoint = '/api/vendor/profile', 
     throw new Error(error.response?.data?.message || 'Profile update failed. Please try again.');
   }
 };
+
+
+export const vendorAddMenu = async (formData, endpoint = '/vendor/addmenu', token) => {
+  console.log('vendorProfile Hit');
+  try {
+    debug(`[vendorProfile] Called with formData to endpoint: ${endpoint}`, formData);
+
+   const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`, // Include the token for authentication
+      },
+      withCredentials: true, // Allow cookies for session management
+    };
+    // Send POST request
+    const response = await apiClient.post(endpoint, formData, config);
+
+    console.log('Response Data:', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error adding menu item:', error);
+    throw error;
+  }
+}

@@ -125,7 +125,8 @@ input::placeholder{
 .inputGroup input:focus {
   box-shadow: 0 1px 0 0 #7c0778;
 }
-.btnWrap{
+.btnWrap,
+.btnWrapLogin{
   margin: 1rem 0px;
   width: 100%;
   display: flex;
@@ -133,7 +134,8 @@ input::placeholder{
   align-items: center;
   justify-content: center;
 }
-.btnsubmit{
+.btnsubmit,
+.button{
   background-color: lightcoral;
   color: white;
   font-size: 1.4rem;
@@ -153,16 +155,23 @@ input::placeholder{
   font-size: 1.1rem;
   color: dodgerblue;
   font-family: var(--fontfamilyMacondo);
+  margin-bottom: 1.5rem;
 
 }
 
 /* Md Viewport*/
 
-@media (min-width: 575.98px) {
+@media (min-width: 576px) {
+  .gridContainer{
+    height: 100%;
+  }
   .formWrap {
     max-width: 650px;
     width: 95%;
     height: fit-content;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
   .formWrap h2{
     font-family: var(--Alte-Text);
@@ -183,5 +192,16 @@ input::placeholder{
     right: 0;
     color: black;
     font-size: 1.1rem;
+  }
+.btnWrapLogin{
+  margin: 1rem 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+  .buttonSubmit{
+    font-size: 1.4rem;
   }
 }

@@ -1,41 +1,35 @@
 // client/src/redux/actions/vendorActions.js
-import axios from 'axios';
 import {
   VENDOR_LOGIN,
   VENDOR_LOGIN_SUCCESS,
   VENDOR_LOGIN_FAILURE,
   VENDOR_LOGOUT,
   CLEAR_ERROR,
+  UPDATE_VENDOR_PROFILE,
+  VENDOR_ADD_MENU_ITEM,
+  VENDOR_UPDATE_MENU_ITEM,
+  VENDOR_REMOVE_MENU_ITEM,
+  VENDOR_UPDATE_SESSION_MEALS,
 } from '../constants/actionTypes';
 
+//import { refreshAccessToken } from '../../frontendUtils/tokenUtils';
+//import { setAuthToken } from '../../frontendUtils/apiClient';
+import apiClient from '../../frontendUtils/apiClient';
+
+
 // Action to initiate the login process
-export const loginVendor = (formData) => async (dispatch) => {
+export const loginVendorAction = (vendorData) => (dispatch) => {
+  dispatch({ type: VENDOR_LOGIN });
   try {
-    dispatch({ type: VENDOR_LOGIN });
-
-    // Make API call to login endpoint
-    const response = await axios.post('/api/vendor/login', formData);
-
-    const { token, vendor, sessionData } = response.data;
-    console.log({ token, vendor, sessionData });
-
-    // Dispatch successful login action
     dispatch({
-      type: VENDOR_LOGIN_SUCCESS,
-      payload: {
-        token,
-        vendor,
-        sessionData,
-      },
+        type: VENDOR_LOGIN_SUCCESS,
+        payload: vendorData, // Pass entire vendorData
     });
-
-    // Save token to localStorage
-    localStorage.setItem('vendorToken', token);
   } catch (error) {
-    console.error('Error logging in vendor:', error);
+    // Dispatch login failure in case of an error
     dispatch({
       type: VENDOR_LOGIN_FAILURE,
-      payload: error.response?.data?.error || 'Something went wrong',
+      payload: error.message || 'Login failed',
     });
   }
 };
@@ -43,7 +37,9 @@ export const loginVendor = (formData) => async (dispatch) => {
 // Action to log out vendor
 export const logoutVendor = () => (dispatch) => {
   // Clear token and any persisted data
-  localStorage.removeItem('vendorToken');
+  localStorage.removeItem('userData');
+
+  // Dispatch actions for logout and session failure
   dispatch({ type: VENDOR_LOGOUT });
 };
 
@@ -51,3 +47,125 @@ export const logoutVendor = () => (dispatch) => {
 export const clearError = () => ({
   type: CLEAR_ERROR,
 });
+
+// vendorActions for profile updates
+export const updateVendorProfile = (profile) => {
+  return {
+    type: UPDATE_VENDOR_PROFILE,
+    payload: profile
+  };
+};
+
+// In vendorActions.js
+export const addMenuItem = (menuItem) => ({
+  type: VENDOR_ADD_MENU_ITEM,
+  payload: menuItem,
+});
+
+export const updateMenuItem = (menuItem) => ({
+  type: VENDOR_UPDATE_MENU_ITEM,
+  payload: menuItem,
+});
+
+export const removeMenuItem = (menuItemId) => ({
+  type: VENDOR_REMOVE_MENU_ITEM,
+  payload: menuItemId,
+});
+
+// Async action for adding menu item
+export const updateSessionMeals = (meals) => ({
+  type: VENDOR_UPDATE_SESSION_MEALS,
+  payload: meals,
+});
+
+//Api post for vendor add menu
+export const addMenuItemAsync = (formData, token) => async (dispatch) => {
+  console.log('🚀 [addMenuItemAsync] Starting API call to add menu item');
+  console.log('📤 [addMenuItemAsync] FormData contents:', Array.from(formData.entries()));
+  
+  try {
+    console.log('⏳ [addMenuItemAsync] Sending POST request to /vendor/addmenu');
+
+    const response = await apiClient.post('/vendor/addmenu', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log('📥 [addMenuItemAsync] API Response:', {
+      status: response.status,
+      data: response.data,
+    });
+
+    const newMenuItem = response.data.meal;
+    console.log('🍴 [addMenuItemAsync] New Menu Item:', newMenuItem);
+
+    // Dispatch action to add menu item to menu array
+    dispatch(addMenuItem(newMenuItem));
+    console.log('✅ [addMenuItemAsync] Dispatched addMenuItem action');
+    return response.data;
+  } catch (error) {
+    console.error('❌ [addMenuItemAsync] Error adding menu item:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+    });
+    throw error;
+  }
+};
+
+
+// eleteMenuItem action
+export const deleteMenuItem = (menuItemId, token, vendorId) => async (dispatch) => {
+  console.log('🚀 [deleteMenuItem] Starting API call with:', {
+    menuItemId,
+    vendorId,
+    hasToken: !!token
+  });
+  
+  try {
+    // Updated URL to match the route definition
+    console.log(`📤 [deleteMenuItem] Sending DELETE request to: /vendor/dashboard/${menuItemId}`);
+
+    
+    // The path should match your backend route structure: /api/vendor/dashboard/:id
+    const url = `/vendor/dashboard/${menuItemId}`;
+    console.log(`📤 [deleteMenuItem] Sending DELETE request to: ${url}`);
+    
+    const response = await apiClient.delete(`/vendor/dashboard/${menuItemId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: { vendorId },
+    });
+    
+    console.log('📥 [deleteMenuItem] API Response:', {
+      status: response.status,
+      data: response.data
+    });
+
+    if (response.status === 200) {
+      dispatch(removeMenuItem(menuItemId));
+      console.log('✅ [deleteMenuItem] Successfully dispatched removeMenuItem');
+      return { success: true };
+    }
+  } catch (error) {
+    console.error('❌ [deleteMenuItem] API Error:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    return { 
+      success: false, 
+      error: error.response?.data || "Unknown error" 
+    };
+  }
+};
+
+
+
+
+
+

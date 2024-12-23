@@ -1,40 +1,45 @@
 // client/src/API/upload.js
+//import apiClient from "../frontendUtils/apiClient";
+//import { getAccessToken } from '../frontendUtils/tokenUtils';
 
 import axios from 'axios';
+// Create an Axios instance with the hardcoded baseURL
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:5000/api',
+});
 
-// Upload image to the server
-export const uploadImage = async (file) => {
-  const formData = new FormData();
-  formData.append('image', file);
+const dashboardApiUri = '/user/login/dashboard';
 
+export const uploadImage = async (imageFile, token) => {
   try {
-    const response = await axios.post('/api/upload', formData, {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    console.log('[upload.js] Uploading image...');
+
+    const response = await axiosInstance.post(dashboardApiUri, formData, {
       headers: {
+        'Authorization': `Bearer ${token}`, // Include the token
         'Content-Type': 'multipart/form-data',
       },
     });
+
+    console.log('[upload.js] Upload successful:', response.data);
     return response.data;
   } catch (error) {
+    console.error('[upload.js] Error uploading image:', error.message);
     throw error;
   }
 };
 
-// Fetch profile image from the server
-export const fetchProfileImage = async () => {
-  try {
-    const response = await axios.get('/api/profile');
-    return response.data.user.profilePicture;
-  } catch (error) {
-    throw error;
-  }
-};
+
 
 // upoad vendor Image
 export const uploadVendorImage = (file) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  return axios.post("api/upload", formData, {
+  return axiosInstance.post("/upload", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
