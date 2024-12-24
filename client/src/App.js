@@ -17,6 +17,7 @@ import Vendor from "./Pages/Vendor";
 import Rider from "./Pages/Rider";
 import Menu from "./Pages/Menu";
 import Dashboard from "./Pages/Dashboard";
+import CheckoutPage from "./components/UI/CheckoutPage";
 import VendorSignup from "./Pages/VendorRoutes/VendorSignUp";
 import VendorLogin from "./Pages/VendorRoutes/VendorLogin";
 import VendorDashboard from "./Pages/VendorRoutes/VendorDashboard";
@@ -48,6 +49,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/account" element={<Account />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/login" element={<Login />} />
         <Route path="/login/dashboard" element={<Dashboard />} />

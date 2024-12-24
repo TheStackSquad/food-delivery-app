@@ -1,0 +1,74 @@
+.filterContainer {
+    position: relative;
+    width: 100%;
+    max-width: 16rem;
+  }
+  
+  .selectTrigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .selectTrigger:hover {
+    border-color: #D1D5DB;
+    background-color: #F9FAFB;
+  }
+  
+  .selectTrigger span {
+    font-size: 0.875rem;
+    color: #374151;
+  }
+  
+  .dropdownArrow {
+    margin-left: 8px;
+    color: #6B7280;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .selectContent {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    max-height: 15rem;
+    overflow-y: auto;
+  }
+  
+  .selectItem {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #374151;
+    transition: all 0.2s ease;
+  }
+  
+  .selectItem:hover {
+    background-color: #F3F4F6;
+  }
+  
+  /* Scrollbar styling */
+  .selectContent::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .selectContent::-webkit-scrollbar-track {
+    background: #F3F4F6;
+  }
+  
+  .selectContent::-webkit-scrollbar-thumb {
+    background-color: #D1D5DB;
+    border-radius: 3px;
+  }

@@ -54,6 +54,13 @@ function GlobalLayout({ children }) {
     dispatch(toggleDropdown(false));
   }, [navigate, dispatch]);
 
+  
+const handleCartClick = () => {
+  dispatch(updateInteraction());
+  navigate('/checkout');
+};
+
+
   return (
     <div className="global-layout">
       <div className="header-brand">
@@ -112,7 +119,7 @@ function GlobalLayout({ children }) {
           </div>
 
           <div className="icons-container">
-            <div className="cart-icon" onClick={() => dispatch(updateInteraction())}>
+            <div className="cart-icon" onClick={handleCartClick}>
               <FaShoppingCart />
             </div>
           </div>

@@ -1,52 +1,46 @@
-.container {
-  padding: 1rem;
+.container{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
-
-.filterContainer {
-  width: 16rem;
-  margin-bottom: 2rem;
-  z-index: 19;
+.filterWrap{
+  padding: .7rem;
 }
 .sectionWrap{
   z-index: 9;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 .sectionTitle {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  width: 100%;
+  height: fit-content;
+  text-align: start;
+  padding-left: .9rem;
+ 
 }
-
 .gridContainer {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  width: 95%;
+  height: auto;
 }
-
-.vendorType {
-  color: #4B5563;
-}
-
-.vendorRating {
-  font-weight: 600;
-}
-
-.cardHover {
-  transition: box-shadow 0.2s;
-}
-
-.cardHover:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .gridContainer {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: .7rem;
   }
 }
-
-@media (min-width: 1024px) {
-  .gridContainer {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.selectContent{
+  border: 2rem solid blue;
 }

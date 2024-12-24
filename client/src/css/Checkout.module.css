@@ -1,0 +1,152 @@
+.container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 1rem;
+  }
+  
+  .wrapper {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+  }
+  
+  .grid {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .cardTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .cartItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .itemInfo {
+    font-weight: 500;
+  }
+  
+  .quantity {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .summaryItem {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  
+  .total {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+  
+  .formGroup {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  .input {
+    width: 100%;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0.5rem 0;
+    transition: border-color 0.2s;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #3b82f6;
+  }
+  
+  .label {
+    position: absolute;
+    left: 0;
+    top: -0.875rem;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+  
+  .input:placeholder-shown + .label {
+    top: 0.5rem;
+    font-size: 1rem;
+    color: #9ca3af;
+  }
+  
+  .input:focus + .label {
+    top: -0.875rem;
+    font-size: 0.875rem;
+    color: #3b82f6;
+  }
+  
+  .textarea {
+    width: 100%;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    height: 6rem;
+    resize: none;
+    transition: border-color 0.2s;
+  }
+  
+  .textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  .button:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+  }
+  
+  .button:not(:disabled) {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .button:not(:disabled):hover {
+    background-color: #2563eb;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      padding: 2rem;
+    }
+    
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
