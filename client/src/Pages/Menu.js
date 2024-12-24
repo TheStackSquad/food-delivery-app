@@ -1,3 +1,4 @@
+//client/src/Pages/Menu.js
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/UI/menuCard';
 import Dropdown from '../components/UI/dropdown'; // Import the Dropdown component
@@ -20,7 +21,7 @@ const Menu = () => {
   return (
     <div className={`${styles.container}`}>
       {/* Vendor Type Filter */}
-      <div className={styles.filterContainer}>
+      <div className={styles.filterWrap}>
         <Dropdown
           onChange={setSelectedType} // Pass setSelectedType to handle selection
           options={[
@@ -55,7 +56,7 @@ const Menu = () => {
       </section>
 
       {/* All Vendors */}
-      <section>
+      <section  className={styles.sectionWrap}>
         <h2 className={styles.sectionTitle}>All Vendors</h2>
         <div className={styles.gridContainer}>
           {vendors

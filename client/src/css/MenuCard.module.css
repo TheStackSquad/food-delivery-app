@@ -1,68 +1,33 @@
 .card {
-    background: white;
-    border: 1px solid #E5E7EB;
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
-  
-  .cardHeader {
-    padding: 1.25rem 1.25rem 0;
-  }
-  
-  .cardContent {
-    padding: 1.25rem;
-  }
-  
-  .cardTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-  }
-  
-/* dropdown styling */
-
-.filterContainer {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .selectTrigger {
-    display: flex;
-    justify-content: space-between;
+  background: white;
+  border: 2px solid #96afe2;
+  border-radius: 0.5rem;
+  width: max-content;
+  margin: .2rem 0px ;
+  width: 100%;
+  overflow: hidden;
+}
+@media (min-width: 576px){
+  .card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
     align-items: center;
-    padding: 10px 15px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    cursor: pointer;
+    margin: .2rem 0px;
   }
-  
-  .selectContent {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    overflow: hidden;
-  }
-  
-  .selectItem {
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .selectItem:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .dropdownArrow {
-    margin-left: 10px;
-  }
-  
+}
+.cardHeader {
+  padding: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.cardHover {
+  transition: box-shadow 0.2s;
+}
+.cardHover:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  padding: 1.25rem;
+}
