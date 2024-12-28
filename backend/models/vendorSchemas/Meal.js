@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const MealSchema = new Schema({
+  category: { type: String, required: true },
   mealName: { type: String, required: true },
   description: { type: String },
   image: { type: String }, // URL of the meal image

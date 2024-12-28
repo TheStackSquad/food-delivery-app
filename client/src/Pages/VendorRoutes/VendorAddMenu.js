@@ -1,20 +1,21 @@
 // client/src/Pages/VendorRoutes/AddMenu.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { useLocation } from "react-router-dom";
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import styles from "../../css/VendorAddMenu.module.css";
 import { addMenuValidationSchema} from '../../frontendUtils/yupValidation';
-import { addMenuItemAsync } from '../../redux/actions/vendorActions';
+import { addMenuItemAsync, updateMenuItemAsync} from '../../redux/actions/vendorActions';
 
- // eslint-disable-next-line
-//import placeholderImage from '../../asset/img/protectedRoute.webp';
 import FoodIcon from "../../asset/img/rice-bowl.png";
 import { FaChevronDown, FaCamera } from "react-icons/fa";
 
 import '../../css/ProtectedRoute.css';
 
-function AddMenu() {
+function AddMenu({ isEditMode = false }) {
+  const location = useLocation();
+  const mealData = location.state?.meal || {}; 
   const dispatch = useDispatch();
   const vendor = JSON.parse(localStorage.getItem("vendorData"));
   const accessToken = vendor?.accessToken || null;
@@ -41,23 +42,23 @@ console.log("VendorId AddMenu:", vendorId);
   //Submit Function
   const formik = useFormik({
     initialValues: {
-      category: '',
-      mealName: '',
-      description: '',
+      category: mealData.category || '',
+      mealName: mealData.mealName || '',
+      description: mealData.description || '',
       image: null,
-      price: '',
-      priceDescription: '',
-      pack: '',
-      inStock: true,
+      price: mealData.price || '',
+      priceDescription: mealData.priceDescription || '',
+      pack: mealData.pack || '',
+      inStock: mealData.inStock !== undefined ? mealData.inStock : true,
     },
     validationSchema: addMenuValidationSchema,
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      console.log('🟢 [onSubmit] Starting submission');
+      console.log('[AddMenu] Starting submission in', isEditMode ? 'EDIT' : 'ADD', 'mode');
+      
       try {
         setSubmitting(true);
         const formData = new FormData();
   
-        // Add form fields to FormData
         Object.keys(values).forEach((key) => {
           if (key === 'image' && values[key]) {
             console.log(`📁 Adding file "${key}" to formData`);
@@ -68,19 +69,22 @@ console.log("VendorId AddMenu:", vendorId);
           }
         });
   
-        formData.append('vendorId', vendorId);
-        console.log('📤 [onSubmit] Dispatching addMenuItemAsync');
+        formData.append("vendorId", vendorId);
+        
+        let result;
+        if (isEditMode) {
+          console.log('[AddMenu] Adding mealId for update:', mealData._id);
+          formData.append("mealId", mealData._id);
+          result = await dispatch(updateMenuItemAsync(formData, accessToken));
+        } else {
+          result = await dispatch(addMenuItemAsync(formData, accessToken));
+        }
+        console.log('[AddMenu] Operation result:', result);
   
-        const result = await dispatch(addMenuItemAsync(formData, accessToken));
-        console.log('📥 [Dispatch Result]:', result);
-  
-        if (result.meal) {
-          console.log('✅ [onSubmit] Menu item added successfully');
-          toast.success('Menu item added successfully!');
-           // Clear preview image
-        setPreviewImage(null);
-  
-          // Reset the form
+        if (result?.meal || result?.payload?.meal) {
+          toast.success(isEditMode ? "Menu item updated successfully!" : "Menu item added successfully!");
+          setPreviewImage(null);
+          
           resetForm({
             values: {
               category: '',
@@ -93,24 +97,19 @@ console.log("VendorId AddMenu:", vendorId);
               inStock: true,
             }
           });
-          console.log('🧹 [onSubmit] Form reset');
-  
-          // Transition back to the initial state
-          setIsAddingMeal(false); // Return to "Add meals" UI
-          console.log('🔄 [onSubmit] Returned to centered container');
+          
+          setIsAddingMeal(false);
         } else {
-          throw new Error(result.error || 'Failed to add menu item');
+          throw new Error(result.error || 'Operation failed');
         }
       } catch (error) {
-        console.error('❌ [onSubmit] Error:', error);
-        toast.error(error.response?.data?.error || 'Failed to add menu item');
+        console.error('[AddMenu] Error:', error);
+        toast.error(error.response?.data?.error || 'Operation failed');
       } finally {
         setSubmitting(false);
-        console.log('✅ [onSubmit] Submission complete');
       }
     },
   });
-  
 
  // Handle image file selection and preview
  const handleImageChange = (event) => {
@@ -124,6 +123,7 @@ console.log("VendorId AddMenu:", vendorId);
     reader.readAsDataURL(file);
   }
 };
+
 
 useEffect(() => {
   console.log('isAddingMeal state changed:', isAddingMeal);
@@ -151,7 +151,7 @@ return (
                     <option value="Asian Cuisine">Asian Cuisine</option>
                     <option value="Alcohol Beverages">Alcohol Beverages</option>
                   </select>
-                  <FaChevronDown />
+               
                 </div>
                 <button type="button" className={styles.addCategory}>
                   + Add Category

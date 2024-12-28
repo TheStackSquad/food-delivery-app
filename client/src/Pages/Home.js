@@ -13,9 +13,9 @@ function Home() {
   return (
     <div className="home">
       <div class="section1">
-        <img src={BackgroundImage} alt='backgroundImg' className='HomeImg' />
+       <img src={BackgroundImage} alt='backgroundImg' className='HomeImg' />
         <FlashText texts={texts} />
-        <SlideNav />
+        <SlideNav /> 
       </div>
       <div class="section2">
         <Snap />

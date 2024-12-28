@@ -13,15 +13,14 @@
   right: 0;
   bottom: 0;
 }
-
 .loginCard {
   background: transparent;
   padding: 1.25rem;
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
+  height: fit-content;
   max-width: 100%;
-  height: 100vh;
   position: relative;
   z-index: 1;
   display: flex;
@@ -29,25 +28,25 @@
   justify-content: flex-end;
   align-items: center;
 }
-
+@media (min-width: 576px){
+  .loginCard {
+    max-width: 500px;
+  }
+}
+@media (min-width: 886px){
+  .loginCard {
+    max-width: 650px;
+  }
+}
 .header {
   text-align: center;
   color: #333;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   line-height: 1.9;
-  font-size: 2rem;
+  font-size: clamp(2rem, 1.5rem + 1vw, 3rem);
   font-weight: 800;
   font-family: var(--fontfamilyMacondo);
-
 }
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-top: 7rem;
-}
-
 .inputGroup {
   position: relative;
   margin-bottom: 1rem;
@@ -55,7 +54,6 @@
 
 .inputGroup input {
   width: 100%;
-  padding: 0.625rem 0;
   border: none;
   outline: none;
   background: transparent;
@@ -65,9 +63,10 @@
 .inputGroup input[type="text"] {
   border: none;
   outline: none;
+  padding: 0.625rem 0;
+  margin-bottom: .5rem;
   background: transparent;
 }
-
 .inputGroup label {
   position: absolute;
   left: 0;
@@ -75,16 +74,15 @@
   color: #666;
   transition: all 0.3s ease;
   pointer-events: none;
-  font-size: .9rem;
+  font-size: 1.1rem;
 }
-
 .inputLine {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: #ddd;
+  background-color: black;
 }
 
 .inputLine::after {
@@ -98,7 +96,6 @@
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .inputGroup input:focus~.inputLine::after,
 .inputGroup input:not(:placeholder-shown)~.inputLine::after {
   transform: scaleX(1);
@@ -110,7 +107,6 @@
   font-size: 0.75rem;
   color: #2196f3;
 }
-
 .submitButton {
   background-color: #2196f3;
   color: white;
@@ -123,6 +119,17 @@
   width: 100%;
   margin-top: 0.5rem;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .submitButton:hover {
   background-color: #010d18;

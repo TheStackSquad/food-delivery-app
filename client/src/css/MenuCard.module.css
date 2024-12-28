@@ -1,33 +1,30 @@
 .card {
-  background: white;
   border: 2px solid #96afe2;
   border-radius: 0.5rem;
-  width: max-content;
-  margin: .2rem 0px ;
   width: 100%;
   overflow: hidden;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-@media (min-width: 576px){
-  .card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
-    margin: .2rem 0px;
-  }
-}
+
 .cardHeader {
-  padding: 1.25rem;
-  font-size: 1.25rem;
+  padding-left: .5rem;
+  font-size: 1.4rem;
   font-weight: bold;
-}
-.cardHover {
-  transition: box-shadow 0.2s;
-}
-.cardHover:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .cardContent {
-  padding: 1.25rem;
+  padding-left: .9rem;
+  height: fit-content;
+}
+
+.cardHover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.cardHover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

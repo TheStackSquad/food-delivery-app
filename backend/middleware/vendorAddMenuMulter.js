@@ -1,58 +1,78 @@
+//backend/middlewrae/vendorAddMenuMulter.js
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { generateFileName } = require('./multerUtils');
 
-
-// Directory path for vendorProfile
-const vendorAddMenuDirectory = path.join(__dirname, '../uploads/vendorAddMenu');
-
-// Ensure directory exists
-if (!fs.existsSync(vendorAddMenuDirectory)) {
-  fs.mkdirSync(vendorAddMenuDirectory, { recursive: true });
-  console.log(`[MULTER] Created upload directory: ${vendorAddMenuDirectory}`);
+// Create upload directory
+const uploadDir = path.join(__dirname, '../uploads/vendorAddMenu');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Storage configuration for vendor menu uploads
+// Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    try {
-      console.log(`[MULTER] Saving menu file to: ${vendorAddMenuDirectory}`);
-      cb(null, vendorAddMenuDirectory); // Use the directory path as a string
-    } catch (err) {
-      console.error(`[MULTER] Error in destination: ${err.message}`);
-      cb(err);
-    }
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     const filename = generateFileName(req, file);
-    console.log(`[MULTER] Generated filename for menu: ${filename}`);
     cb(null, filename);
-  },
+  }
 });
 
-// Multer upload configuration
+// Configure multer upload
 const upload = multer({
-  storage,
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB
+  },
   fileFilter: (req, file, cb) => {
+    // Check file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
     if (!allowedTypes.includes(file.mimetype)) {
-      return cb(new Error('Invalid file type for menu. Only JPEG, PNG, JPG, and WebP are allowed.'));
+      return cb(new Error('Only .jpeg, .jpg, .png and .webp formats are allowed'));
     }
     cb(null, true);
-  },
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  }
 });
 
-// Middleware for vendor menu uploads
+// Main middleware
 const vendorMenuUpload = (req, res, next) => {
+  // First check if vendor is authenticated
+  if (!req.vendor?.vendorId) {
+    return res.status(401).json({
+      success: false,
+      message: 'Vendor authentication required'
+    });
+  }
+
+  // Handle the file upload
   upload.single('image')(req, res, (err) => {
-    if (err) {
-      console.error('[MULTER] Error during menu upload:', err.message);
-      return res.status(400).json({ success: false, message: err.message });
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({
+        success: false,
+        message: 'File upload error: ' + err.message
+      });
+    } else if (err) {
+      return res.status(400).json({
+        success: false,
+        message: err.message
+      });
     }
+
+    // Check if file was provided
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide an image file'
+      });
+    }
+
     next();
   });
 };
 
-module.exports = { vendorMenuUpload };
+module.exports = {
+  vendorMenuUpload
+};

@@ -7,7 +7,6 @@
   width: 100%;
   height: fit-content;
 }
-
 .scrollableNavbar {
   display: flex;
   justify-content: center;
@@ -19,7 +18,18 @@
   max-width: 350px;
   scroll-behavior: smooth;
 }
-
+@media (min-width: 576px){
+  .scrollableNavbar {
+    max-width: 550px;
+    height: 50px;
+  }
+}
+@media (min-width: 886px){
+  .scrollableNavbar {
+    max-width: 750px;
+    height: 50px;
+  }
+}
 .navItem {
   list-style: none;
   font-size: 1.2rem;
@@ -31,129 +41,104 @@
   padding: 8px;
   scroll-snap-align: center; 
 }
-.navItem:hover{
-  color: #200202;
-  font-weight: bold;
-}
-.activeNavItem {
-  transform: scale(1.1); /* Slight enlargement for active items */
-  color: #2980b9; /* Active color */
-  border-bottom: 2px solid #2980b9;
-}
-.cardContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  max-height: 100%;
-  max-width: 400px;
-  width: 90%;
-  position: relative;
-  padding: 1rem;
-  overflow-y: hidden;
-}
-@media (max-width: 575.98px) {
-  .cardContainer {
-    width: 90%; 
-    max-width: 370px;
+@media (min-width: 576px){
+  .navItem {
+    font-size: 1.5rem;
   }
 }
-.card {
-  max-width: 350px;
-  width: 95%;
-  padding: 16px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 16px;
-}
 
-.activeCard {
-  border: 2px solid #2980b9;
-  background: #ecf0f1;
-}
-.cardHeader{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: fit-content;
-}
+@media (min-width: 886px){
+  .navItem {
+    font-size: 1.6rem;
+  }
+  }
+
+  .navItem:hover{
+    color: #200202;
+    font-weight: bold;
+  }
+
+  .activeNavItem {
+    transform: scale(1.1); /* Slight enlargement for active items */
+    color: #2980b9; /* Active color */
+    border-bottom: 2px solid #2980b9;
+  }
+
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    max-height: 100%;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    padding: 1rem;
+    overflow-y: hidden;
+    overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+  }
+  @media (min-width: 576px) {
+    .cardContainer {
+      width: 90%; 
+      max-width: 700px;
+      height: 350px;
+    }
+  }
+  .card {
+    width: 95%;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: .4rem;
+    font-size: 1.3rem;
+  }
+  @media (min-width: 576px){
+    .card {
+      width: 95%;
+      padding: .5rem;
+      font-size: 1.5rem;
+    }
+  }
+  .activeCard {
+    border: 2px solid #2980b9;
+    background: #ecf0f1;
+  }
+  .cardHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+  }
+  @media (min-width: 886px){
+    .cardHeader{
+     font-size: 1.7rem;
+     padding: 0;
+    }
+  }
+  
 .icon {
   color: #3498db;
 }
 .headerText{
   font-size: 1.3rem;
 }
-
 .features {
   margin-top: 1rem;
   padding-left: 1.5rem;
-  color: #2ecc71;
+  color: #001a0b;
   list-style-type: square;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem 1rem;
 }
-
-@media screen and (min-width: 576px){
-  .scrollableNavbar {
-    padding: var(--padding);
-    max-width: 700px;
+@media (min-width: 886px){
+  .features {
+    font-size: 1.3rem;
   }
-  
-.navItem {
-  font-size: 1.5rem;
-  scroll-snap-align: center; 
-}
-.cardContainer {
-  max-width: 650px;
-  width: 90%;
-  height: 350px;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #888 transparent;
-}
-.cardContainer::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Optional: Customize scrollbar (Webkit-based browsers like Chrome, Edge) */
-.cardContainer::-webkit-scrollbar {
-  width: .1px;
-}
-
-.cardContainer::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 4px;
-}
-
-.cardContainer::-webkit-scrollbar-track {
-  background-color: transparent; /* Transparent background for the track */
-}
-.card {
-  scroll-snap-align: start;
-  max-width: 100%;
-  width: 95%;
-  padding: 16px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-bottom: 16px;
-}
-.icon {
-  font-size: 2rem;
-}
-.headerText{
-  font-size: 1.8rem;
-}
-.cardContent{
-  font-size: 1.6rem;
-}
-.features {
-  font-size: 1.4rem;
-}
-
 }

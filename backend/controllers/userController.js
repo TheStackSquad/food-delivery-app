@@ -1,6 +1,7 @@
 // backend/controllers/userController.js
 const bcrypt = require('bcrypt');
 const User = require('../models/userSchema/User');
+const Meal = require('../models/vendorSchemas/Meal');
 const jwt = require('jsonwebtoken');
 const { refreshAccessToken } = require('../utils/tokenManager');
 const generateTokens = require('../utils/generateToken');
@@ -265,6 +266,28 @@ const getProfile = async (req, res) => {
   }
 };
 
+// Fetch meals by category
+const mealController = {
+  // Get all meals or filter by category
+  getMeals: async (req, res) => {
+    console.log('meal controller hit...');
+    try {
+      const { category } = req.query;
+      let query = {};
+      
+      // If category is specified and not 'all', add it to query
+      if (category && category !== 'all') {
+        query.category = category;
+      }
+
+      const meals = await Meal.find(query).sort({ createdAt: -1 });
+      res.json(meals);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching meals', error: error.message });
+    }
+  },
+};
+
 // Refresh Token Controller
 const refreshUserToken = (req, res) => {
   const { refreshToken } = req.body;
@@ -291,8 +314,11 @@ module.exports = {
   login,
   uploadProfileImage,
   getProfile,
+  mealController,
   refreshUserToken
 };
+
+
 
 
 

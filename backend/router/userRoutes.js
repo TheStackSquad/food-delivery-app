@@ -10,6 +10,7 @@ const {
   login,
   uploadProfileImage,
   getProfile,
+  mealController,
   refreshUserToken
 } = userController;
 
@@ -26,6 +27,13 @@ userRouter.post('/login/dashboard',
   uploadProfileImage  // controller
 );
 
+// Route to fetch meals by category
+userRouter.get('/meals',  mealController.getMeals);
+
 userRouter.post('/refresh-session', refreshUserToken); 
 
 module.exports = userRouter;
+
+
+
+

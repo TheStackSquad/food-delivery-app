@@ -1,81 +1,121 @@
+
 /* navbarSlide.css */
 .navbar-container {
   width: 95%;
-  height: 100%;
+  height: fit-content;
   background-color: rgb(247, 170, 29, .4);
   border-radius: 1rem;
   position: absolute;
-  top: 60%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--fontfamilyMacondo);
-}
-@media screen and (max-width: 575.98px) {
-  .navbar-container {
-    width: 90%;
-    max-width: 350px;
-    height: 45px;
-    padding: var(--paddingRegular);
-    margin-bottom: 1rem;
-  }
-  }
-.navbar{
-  width: 100%;
-  height: 50px;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.navbar-item{
-  font-size: 1.3rem;
-  background: none;
-  outline: none;
-  border:none;
-  cursor: pointer;
-  position: relative;
-  font-family: var(--fontfamilyMacondo);
-  z-index: 2;
-  margin-right: 1rem;
-}
-.card-container{
-  margin-top: .5rem;
-  height: auto;
-  padding: var(--paddingRegular);
-  font-family: var(--fontfamilyMacondo);
-  border-radius: .5rem;
-  background-color: rgba(223, 228, 231, 0.7);
-}
-
-@media screen and (max-width: 575.98px) {
-  .card-container {
-    width: 90%;
-    max-width: 370px;
-    height: fit-content;
-    padding: var(--paddingRegular);
-    margin-bottom: 1rem;
-  }
-  }
-.card-content{
-  text-align: center;
-  font-size: 1.2rem;
-  color: black;
-}
-.button-box{
-  width: 100%;
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: .5rem;
-  font-family: var(--fontfamilyMacondo);
+  padding: var(--paddingRegular);
+  overflow-x: hidden;
 }
+
+@media (min-width: 576px) {
+  .navbar-container {
+    top: 70%;
+    width: 90%;
+    max-width: 500px;
+  }
+  }
+  @media (min-width: 885px) {
+    .navbar-container {
+      top: 70%;
+      width: 95%;
+      max-width: 650px;
+    }
+    }
+    .navbar{
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .navbar-item{
+      font-size: 1.3rem;
+      font-weight: 600;
+      background: none;
+      outline: none;
+      border:none;
+      cursor: pointer;
+      position: relative;
+      font-family: var(--fontfamilyMacondo);
+      z-index: 2;
+      margin-right: 1rem;
+    }
+    @media (min-width: 575.98px){
+      .navbar-item{
+        font-size: 1.9rem;
+        font-weight: 600;
+      }
+    }
+    @media (min-width: 575.98px){
+      .navbar-item{
+        font-size: 2.1rem;
+        font-weight: 800;
+      }
+    }
+    .card-container{
+      margin-top: .5rem;
+      width: 95%;
+      height: 200px;
+      padding: var(--paddingRegular);
+      font-family: var(--fontfamilyMacondo);
+      border-radius: .5rem;
+      background-color: rgba(223, 228, 231, 0.7);
+    }
+    .card-content{
+      text-align: center;
+      font-size: 1.2rem;
+      color: black;
+    }
+    @media (min-width: 576px){
+      .card-content{
+        font-size: 1.5rem;
+      }
+    }
+    @media (min-width: 885px){
+      .card-content{
+        font-size: 1.6rem;
+      }
+    }
+    .button-box{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--fontfamilyMacondo);
+    }
+    
 .btn-1, .btn-2 {
   font-size: 1.4rem;
   padding: 0.5rem 0.9rem;
   border-radius: 0.4rem;
   font-family: var(--fontfamilyMacondo);
-  margin: 0.6rem 0;
+  margin: .2rem 0;
   transition: all 0.2s ease;
   cursor: pointer;
+}
+@media (min-width: 576px){
+  .btn-1, .btn-2 {
+    font-size: 1.8rem;
+    padding: .7rem 1rem;
+  }
+}
+@media (min-width: 885px){
+  .btn-1, .btn-2 {
+    font-size: 2.1rem;
+    padding: .8rem 1.1rem;
+  }
 }
 
 .btn-1 {
@@ -104,51 +144,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 20%;
     background-color: orange;
     transition: all 0.3s ease;
     border-radius: 0.5rem;
     z-index: 1;
   }
-
-/* MD & LG VIEWPORTS */
-@media screen and (min-width: 576px) {
-  .navbar-container {
-    max-width: 600px;
-    width: 90%;
-    height: auto;
-    top: 70%;
-    overflow-x: hidden;
-  }
-  .navbar{
-    height: 80px;
-    width: 100%;
-    justify-content: space-between;
-    background-color: rgb(231, 211, 172, .9);
-    border-radius: 0.5rem;
-  }
-  .navbar-item{
-    font-size: 1.7rem;
-    position: relative;
-    padding: 0px 2rem;
-    font-family: var(--Alte-Text);
-  }
-  .card-container{
-    background-color: rgb(231, 211, 172, .2);
-  }
-  .card-content{
-    font-size: 1.7rem;
-    font-weight: 700;
-    font-family: var(--Alte-Text);
-  }
-  .navbar-background {
-    height: 80px;
-    background-color: orange;
-  }
-  .btn-1, .btn-2 {
-    font-size: 1.7rem;
-    padding: var(--padding);
-    width: 300px;
-    max-width: 250px;
-  }
-}

@@ -1,78 +1,164 @@
-//client/src/Pages/Menu.js
-import React, { useState } from 'react';
+// client/src/Pages/Menu.js
+import React, { useState, useEffect } from 'react';
+import { FaShoppingCart } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import { fetchMealsByCategory } from '../API/fetchMeal';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/UI/menuCard';
-import Dropdown from '../components/UI/dropdown'; // Import the Dropdown component
+import Dropdown from '../components/UI/dropdown';
+import { formatImagePath } from '../frontendUtils/pathFormatter';
 import styles from '../css/Menu.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Constants for vendor categories
+const VENDOR_TYPES = [
+  { value: 'all', label: 'All Vendors' },
+  { value: 'Ice Cream', label: 'Ice Cream' },
+  { value: 'Alcohol Beverages', label: 'Alcohol Beverages' },
+  { value: 'Chinese Cuisines', label: 'Asian Cuisines' },
+  { value: 'African Food', label: 'Traditional' },
+  { value: 'Bakery Delight', label: 'Bakery Delight' },
+];
+
+// Utility function to update cart count in localStorage and UI
+const updateCartCount = (count) => {
+  console.log('Updating cart count:', count);
+  // Implementation for updating cart count in navigation would go here
+};
+
+// Utility function to handle cart operations
+const handleCartOperation = (meal) => {
+  console.log('Processing cart operation for meal:', meal);
+  
+  // Get existing cart items or initialize empty array
+  const existingCart = JSON.parse(localStorage.getItem('cartItems')) || [];
+  
+  // Check if item already exists in cart
+  const existingItemIndex = existingCart.findIndex(item => item._id === meal._id);
+  
+  if (existingItemIndex !== -1) {
+    console.log('Updating quantity for existing item');
+    existingCart[existingItemIndex].quantity += 1;
+  } else {
+    console.log('Adding new item to cart');
+    existingCart.push({ ...meal, quantity: 1 });
+  }
+  
+  // Update localStorage
+  localStorage.setItem('cartItems', JSON.stringify(existingCart));
+  
+  // Update cart count and show notification
+  updateCartCount(existingCart.length);
+  return existingCart.length;
+};
 
 const Menu = () => {
+  // State declarations
   const [selectedType, setSelectedType] = useState('all');
+  const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Sample data
-  const vendors = [
-    { id: 1, name: 'Sweet Treats', type: 'Ice Cream', rating: 4.5 },
-    { id: 2, name: 'Dragon Palace', type: 'Chinese Cuisines', rating: 4.8 },
-    { id: 3, name: 'African Delights', type: 'African Food', rating: 4.7 },
-    { id: 4, name: 'Craft Beer Co', type: 'Alcohol Beverages', rating: 4.6 },
-    { id: 5, name: 'Fresh Bakes', type: 'Bakery Delight', rating: 4.9 },
-  ];
+  // Effect hook to fetch meals when category changes
+  useEffect(() => {
+    const loadMeals = async () => {
+      console.log('Loading meals for category:', selectedType);
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const data = await fetchMealsByCategory(selectedType);
+        console.log('Fetched meals:', data);
+        setMeals(data);
+      } catch (err) {
+        console.error('Error loading meals:', err);
+        setError('Failed to load meals. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const weeklyPicks = vendors.filter((v) => v.rating >= 4.8);
+    loadMeals();
+  }, [selectedType]);
 
+  // Event Handlers
+  const handleCategoryChange = (category) => {
+    console.log('Category changed to:', category);
+    setSelectedType(category);
+  };
+
+  const handleAddToCart = (meal) => {
+    console.log('Adding to cart:', meal);
+     // eslint-disable-next-line
+    const cartCount = handleCartOperation(meal);
+    toast.success(`Added ${meal.mealName} to cart`);
+  };
+
+  // Render Methods
+  const renderMealCard = (meal) => (
+    <Card key={meal._id} className={styles.cardHover}>
+      <div className={styles.cardImageContainer}>
+        <div 
+          className={styles.cardImage}
+          style={{
+            backgroundImage: `url(${formatImagePath(meal.image)})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+        <button 
+          className={styles.cartButton}
+          onClick={() => handleAddToCart(meal)}
+          aria-label="Add to cart"
+        >
+          <FaShoppingCart />
+        </button>
+      </div>
+      <CardHeader>
+        <CardTitle>{meal.mealName}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className={styles.mealInfo}>
+          <p className={styles.vendorType}>{meal.category}</p>
+          <p className={styles.description}>{meal.description}</p>
+          <p className={styles.price}>
+            ₦{meal.price.toLocaleString()}
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  // Main render
   return (
-    <div className={`${styles.container}`}>
-      {/* Vendor Type Filter */}
+    <div className={styles.container}>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.filterWrap}>
         <Dropdown
-          onChange={setSelectedType} // Pass setSelectedType to handle selection
-          options={[
-            { value: 'all', label: 'All Vendors' },
-            { value: 'Ice Cream', label: 'Ice Cream' },
-            { value: 'Alcohol Beverages', label: 'Alcohol Beverages' },
-            { value: 'Chinese Cuisines', label: 'Chinese Cuisines' },
-            { value: 'African Food', label: 'African Food' },
-            { value: 'Bakery Delight', label: 'Bakery Delight' },
-          ]}
+          onChange={handleCategoryChange}
+          options={VENDOR_TYPES}
           defaultValue="all"
           placeholder="Select vendor type"
         />
       </div>
 
-      {/* Picks of the Week */}
       <section className={styles.sectionWrap}>
-        <h2 className={styles.sectionTitle}>Picks of the Week</h2>
-        <div className={styles.gridContainer}>
-          {weeklyPicks.map((vendor) => (
-            <Card key={vendor.id} className={styles.cardHover}>
-              <CardHeader>
-                <CardTitle>{vendor.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className={styles.vendorType}>{vendor.type}</p>
-                <p className={styles.vendorRating}>Rating: {vendor.rating}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* All Vendors */}
-      <section  className={styles.sectionWrap}>
-        <h2 className={styles.sectionTitle}>All Vendors</h2>
-        <div className={styles.gridContainer}>
-          {vendors
-            .filter((vendor) => selectedType === 'all' || vendor.type === selectedType)
-            .map((vendor) => (
-              <Card key={vendor.id} className={styles.cardHover}>
-                <CardHeader>
-                  <CardTitle>{vendor.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className={styles.vendorType}>{vendor.type}</p>
-                  <p className={styles.vendorRating}>Rating: {vendor.rating}</p>
-                </CardContent>
-              </Card>
-            ))}
-        </div>
+        <h2 className={styles.sectionTitle}>
+          {selectedType === 'all' ? 'All Vendors' : `Vendors in ${selectedType}`}
+        </h2>
+        
+        {error && <p className={styles.error}>{error}</p>}
+        
+        {loading ? (
+          <div className={styles.loading}>Loading vendors...</div>
+        ) : (
+          <div className={styles.gridContainer}>
+            {meals.length === 0 ? (
+              <p>No meals found in this category.</p>
+            ) : (
+              meals.map(renderMealCard)
+            )}
+          </div>
+        )}
       </section>
     </div>
   );

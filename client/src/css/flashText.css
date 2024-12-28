@@ -20,6 +20,23 @@
   }
 
   @media screen and (min-width: 576px){
+    .flash-text-container {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+    }
+    .flash-text {
+      font-size: 4.5rem;
+    }
+  }
+  
+
+  @media screen and (min-width: 885px){
+    .flash-text-container {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+    }
     .flash-text {
       font-size: 6.5rem;
     }

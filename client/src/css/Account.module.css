@@ -2,13 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   background-color: white;
-  margin-top: -10rem;
 }
-
 .contentContainer {
   position: relative;
   z-index: 1;
@@ -22,32 +21,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
-@media (max-width: 575.98px) {
+@media (min-width: 576px){
   .contentContainer {
-    width: 95%;
-    max-width: 370px;
-    padding: 1.5rem;
+    max-width: 700px;
   }
-
 }
+
 .formBox {
-  width: 95%;
-  padding: 1.5rem;
+  width: 90%;
+  padding: .5rem;
+  overflow: hidden;
 }
-@media (max-width: 575.98px) {
-  .formBox {
-    width: 95%;
-    max-width: 350px;
-    padding: 1.5rem;
-  }
-
-}
-
 .blob {
   position: absolute;
-  top: -10%;
-  right: -20%;
+  top: -20%;
+  right: -40%;
   width: 250px;
   height: 250px;
   background: rgba(245, 191, 170, 0.2);
@@ -64,25 +56,19 @@
 
 .formHeader {
   text-align: center;
-  margin-bottom: 2rem;
+  line-height: .9;
+  margin-bottom: .5rem;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 1.5rem + 1vw, 3rem);
   color: #4a4a4a;
   font-weight: 600;
 }
-
-.formBox {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
 .inputGroup {
   position: relative;
-  margin-bottom: 1rem;
   overflow-x: hidden;
+  padding: .2rem 0px;
 }
 
 .input,
@@ -92,7 +78,6 @@
 .input[type="password"] {
   width: 100%;
   height: 40px;
-  padding: 0.95rem;
   border: none;
   outline: none;
   border-bottom: 2px solid #9c0599;
@@ -101,7 +86,15 @@
   background: transparent;
   transition: border-color 0.3s ease;
 }
-
+@media (min-width: 576px){
+  .input,
+.input[type="text"],
+.input[type="tel"],
+.input[type="email"],
+.input[type="password"] {
+  font-size: 1.4rem;
+}
+}
 .label {
   position: absolute;
   bottom: 1rem;
@@ -111,22 +104,14 @@
   color: #888;
   transform-origin: bottom left;
 }
-
 .input:focus {
   outline: none;
   border-bottom-color: #7c0778;
 }
-
 .input:focus + .label,
 .input:not(:placeholder-shown) + .label {
   transform: translateY(-150%) scale(0.8);
   color: #7c0778;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
 }
 
 .submitButton {
@@ -140,6 +125,18 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 576px){
+  .submitButton {
+
+    font-size: 1.1rem;
+    width: fit-content;
+  }
 }
 
 .submitButton:hover {
@@ -152,9 +149,10 @@
   transform: translateY(1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .footerText {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: #666;
 }
 
@@ -205,37 +203,4 @@
 
 .suggestions li:hover {
   text-decoration: underline;
-}
-
-
-/* Responsive adjustments */
-@media screen and (min-width: 576px) {
-  .contentContainer {
-    position: relative;
-    z-index: 1;
-    width: 90%;
-    max-width: 600px;
-    height: fit-content;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-bottom: 3rem;
-  }
-  .formBox{
-    max-width: 450px;
-  }
-  .title {
-    font-size: 2.2rem;
-  }
-
-  .input {
-    font-size: 1.3rem;
-  }
-
-  .submitButton {
-    font-size: 1.4rem;
-    padding: var(--padding);
-    width: 180px;
-  }
 }

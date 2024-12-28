@@ -13,6 +13,7 @@ const {
   getVendorProfile,
   updateVendorProfile,
   addMealToMenu,
+  updateMenuItem,
   getVendorMenu,
   refreshVendorToken,
   removeMenuItem,
@@ -52,6 +53,14 @@ vendorRouter.post(
   addMealToMenu
 ); // Add meal to menu
 
+vendorRouter.put(
+  '/editmenu/:mealId',
+  vendorAuthMiddleware,
+  vendorMenuUpload,      // Uploads new file
+  updateMenuItem         // Updates the database
+);
+
+
 vendorRouter.get("/menu", vendorAuthMiddleware, getVendorMenu); // Get vendor menu
 
 vendorRouter.delete("/dashboard/:id", vendorAuthMiddleware, removeMenuItem);
@@ -66,3 +75,4 @@ vendorRouter.use((req, res, next) => {
 vendorRouter.post("/refresh-session", refreshVendorToken);
 
 module.exports = vendorRouter;
+

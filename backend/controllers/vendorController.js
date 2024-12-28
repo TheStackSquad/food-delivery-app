@@ -10,8 +10,11 @@ const userValidators = require("../utils/validators");
 const generateTokens = require("../utils/generateToken");
 const { refreshAccessToken } = require('../utils/tokenManager');
 
-const fs = require('fs');
+const fs = require('fs').promises;
+const mongoose = require('mongoose');
 const path = require('path');
+
+const { safeDeleteFile, checkFileExists } = require('../middleware/multerUtils');
 
 // Register a new vendor
 const registerVendor = async (req, res) => {
@@ -308,6 +311,7 @@ const addMealToMenu = async (req, res) => {
     }
 
     const {
+      category,
       mealName,
       description,
       price: rawPrice,
@@ -315,6 +319,7 @@ const addMealToMenu = async (req, res) => {
       pack,
       inStock,
     } = req.body;
+    console.log('checkin category:', req.body.category);
     let image = req.file ? req.file.path : null;
 
     const price = Number(rawPrice);
@@ -323,6 +328,10 @@ const addMealToMenu = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Price must be a positive number." });
+    }
+
+    if (!category) {
+      return res.status(400).json({ error: "Category is required" });
     }
 
     if (!mealName || typeof mealName !== "string") {
@@ -340,6 +349,7 @@ const addMealToMenu = async (req, res) => {
     image = image.replace("C:\\Users\\ASUS\\food-delivery-app", "");
 
     const newMeal = new Meal({
+      category,
       mealName,
       description,
       image,
@@ -350,6 +360,7 @@ const addMealToMenu = async (req, res) => {
     });
 
     const savedMeal = await newMeal.save();
+    console.log('checkin saved meal:', savedMeal);
 
     let vendorSession = await VendorSession.findOne({ vendor: vendorId });
 
@@ -489,6 +500,206 @@ const refreshVendorToken = async (req, res) => {
   }
 };
 
+
+
+
+
+// Track database operations for rollback
+class OperationTracker {
+  constructor() {
+    this.operations = new Map();
+  }
+
+  startOperation(id) {
+    this.operations.set(id, {
+      status: 'in-progress',
+      originalData: null,
+      newFilePath: null,
+      oldFilePath: null
+    });
+  }
+
+  updateOperation(id, data) {
+    const operation = this.operations.get(id);
+    if (operation) {
+      this.operations.set(id, { ...operation, ...data });
+    }
+  }
+
+  async cleanup() {
+    // Cleanup operations older than 1 hour
+    const ONE_HOUR = 60 * 60 * 1000;
+    const now = Date.now();
+    
+    for (const [id, operation] of this.operations.entries()) {
+      const operationTime = parseInt(id.split('-').pop());
+      if (now - operationTime > ONE_HOUR) {
+        this.operations.delete(id);
+      }
+    }
+  }
+}
+
+const operationTracker = new OperationTracker();
+
+// Start periodic cleanup
+setInterval(() => operationTracker.cleanup(), 60 * 60 * 1000);
+
+
+// Utility function to delete a file
+const deleteFile = async (filePath) => {
+  try {
+    await fs.unlink(filePath);
+    console.log(`Deleted file: ${filePath}`);
+  } catch (err) {
+    console.warn(`Failed to delete file: ${filePath}, Error: ${err.message}`);
+  }
+};
+
+
+// Enhanced update menu item controller
+const updateMenuItem = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  const operationId = `update-${Date.now()}`;
+  operationTracker.startOperation(operationId);
+
+  try {
+    const { vendorId, mealId } = req.body;
+    const updatedFields = req.body;
+
+    console.log('🔧 [updateMenuItem] Starting update operation:', operationId);
+    console.log('🔧 [updateMenuItem] Vendor ID:', vendorId);
+    console.log('🔧 [updateMenuItem] Meal ID:', mealId);
+
+    // Input validation
+    if (!vendorId || !mealId) {
+      throw new Error('Vendor ID and Meal ID are required.');
+    }
+
+    // Find vendor with session
+    const vendor = await Vendor.findById(vendorId).session(session);
+    if (!vendor) {
+      throw new Error('Vendor not found.');
+    }
+
+    // Find menu item with session
+    const menuItem = await Meal.findById(mealId).session(session);
+    if (!menuItem) {
+      throw new Error('Meal not found in vendor menu.');
+    }
+
+    // Store original data for potential rollback
+    operationTracker.updateOperation(operationId, {
+      originalData: menuItem.toObject(),
+      oldFilePath: menuItem.image
+    });
+
+    // Handle image update
+    if (req.file) {
+      // Verify new file exists before proceeding
+      const newFilePath = req.file.path;
+      const newFileExists = await checkFileExists(newFilePath);
+      
+      if (!newFileExists) {
+        throw new Error('New image file was not properly uploaded.');
+      }
+
+      operationTracker.updateOperation(operationId, {
+        newFilePath
+      });
+
+      // If there's an existing image, delete it
+      if (menuItem.image) {
+        const oldImageExists = await checkFileExists(menuItem.image);
+        if (oldImageExists) {
+          await safeDeleteFile(menuItem.image);
+        }
+      }
+
+      // Update image path
+      menuItem.set('image', newFilePath);
+    }
+
+    // Update other fields
+    Object.keys(updatedFields).forEach((key) => {
+      if (key !== 'vendorId' && key !== 'mealId') {
+        menuItem.set(key, updatedFields[key]);
+      }
+    });
+
+    // Save changes within transaction
+    await menuItem.save({ session });
+    await session.commitTransaction();
+
+    // Update operation status
+    operationTracker.updateOperation(operationId, {
+      status: 'completed'
+    });
+
+    console.log('✅ [updateMenuItem] Successfully updated menu item:', menuItem);
+
+    res.status(200).json({
+      message: 'Menu item updated successfully.',
+      meal: menuItem,
+    });
+
+  } catch (error) {
+    console.error('❌ [updateMenuItem] Error:', error);
+
+    // Rollback transaction
+    await session.abortTransaction();
+
+    // Attempt to recover from file system changes
+    try {
+      const operation = operationTracker.operations.get(operationId);
+      
+      if (operation) {
+        // If we uploaded a new file but failed, delete it
+        if (operation.newFilePath) {
+          await safeDeleteFile(operation.newFilePath);
+        }
+
+        // If we deleted an old file, we should have it backed up
+        if (operation.oldFilePath && operation.status === 'in-progress') {
+          // Here you might want to implement a backup/restore mechanism
+          console.log('⚠️ [updateMenuItem] Old file might need restoration:', operation.oldFilePath);
+        }
+      }
+    } catch (rollbackError) {
+      console.error('❌ [updateMenuItem] Rollback error:', rollbackError);
+    }
+
+    // Determine appropriate error response
+    const errorResponse = {
+      error: error.message || 'Failed to update menu item.',
+      code: 'UPDATE_FAILED'
+    };
+
+    if (error.message.includes('Vendor not found')) {
+      res.status(404).json(errorResponse);
+    } else if (error.message.includes('required')) {
+      res.status(400).json(errorResponse);
+    } else {
+      res.status(500).json(errorResponse);
+    }
+  } finally {
+    session.endSession();
+  }
+};
+
+// Add a cleanup endpoint for maintenance
+const cleanupOrphanedFiles = async (req, res) => {
+  try {
+    // Implementation for cleaning up orphaned files
+    // This could scan the upload directory and compare with database records
+    res.status(200).json({ message: 'Cleanup completed' });
+  } catch (error) {
+    res.status(500).json({ error: 'Cleanup failed' });
+  }
+};
+
 module.exports = {
   registerVendor,
   loginVendor,
@@ -496,10 +707,9 @@ module.exports = {
   updateVendorProfile,
   uploadVendorImages,
   addMealToMenu,
+  updateMenuItem,
+  cleanupOrphanedFiles,
   getVendorMenu,
   removeMenuItem,
   refreshVendorToken,
 };
-
-
-

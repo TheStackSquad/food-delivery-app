@@ -111,7 +111,7 @@ const [formData, setFormData] = useState({
           console.log('Check Response:', response);
   
           // Update localStorage with the new profile data
-          const updatedProfile = response.data; // Assuming this contains the updated profile details
+          const updatedProfile = response.vendorProfile;
           const vendorData = JSON.parse(localStorage.getItem('vendorData')) || {};
   
           // Update the nested profile object

@@ -65,7 +65,11 @@ function App() {
             <Route path="profile" element={<VendorProfile />} />
             <Route path="dashboard" element={<VendorDashboard />} />
             <Route path="payout" element={<VendorPayout />} />
+       
+
             <Route path="addmenu" element={<VendorAddMenu />} />
+<Route path="editmenu/:id" element={<VendorAddMenu isEditMode={true} />} />
+
             <Route path="insight" element={<VendorInsight />} />
           </Route>
           {/* Protected vendor routes */}

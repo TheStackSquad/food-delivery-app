@@ -8,6 +8,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Modal } from "../../components/UI/dashboardCard";
 
 // Redux Actions
@@ -44,9 +45,11 @@ const VendorDashboard = () => {
   const [activeCardId, setActiveCardId] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const [dashboardData, setDashboardData] = React.useState({ profile: {}, mealsData: [] });
+  const [dashboardData, setDashboardData] = React.useState({
+    profile: {},
+    mealsData: [],
+  });
   const [accessToken, setAccessToken] = React.useState(null);
- 
 
   // Use useSelector to fetch data from the Redux store
   const vendorData = useSelector((state) => state.vendor.vendorData);
@@ -75,7 +78,6 @@ const VendorDashboard = () => {
     }
   }, [vendorData]);
 
-
   // Initial delete click handler
   const handleDeleteClick = (mealId) => {
     console.log("Delete initiated for meal:", mealId);
@@ -84,40 +86,53 @@ const VendorDashboard = () => {
 
   // Confirmation handler
   const handleConfirmDelete = async () => {
-    console.log('🚀 [handleConfirmDelete] Starting deletion process');
+    console.log("🚀 [handleConfirmDelete] Starting deletion process");
     setIsDeleting(true);
-    
+
     try {
       const vendorState = JSON.parse(localStorage.getItem("persist:vendor"));
-   //   const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?._id;
-      const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?.vendor?._id;
-      console.log('Token In Dashboard (From State):', accessToken);
-      console.log('📦 [handleConfirmDelete] Parsed data:', {
+      //   const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?._id;
+      const vendorId = JSON.parse(vendorState.vendorData)?.sessionData?.vendor
+        ?._id;
+      console.log("Token In Dashboard (From State):", accessToken);
+      console.log("📦 [handleConfirmDelete] Parsed data:", {
         vendorId,
         activeCardId,
-        hasToken: accessToken
+        hasToken: accessToken,
       });
-      console.log('✅ [handleConfirmDelete] Deletion result (TOKEN):', accessToken);
-  
+      console.log(
+        "✅ [handleConfirmDelete] Deletion result (TOKEN):",
+        accessToken
+      );
+
       const result = await dispatch(
         deleteMenuItem(activeCardId, accessToken, vendorId)
       );
-      
-      console.log('✅ [handleConfirmDelete] Deletion result:', result);
-      
+
+      console.log("✅ [handleConfirmDelete] Deletion result:", result);
+
       if (result.success) {
         setActiveCardId(null);
-        console.log('✨ [handleConfirmDelete] Successfully deleted menu item');
+        console.log("✨ [handleConfirmDelete] Successfully deleted menu item");
       } else {
-        console.error('❌ [handleConfirmDelete] Failed to delete:', result.error);
+        console.error(
+          "❌ [handleConfirmDelete] Failed to delete:",
+          result.error
+        );
       }
     } catch (error) {
-      console.error('💥 [handleConfirmDelete] Error:', error);
+      console.error("💥 [handleConfirmDelete] Error:", error);
     } finally {
       setIsDeleting(false);
     }
   };
 
+  // Edit button click handler
+  const handleEditClick = (meal) => {
+    console.log("[Dashboard] Edit clicked for meal:", meal._id);
+    navigate(`/vendor/editmenu/${meal._id}`, { state: { meal } });
+  };
+  
   const handleLogout = () => {
     [
       "vendorData",
@@ -193,6 +208,10 @@ const VendorDashboard = () => {
               <DashboardWrap>
                 <p>Metric...</p>
                 <div className={styles.iconContainer}>
+                  <AiOutlineEdit
+                    className={styles.editIcon}
+                    onClick={() => handleEditClick(meal)}
+                  />
                   <AiOutlineDelete
                     className={styles.deleteIcon}
                     onClick={() => handleDeleteClick(meal._id)}

@@ -1,11 +1,12 @@
 // src/GlobalLayout/layout.js
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes, FaHome, FaUser, FaUtensils, FaMoneyCheckAlt, FaSignInAlt, FaPhone } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDropdown, updateInteraction, hideChatIcon } from '../redux/actions/layoutActions';  // Use the new hideChatIcon action
 import { slideVariants, menuItemVariants } from '../Motion/animation';
+import CartBadge from '../components/CartBadge';
 import '../css/layout.css';
 
 function GlobalLayout({ children }) {
@@ -17,6 +18,24 @@ function GlobalLayout({ children }) {
   const { isOpen, isChatIconVisible } = useSelector((state) => state.layout);  // Select state
   const dispatch = useDispatch();
 
+  //State For Badge Count
+  const [cartCount, setCartCount] = useState(0);
+
+  //useEffect to keep track of cart click
+  useEffect(() => {
+    // Initialize cart count from localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setCartCount(cartItems.length);
+
+    // Listen for cart updates
+    const handleStorageChange = () => {
+      const items = JSON.parse(localStorage.getItem('cartItems')) || [];
+      setCartCount(items.length);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -121,6 +140,7 @@ const handleCartClick = () => {
           <div className="icons-container">
             <div className="cart-icon" onClick={handleCartClick}>
               <FaShoppingCart />
+              <CartBadge count={cartCount} />
             </div>
           </div>
         </div>

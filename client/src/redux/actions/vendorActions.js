@@ -12,8 +12,6 @@ import {
   VENDOR_UPDATE_SESSION_MEALS,
 } from '../constants/actionTypes';
 
-//import { refreshAccessToken } from '../../frontendUtils/tokenUtils';
-//import { setAuthToken } from '../../frontendUtils/apiClient';
 import apiClient from '../../frontendUtils/apiClient';
 
 
@@ -115,8 +113,48 @@ export const addMenuItemAsync = (formData, token) => async (dispatch) => {
   }
 };
 
+export const updateMenuItemAsync = (formData, token) => async (dispatch) => {
+  console.log('📄 [updateMenuItemAsync Hit....]');
+  try {
+    // Configuring headers for authentication and file upload
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log('📄 [Request Config]:', config);
 
-// eleteMenuItem action
+    // Extract meal ID from formData
+    const mealId = formData.get('mealId');
+    console.log('📄 [Meal ID]:', mealId);
+
+    if (!mealId) {
+      throw new Error('Meal ID is required to update a menu item.');
+    }
+
+    console.log('🟢 [updateMenuItemAsync] Starting update for meal ID:', mealId);
+
+    // Sending PUT request to update the menu item
+    const { data } = await apiClient.put(`/vendor/editmenu/${mealId}`, formData, config);
+
+    console.log('✅ [updateMenuItemAsync] Menu item updated successfully:', data);
+
+    // Dispatch action to update Redux state
+    dispatch(updateMenuItem(data));
+
+    return data; // Returning updated data to the caller
+  } catch (error) {
+    console.error('❌ [updateMenuItemAsync] Error updating menu item:', error);
+
+    // Handle errors
+    return {
+      error: error.response?.data?.message || error.message,
+    };
+  }
+};
+
+// deleteMenuItem action
 export const deleteMenuItem = (menuItemId, token, vendorId) => async (dispatch) => {
   console.log('🚀 [deleteMenuItem] Starting API call with:', {
     menuItemId,
@@ -163,9 +201,3 @@ export const deleteMenuItem = (menuItemId, token, vendorId) => async (dispatch) 
     };
   }
 };
-
-
-
-
-
-

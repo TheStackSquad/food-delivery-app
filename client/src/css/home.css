@@ -7,20 +7,31 @@
   background-color: rgba(203, 219, 236, 0.3);
   overflow-y: auto;
   scroll-behavior: smooth;
-  margin-top: -10rem;
+  margin-top: -7rem;
 }
-
 /* Section 1 */
 .section1 {
   width: 100%;
-  padding: 1rem 0; /* Space around content */
+  height: 800px;
   position: relative;
+  margin: 0;
+  background-color: pink;
 }
-
+@media (min-width: 576px){
+  .section1 {
+    margin: 0;
+    padding: 0;
+  }
+}
+@media (min-width: 886px){
+  .section1 {
+    height: 650px;
+  }
+}
 .HomeImg {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Section 2 */
@@ -37,7 +48,6 @@
   position: relative;
   margin-top: -3rem;
 }
-
 /* Section 3 */
 .section3 {
   width: 100%;
@@ -45,7 +55,6 @@
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
-
 .star-listing{
   font-family: var(--fontfamilyMacondo);
   text-align: center;
@@ -56,25 +65,4 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* Responsive design */
-@media (min-width: 576px) {
-  .home{
-    margin-top: -11rem;
-  }
-  .section1, .section3 {
-    width: 100%;
-    margin: 0 auto;
-  }
-  .HomeImg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  .section2 {
-    background-size: cover;
-    background-position: center;
-    margin-top: -5rem;
-  }
 }

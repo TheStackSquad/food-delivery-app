@@ -24,7 +24,6 @@
   height: fit-content;
   text-align: start;
   padding-left: .9rem;
- 
 }
 .gridContainer {
   z-index: 9;
@@ -37,10 +36,67 @@
 @media (min-width: 576px) {
   .gridContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+/*    grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: .7rem;
   }
 }
-.selectContent{
-  border: 2rem solid blue;
+.cardImage {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  width: 100%;
+}
+.cardHover:hover .cardImage {
+  transform: scale(1.05);
+}
+
+.mealInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.price {
+  font-weight: bold;
+  color: #2a9d8f;
+  font-size: 1.3rem;
+}
+
+.cardImageContainer {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.cartButton {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cartButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
