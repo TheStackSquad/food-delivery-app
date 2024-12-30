@@ -2,6 +2,7 @@
     min-height: 100vh;
     background-color: #f9fafb;
     padding: 1rem;
+    position: relative;
   }
   
   .wrapper {
@@ -89,6 +90,7 @@
     top: -0.875rem;
     font-size: 0.875rem;
     transition: all 0.2s;
+    padding-left: .2rem;
   }
   
   .input:placeholder-shown + .label {

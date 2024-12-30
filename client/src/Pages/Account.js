@@ -191,6 +191,7 @@ const Account = () => {
 
   return (
     <div className={styles.wrapper}>
+     
       {/* Alert Component */}
       <Alert
         isVisible={alertConfig.isVisible}
@@ -199,56 +200,60 @@ const Account = () => {
         userName={alertConfig.userName}
         onClose={closeAlert}
       />
+        <div className={styles.blob}></div>
+        <div className={styles.blob2}></div>
 
-      <div className={styles.contentContainer}>
-        <h2 className={styles.title}>Sign Up Here!</h2>
-        <form className={styles.formBox} onSubmit={handleSubmit}>
-          {[
-            { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
-            { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com' },
-            { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '1234567890' },
-            { id: 'address', label: 'Delivery Address', type: 'text', placeholder: '123 Main St' },
-            { id: 'city', label: 'City/State', type: 'text', placeholder: 'City, State' },
-            { id: 'password', label: 'Password', type: 'password', placeholder: 'Create a password' },
-            { id: 'confirmPassword', label: 'Confirm Password', type: 'password', placeholder: 'Confirm password' },
-          ].map(({ id, label, type, placeholder }) => (
-            <div key={id} className={`${styles.inputGroup} ${errors[id] ? styles.inputError : ''}`}>
-              <input
-                type={type}
-                id={id}
-                value={formData[id]}
-                onChange={handleChange}
-                placeholder={placeholder}
-                className={styles.input}
-                required
-              />
-              <label htmlFor={id} className={styles.label}>
-                {label}
-              </label>
-              {errors[id] && <div className={styles.error}>{errors[id]}</div>}
-              {id === 'username' && suggestions.length > 0 && (
-                <ul className={styles.suggestions}>
-                  {suggestions.map((suggestion, index) => (
-                    <li key={index} onClick={() => autofillSuggestion(suggestion)}>
-                      {suggestion}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-
-          <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
-          </button>
-          <p className={styles.footerText}>
-            Already have an account?{' '}
-            <span onClick={handleLoginRedirect} className={styles.linkText}>
-              Sign in
-            </span>
-          </p>
-        </form>
+        <div className={styles.contentContainer}>
+  <h2 className={styles.title}>Sign Up Here!</h2>
+  <form className={styles.formBox} onSubmit={handleSubmit}>
+    {[
+      { id: 'username', label: 'Username', type: 'text', placeholder: 'John Doe' },
+      { id: 'email', label: 'Email Address', type: 'email', placeholder: 'you@example.com' },
+      { id: 'phone', label: 'Phone Number', type: 'tel', placeholder: '1234567890' },
+      { id: 'address', label: 'Delivery Address', type: 'text', placeholder: '123 Main St' },
+      { id: 'city', label: 'City/State', type: 'text', placeholder: 'City, State' },
+      { id: 'password', label: 'Password', type: 'password', placeholder: 'Create a password' },
+      { id: 'confirmPassword', label: 'Confirm Password', type: 'password', placeholder: 'Confirm password' },
+    ].map(({ id, label, type, placeholder }) => (
+      <div key={id} className={`${styles.inputGroup} ${errors[id] ? styles.inputError : ''}`}>
+        <input
+          type={type}
+          id={id}
+          value={formData[id]}
+          onChange={handleChange}
+          placeholder=" "
+          className={styles.input}
+          required
+        />
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+        <div className={styles.inputLineLogin}></div>
+        {errors[id] && <div className={styles.error}>{errors[id]}</div>}
+        {id === 'username' && suggestions.length > 0 && (
+          <ul className={styles.suggestions}>
+            {suggestions.map((suggestion, index) => (
+              <li key={index} onClick={() => autofillSuggestion(suggestion)}>
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
+    ))}
+
+    <button type="submit" className={styles.submitButton} disabled={loading}>
+      {loading ? 'Registering...' : 'Register'}
+    </button>
+    <p className={styles.footerText}>
+      Already have an account?{' '}
+      <span onClick={handleLoginRedirect} className={styles.linkText}>
+        Sign in
+      </span>
+    </p>
+  </form>
+</div>
+
     </div>
   );
 };

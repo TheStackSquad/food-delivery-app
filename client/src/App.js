@@ -1,6 +1,7 @@
 //client/src/App.js
 import React from "react";
 import "./App.css";
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router-dom";
 //import { useDispatch, useSelector } from "react-redux";
 //import { checkSession, refreshSession } from './redux/actions/vendorActions';

@@ -7,7 +7,7 @@ import Snap from "../components/Snap";
 import Ratings from '../components/Ratings';
 import  BackgroundImage from '../asset/img/Menu/noodles.webp';
 import "../css/home.css";
-import "../css/slideNav.css";
+import "../css/slideNav.module.css";
 
 function Home() {
   return (

@@ -13,6 +13,7 @@
   z-index: 1000;
   background-color: transparent;
   margin: 0px .3rem;
+  padding: .5rem 0px 0px 0px ;
 }
 
 /*Brand Styling*/
@@ -32,7 +33,8 @@
 .iconsGrid {
   display: flex;
   width: fit-content;
-  gap: .2rem;;
+  gap: .2rem;
+  margin-right: .5rem;
 }
 .togglebuttonLayout {
   position: relative;
@@ -63,6 +65,7 @@
   padding: var(--padding);
   border-radius: 50%;
   margin-left: .5rem;
+  position: relative;
 }
 .menu {
   position: fixed;
@@ -106,25 +109,9 @@
   width: 100%;
   color: wheat;
 }
-.icon {
-  display: flex;
-  align-items: center;
-  font-size: 1.2em;
+.icons-container{
+  width: fit-content;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*MD & LG VIEWPORTS */
 @media screen and (min-width: 576px) {

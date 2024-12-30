@@ -1,4 +1,3 @@
-// client/src/RiderRoutes/RiderSignUp.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { riderSignUpUser } from "../../API/signup";
@@ -9,6 +8,7 @@ import {
   validatePassword,
 } from "../../frontendUtils/validation";
 import Alert from "../../components/UI/Alert";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "../../css/RiderSignUp.css";
 import "../../css/Alert.css";
 
@@ -52,25 +52,21 @@ const RiderSignUp = () => {
   const validateForm = () => {
     let formErrors = {};
 
-    // Validate Full Name
     const fullNameValidation = validateFullname(formData.fullName);
     if (!fullNameValidation.isValid) {
       formErrors.fullName = fullNameValidation.error;
     }
 
-    // Validate Email
     const emailValidation = validateEmail(formData.email);
     if (!emailValidation.isValid) {
       formErrors.email = emailValidation.error;
     }
 
-    // Validate Phone
     const phoneValidation = validatePhone(formData.phone);
     if (!phoneValidation.isValid) {
       formErrors.phone = phoneValidation.error;
     }
 
-    // Validate Password
     const passwordValidation = validatePassword(
       formData.password,
       formData.confirmPassword
@@ -79,7 +75,6 @@ const RiderSignUp = () => {
       formErrors.password = passwordValidation.error;
     }
 
-    // Confirm Password Validation
     if (formData.password !== formData.confirmPassword) {
       formErrors.confirmPassword = "Passwords do not match";
     }
@@ -95,8 +90,7 @@ const RiderSignUp = () => {
       setErrors({});
 
       try {
-        // eslint-disable-next-line
-        const response = await riderSignUpUser(formData, "/api/rider/signup");
+        await riderSignUpUser(formData, "/api/rider/signup");
 
         setFormData({
           fullName: "",
@@ -108,12 +102,12 @@ const RiderSignUp = () => {
 
         showAlert(
           "success",
-          `Hi ${formData.fullName}! Your rider application for our logistics platform has been received. We'll review your details and get back to you soon. Check your email for further instructions.`,
+          `Hi ${formData.fullName}! Your rider application has been received. We'll review your details and get back to you soon. Check your email for further instructions.`,
           formData.fullName
         );
-         // Redirect to the login page after signup after 3 seconds
-         setTimeout(() => {
-          navigate('/rider/login');
+
+        setTimeout(() => {
+          navigate("/rider/login");
         }, 3000);
       } catch (error) {
         showAlert(
@@ -140,142 +134,109 @@ const RiderSignUp = () => {
         onClose={() => setAlertState((prev) => ({ ...prev, isVisible: false }))}
         autoCloseTime={5000}
       />
-      <div className="customSignupContainer">
-        <h1 className="customHeader">Create Rider Account</h1>
-        <form onSubmit={handleSubmit} className="customSignupForm">
-          <div className="customInputGroup">
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={`customInput ${
-                errors.fullName ? "customErrorInput" : ""
-              }`}
-              placeholder="Full Name"
-            />
-            <label
-              htmlFor="fullName"
-              className={`customLabel ${
-                errors.fullName ? "customErrorLabel" : ""
-              }`}
+      <Container className="login-container">
+        <Row className="justify-content-center">
+          <Col lg={6} md={8} sm={12}>
+            <h1 className="text-center mb-4 header-text">Create Rider Account</h1>
+            <Form onSubmit={handleSubmit} className="p-4 border rounded shadow-lg bg-white form-container">
+              <Form.Group className="mb-3" controlId="fullName">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  isInvalid={!!errors.fullName}
+                  placeholder="Enter your full name"
+                  className="custom-input"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.fullName}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  isInvalid={!!errors.email}
+                  placeholder="Enter your email"
+                   className="custom-input"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="phone">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  isInvalid={!!errors.phone}
+                  placeholder="Enter your phone number"
+                   className="custom-input"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  isInvalid={!!errors.password}
+                  placeholder="Enter your password"
+                   className="custom-input"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="confirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  isInvalid={!!errors.confirmPassword}
+                  placeholder="Confirm your password"
+                   className="custom-input"
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.confirmPassword}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <Button type="submit"
+              variant="primary"
+               className="w-100 py-2 custom-btnRider"
             >
-              Full Name
-            </label>
-            {errors.fullName && (
-              <p className="customErrorText">{errors.fullName}</p>
-            )}
-          </div>
+                Sign Up
+              </Button>
 
-          <div className="customInputGroup">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`customInput ${
-                errors.email ? "customErrorInput" : ""
-              }`}
-              placeholder="Email Address"
-            />
-            <label
-              htmlFor="email"
-              className={`customLabel ${
-                errors.email ? "customErrorLabel" : ""
-              }`}
-            >
-              Email Address
-            </label>
-            {errors.email && <p className="customErrorText">{errors.email}</p>}
-          </div>
-
-          <div className="customInputGroup">
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={`customInput ${
-                errors.phone ? "customErrorInput" : ""
-              }`}
-              placeholder="Phone Number"
-            />
-            <label
-              htmlFor="phone"
-              className={`customLabel ${
-                errors.phone ? "customErrorLabel" : ""
-              }`}
-            >
-              Phone Number
-            </label>
-            {errors.phone && <p className="customErrorText">{errors.phone}</p>}
-          </div>
-
-          <div className="customInputGroup">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className={`customInput ${
-                errors.password ? "customErrorInput" : ""
-              }`}
-              placeholder="Password"
-            />
-            <label
-              htmlFor="password"
-              className={`customLabel ${
-                errors.password ? "customErrorLabel" : ""
-              }`}
-            >
-              Password
-            </label>
-            {errors.password && (
-              <p className="customErrorText">{errors.password}</p>
-            )}
-          </div>
-
-          <div className="customInputGroup">
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className={`customInput ${
-                errors.confirmPassword ? "customErrorInput" : ""
-              }`}
-              placeholder="Confirm Password"
-            />
-            <label
-              htmlFor="confirmPassword"
-              className={`customLabel ${
-                errors.confirmPassword ? "customErrorLabel" : ""
-              }`}
-            >
-              Confirm Password
-            </label>
-            {errors.confirmPassword && (
-              <p className="customErrorText">{errors.confirmPassword}</p>
-            )}
-          </div>
-
-          <button type="submit" className="customSubmitButton">
-            Sign Up
-          </button>
-
-          <p
-            className="customToggleLink"
-            onClick={() => navigate("/rider/login")}
-          >
-            Already have an account? Log in
-          </p>
-        </form>
-      </div>
+              <p
+                className="mt-3 text-center text-primary"
+                onClick={() => navigate("/rider/login")}
+                style={{ cursor: "pointer" }}
+              >
+                Already have an account? Log in
+              </p>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

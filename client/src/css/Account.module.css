@@ -2,205 +2,174 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
   position: relative;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  background-color: white;
 }
 .contentContainer {
-  position: relative;
-  z-index: 1;
-  width: 90%;
-  max-width: 500px;
+  margin: 1.5rem 0px;
   height: fit-content;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+              0 1px 3px rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: .5rem;
 }
+
 @media (min-width: 576px){
   .contentContainer {
-    max-width: 700px;
+    max-width: 500px;
   }
 }
-
-.formBox {
-  width: 90%;
-  padding: .5rem;
-  overflow: hidden;
-}
-.blob {
-  position: absolute;
-  top: -20%;
-  right: -40%;
-  width: 250px;
-  height: 250px;
-  background: rgba(245, 191, 170, 0.2);
-  border-radius: 50%;
-  filter: blur(60px);
-  animation: blobMove 6s infinite alternate ease-in-out;
-  z-index: -1;
-}
-
-@keyframes blobMove {
-  0% { transform: scale(1) translate(0, 0); }
-  100% { transform: scale(1.1) translate(20px, 20px); }
-}
-
-.formHeader {
-  text-align: center;
-  line-height: .9;
-  margin-bottom: .5rem;
+@media (min-width: 886px){
+  .contentContainer  {
+    max-width: 650px;
+  }
 }
 
 .title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  line-height: 1.9;
   font-size: clamp(2rem, 1.5rem + 1vw, 3rem);
-  color: #4a4a4a;
-  font-weight: 600;
+  font-weight: 800;
+  font-family: var(--fontfamilyMacondo);
 }
 .inputGroup {
   position: relative;
-  overflow-x: hidden;
-  padding: .2rem 0px;
-}
-
-.input,
-.input[type="text"],
-.input[type="tel"],
-.input[type="email"],
-.input[type="password"] {
-  width: 100%;
-  height: 40px;
-  border: none;
-  outline: none;
-  border-bottom: 2px solid #9c0599;
-  border-radius: 0px;
-  font-size: 1rem;
-  background: transparent;
-  transition: border-color 0.3s ease;
-}
-@media (min-width: 576px){
-  .input,
-.input[type="text"],
-.input[type="tel"],
-.input[type="email"],
-.input[type="password"] {
-  font-size: 1.4rem;
-}
-}
-.label {
-  position: absolute;
-  bottom: 1rem;
-  left: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  color: #888;
-  transform-origin: bottom left;
-}
-.input:focus {
-  outline: none;
-  border-bottom-color: #7c0778;
-}
-.input:focus + .label,
-.input:not(:placeholder-shown) + .label {
-  transform: translateY(-150%) scale(0.8);
-  color: #7c0778;
-}
-
-.submitButton {
-  padding: 0.75rem 1.5rem;
-  font-size: 1.1rem;
-  width: 200px;
-  background-color: #7c0778;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
+  margin: 1rem 0;
+  height: 3rem; /* Set uniform height */
+  width: 100%; /* Set uniform width */
+  border-radius: 0.25rem; /* Optional: For rounded edges */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
-@media (min-width: 576px){
-  .submitButton {
 
-    font-size: 1.1rem;
-    width: fit-content;
-  }
+.inputGroup input[type="text"],
+.inputGroup input[type="password"],
+.inputGroup input[type="email"],
+.inputGroup input[type="tel"] {
+  width: 100%; /* Full width */
+  height: 100%; /* Match the height of .inputGroup */
+  border: none;
+  outline: none;
+  padding: 0 0.5rem; /* Add padding for a better look */
+  font-size: 1rem;
+  background: transparent;
+  color: #333; /* Ensure text color is visible */
+  box-sizing: border-box; /* Include padding in height/width calculation */
+}
+
+.inputGroup label {
+  position: absolute;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #999;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.inputGroup input:focus + label,
+.inputGroup input:not(:placeholder-shown) + label {
+  top: 0.2rem;
+  font-size: 0.75rem;
+  color: rgb(44, 31, 6);
+}
+
+
+.inputGroup .inputLineLogin {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: black;
+  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.inputGroup input:focus ~ .inputLineLogin {
+  transform: scaleX(1);
+  background-color: blue;
+}
+
+
+.submitButton {
+  background-color: #2196f3;
+  color: white;
+  padding: var(--padding);
+  border: none;
+  border-radius: .5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .submitButton:hover {
-  background-color: #9c0599;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  background-color: #010d18;
 }
-
-.submitButton:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.footerText {
+.signupText {
   text-align: center;
-  font-size: 1.1rem;
   color: #666;
+  font-size: 1.1zrem;
+  margin-top: .1rem;
 }
 
-.linkText {
-  color: orchid;
-  cursor: pointer;
-  font-weight: bold;
+.signupText a {
+  color: #2196f3;
+  text-decoration: none;
 }
 
-.linkText:hover {
+.signupText a:hover {
   text-decoration: underline;
 }
 
-.error {
-  color: #d32f2f;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
+
+
+/* Blob animations - scaled down for mobile */
+.blob,
+.blob2 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 43% 57% 63% 37% / 48% 45% 55% 52%;
+  background: linear-gradient(135deg, #00796b, #004d40);
+  opacity: 0.1;
+  animation: blobAnimation 20s linear infinite;
 }
 
-.success {
-  color: #4caf50;
-  text-align: center;
-  margin-bottom: 1rem;
+.blob {
+  top: -125px;
+  left: -125px;
 }
 
-.suggestions {
-  margin-top: 0.5rem;
-  padding-left: 1rem;
-  color: #555; /* Adjust to your theme */
-  font-size: 0.9rem;
+.blob2 {
+  bottom: -125px;
+  right: -125px;
+  animation-delay: -10s;
+  animation-direction: reverse;
 }
 
-.suggestions h4 {
-  margin-bottom: 0.3rem;
-  font-size: 1rem;
-  font-weight: bold;
-}
+@keyframes blobAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
 
-.suggestions ul {
-  list-style: disc;
-  margin-left: 1rem;
-}
-
-.suggestions li {
-  margin-bottom: 0.2rem;
-  cursor: pointer;
-}
-
-.suggestions li:hover {
-  text-decoration: underline;
+  100% {
+    transform: rotate(360deg);
+  }
 }

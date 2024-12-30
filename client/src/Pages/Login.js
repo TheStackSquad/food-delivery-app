@@ -119,7 +119,7 @@ const Login = () => {
               required
             />
             <label htmlFor="username">Username</label>
-            <div className={styles.inputLine}></div>
+            <div className={styles.inputLineLogin}></div>
           </div>
 
           {/* Password input */}
@@ -133,7 +133,7 @@ const Login = () => {
               required
             />
             <label htmlFor="password">Password</label>
-            <div className={styles.inputLine}></div>
+            <div className={styles.inputLineLogin}></div>
           </div>
 
           {/* Forgot username link */}
