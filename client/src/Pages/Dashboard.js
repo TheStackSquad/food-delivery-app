@@ -15,7 +15,8 @@ import { uploadImage } from "../API/upload";
 import { FaCamera, FaSignOutAlt } from "react-icons/fa";
 
 // UI Components and Styles
-// eslint-disable-next-line 
+// eslint-disable-next-line
+// eslint-disable-next-line
 import { DashboardCard, DashboardCardContent } from "../components/UI/dashboardCard";
 import styles from "../css/LoginDashboard.module.css";
 

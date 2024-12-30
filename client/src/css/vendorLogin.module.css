@@ -4,12 +4,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   font-family: var(--Alte-Text);
+  position: relative;
 }
 .formWrap{
   width: 95%;
-  max-width: 500px;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -21,32 +21,34 @@
     0 6px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
   margin-bottom: 1.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-
+@media (min-width: 576px){
+  .formWrap{
+    width: 700px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 .formWrap:hover {
   box-shadow: 
     0 15px 35px rgba(0, 0, 0, 0.12), 
     0 8px 15px rgba(0, 0, 0, 0.07);
 }
-
-@media (max-width: 575.98px){
-  .formWrap{
-    width: 95%;
-    max-width: 370px;
-  }
-}
 .formWrap h2{
   text-align: center;
   color: black;
 }
-@media (max-width: 575.98px) {
-  .formGrid {
-    width: 95%;
-    max-width: 370px;
-    margin-bottom: .2rem;
-  }
-}
+
 .inputGroup {
   position: relative;
   margin-bottom: 1.5rem;
@@ -66,7 +68,6 @@
     color 0.3s ease;
   transform-origin: left center;
 }
-
 
 .inputGroup input[type="email"],
 .inputGroup input[type="text"],
@@ -94,6 +95,7 @@
   font-size: 1.4rem;
 }
 }
+
 .inputGroup input:not(:placeholder-shown),
 .inputGroup input:focus {
   border-bottom-color: #7c0778;
@@ -164,51 +166,4 @@ input::placeholder{
   font-family: var(--fontfamilyMacondo);
   margin-bottom: 1.5rem;
 
-}
-
-/* Md Viewport*/
-
-@media (min-width: 576px) {
-  .gridContainer{
-    height: 100%;
-  }
-  .formWrap {
-    max-width: 650px;
-    width: 95%;
-    height: fit-content;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .formWrap h2{
-    font-family: var(--Alte-Text);
-  }
-  .formGrid {
-    width: 95%;
-    max-width: 450px;
-    margin-bottom: .2rem;
-  }
-  .inputGroup label {
-    margin-bottom: .7rem;
-    font-size: 1.3rem;
-    pointer-events: none;
-    color: black;
-  }
-  input::placeholder{
-    position: absolute;
-    right: 0;
-    color: black;
-    font-size: 1.1rem;
-  }
-.btnWrapLogin{
-  margin: 1rem 0px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-  .buttonSubmit{
-    font-size: 1.4rem;
-  }
 }

@@ -52,6 +52,7 @@
   justify-content: center;
 }
 
+.inputGroup input[type="email"],
 .inputGroup input[type="text"],
 .inputGroup input[type="password"] {
   width: 100%; /* Full width */
