@@ -2,32 +2,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   min-height: 100vh;
   background-color: #f5f5f5;
   position: relative;
-  overflow: hidden;
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 .loginCard {
-  background: transparent;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
   height: fit-content;
-  max-width: 100%;
-  position: relative;
-  z-index: 1;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+              0 1px 3px rgba(0, 0, 0, 0.06); /* Sleek shadow effect */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Add rounded corners for a polished look */
+  background-color: #fff; /* Optional: Add a background color */
+  padding: 1.5rem; /* Optional: Add padding for content spacing */
 }
+
 @media (min-width: 576px){
   .loginCard {
     max-width: 500px;
@@ -49,88 +43,66 @@
 }
 .inputGroup {
   position: relative;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  height: 3rem; /* Set uniform height */
+  width: 100%; /* Set uniform width */
+  border-radius: 0.25rem; /* Optional: For rounded edges */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.inputGroup input {
-  width: 100%;
+.inputGroup input[type="text"],
+.inputGroup input[type="password"] {
+  width: 100%; /* Full width */
+  height: 100%; /* Match the height of .inputGroup */
   border: none;
   outline: none;
+  padding: 0 0.5rem; /* Add padding for a better look */
+  font-size: 1rem;
   background: transparent;
+  color: #333; /* Ensure text color is visible */
+  box-sizing: border-box; /* Include padding in height/width calculation */
+}
+input{
+  color: black;
   font-size: 1rem;
 }
 
-.inputGroup input[type="text"] {
-  border: none;
-  outline: none;
-  padding: 0.625rem 0;
-  margin-bottom: .5rem;
-  background: transparent;
-}
 .inputGroup label {
   position: absolute;
-  left: 0;
-  top: 0.625rem;
-  color: #666;
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #999;
   transition: all 0.3s ease;
   pointer-events: none;
-  font-size: 1.1rem;
-}
-.inputLine {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-color: black;
 }
 
-.inputLine::after {
-  content: '';
+.inputGroup input:focus + label,
+.inputGroup input:not(:placeholder-shown) + label {
+  top: 0.2rem;
+  font-size: 0.75rem;
+  color: wheat;
+}
+
+.inputGroup .inputLineLogin {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
   height: 2px;
-  background-color: #2196f3;
-  transform: scaleX(0);
+  background-color: black;
+  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left;
   transition: transform 0.3s ease;
 }
-.inputGroup input:focus~.inputLine::after,
-.inputGroup input:not(:placeholder-shown)~.inputLine::after {
+
+.inputGroup input:focus ~ .inputLineLogin {
   transform: scaleX(1);
+  background-color: blue;
 }
-
-.inputGroup input:focus~label,
-.inputGroup input:not(:placeholder-shown)~label {
-  transform: translateY(-1.25rem);
-  font-size: 0.75rem;
-  color: #2196f3;
-}
-.submitButton {
-  background-color: #2196f3;
-  color: white;
-  padding: var(--padding);
-  border: none;
-  border-radius: .5rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  margin-top: 0.5rem;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 .submitButton:hover {
   background-color: #010d18;
 }
@@ -146,6 +118,19 @@
   color: #2196f3;
 }
 
+
+.submitButton {
+  background-color: #2196f3;
+  color: white;
+  padding: var(--padding);
+  border: none;
+  border-radius: .5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 0.5rem;
+}
 .signupText {
   text-align: center;
   color: #666;
@@ -161,6 +146,20 @@
 .signupText a:hover {
   text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Blob animations - scaled down for mobile */
 .blob,

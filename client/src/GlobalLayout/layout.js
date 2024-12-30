@@ -1,13 +1,13 @@
 // src/GlobalLayout/layout.js
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes, FaHome, FaUser, FaUtensils, FaMoneyCheckAlt, FaSignInAlt, FaPhone } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleDropdown, updateInteraction, hideChatIcon } from '../redux/actions/layoutActions';  // Use the new hideChatIcon action
 import { slideVariants, menuItemVariants } from '../Motion/animation';
-import CartBadge from '../components/CartBadge';
-import '../css/layout.css';
+//import CartBadge from '../components/CartBadge';
+import styles from '../css/layout.module.css';
 
 function GlobalLayout({ children }) {
   const navigate = useNavigate();
@@ -17,25 +17,6 @@ function GlobalLayout({ children }) {
    // eslint-disable-next-line
   const { isOpen, isChatIconVisible } = useSelector((state) => state.layout);  // Select state
   const dispatch = useDispatch();
-
-  //State For Badge Count
-  const [cartCount, setCartCount] = useState(0);
-
-  //useEffect to keep track of cart click
-  useEffect(() => {
-    // Initialize cart count from localStorage
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartCount(cartItems.length);
-
-    // Listen for cart updates
-    const handleStorageChange = () => {
-      const items = JSON.parse(localStorage.getItem('cartItems')) || [];
-      setCartCount(items.length);
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -81,22 +62,22 @@ const handleCartClick = () => {
 
 
   return (
-    <div className="global-layout">
-      <div className="header-brand">
+    <div className={styles['global-layout']}>
+       <div className={styles['header-brand']}>
         <Link to="/">
-          <h3 className="brand">Dev-Kitchen</h3>
+      <h3 className={styles['brand']}>Dev-Kitchen</h3>
         </Link>
       
         
 
-        <div className="iconsGrid">
-          <div ref={slideRef} className="relative z-50">
+        <div className={styles['iconsGrid']}>
+          <div ref={slideRef} className={styles["relative z-50"]}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 dispatch(toggleDropdown(!isOpen));  // Toggle menu state
               }}
-              className="togglebuttonLayout"
+              className={styles["togglebuttonLayout"]}
             >
               {isOpen ? <FaTimes /> : <FaBars />}
             </button>
@@ -108,9 +89,9 @@ const handleCartClick = () => {
                   animate="open"
                   exit="closed"
                   variants={slideVariants}
-                  className="menu"
+                  className={styles["menu"]}
                 >
-                  <div className="px-4 space-y-4 navigation-menu">
+                  <div className={styles["navigation-menu"]}>
                     {[
                       { path: '/', label: 'Home', icon: <FaHome />, color: 'orchid' },
                       { path: '/account', label: 'Account', icon: <FaUser />, color: 'deepskyblue' },
@@ -122,10 +103,10 @@ const handleCartClick = () => {
                       <motion.div
                         key={item.path}
                         variants={menuItemVariants}
-                        className="dropdown-item"
+                        className={styles["dropdown-item"]}
                         onClick={() => handleMenuClick(item.path)}
                       >
-                        <span className="icon" style={{ color: item.color }}>
+                        <span className={styles["icon"]} style={{ color: item.color }}>
                           {item.icon}
                         </span>
                         <span className="label">{item.label}</span>
@@ -137,12 +118,11 @@ const handleCartClick = () => {
             </AnimatePresence>
           </div>
 
-          <div className="icons-container">
-            <div className="cart-icon" onClick={handleCartClick}>
-              <FaShoppingCart />
-              <CartBadge count={cartCount} />
-            </div>
+          <div className={styles['icons-container']}>
+          <div className={styles['cart-icon']} onClick={handleCartClick}>
+            <FaShoppingCart /> 
           </div>
+        </div>
         </div>
         </div>
    

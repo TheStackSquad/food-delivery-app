@@ -1,8 +1,8 @@
 
 .badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -55px;
+  right: 1px;
   background-color: #ff4444;
   color: white;
   border-radius: 50%;
@@ -14,4 +14,5 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  z-index: 1200;
 }

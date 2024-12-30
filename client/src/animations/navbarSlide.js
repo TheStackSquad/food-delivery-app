@@ -1,5 +1,6 @@
 // components/animations/navbarSlide.js
 import { motion } from 'framer-motion';
+import styles from '../css/slideNav.module.css';
 
 export const NavbarSlide = ({ selectedIndex }) => {
   const itemWidths = [33.3, 33.3, 33.3]; // Assuming there are 3 items, adjust width accordingly
@@ -13,7 +14,7 @@ export const NavbarSlide = ({ selectedIndex }) => {
       }}
       exit={{ width: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="navbar-background"
+      className={styles['navbar-background']}
     />
   );
 };

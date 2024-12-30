@@ -247,39 +247,43 @@ return (
             </div>
 
             {/* Price and Additional Details */}
-            <div className={styles.inputGroupForPrice}>
-              <div className={styles.inputGroup}>
-                <label>Price</label>
-                <input
-                  type="number"
-                  name="price"
-                  className={styles.input}
-                  placeholder="₦"
-                  onChange={formik.handleChange}
-                  value={formik.values.price}
-                />
-                {formik.touched.price && formik.errors.price && (
-                  <div className={styles.error}>{formik.errors.price}</div>
-                )}
-              </div>
-              <div className={styles.inputGroup}>
-                <label>Price Description</label>
-                <input
-                  type="text"
-                  name="priceDescription"
-                  className={styles.input}
-                  placeholder="Price per plate"
-                  onChange={formik.handleChange}
-                  value={formik.values.priceDescription}
-                />
-                {formik.touched.priceDescription &&
-                  formik.errors.priceDescription && (
-                    <div className={styles.error}>
-                      {formik.errors.priceDescription}
-                    </div>
-                  )}
-              </div>
-            </div>
+           {/* Input Group for Price */}
+<div className={styles.inputGroupForPrice}>
+  <div className={styles.inputGroup}>
+    <label>Price</label>
+    <input
+      type="text" // Change to text to handle Naira symbol
+      name="price"
+      className={styles.input}
+      placeholder="₦"
+      onChange={(e) => {
+        const value = e.target.value.replace(/[₦,]/g, ''); // Remove ₦ and commas
+        if (!isNaN(value)) {
+          formik.setFieldValue('price', value);
+        }
+      }}
+      value={`₦${formik.values.price ? Number(formik.values.price).toLocaleString() : ''}`} // Add formatting
+    />
+    {formik.touched.price && formik.errors.price && (
+      <div className={styles.error}>{formik.errors.price}</div>
+    )}
+  </div>
+  <div className={styles.inputGroup}>
+    <label>Price Description</label>
+    <input
+      type="text"
+      name="priceDescription"
+      className={styles.input}
+      placeholder="Price per plate"
+      onChange={formik.handleChange}
+      value={formik.values.priceDescription}
+    />
+    {formik.touched.priceDescription && formik.errors.priceDescription && (
+      <div className={styles.error}>{formik.errors.priceDescription}</div>
+    )}
+  </div>
+</div>
+
 
             <div className={styles.inputGroup}>
               <label>Pack</label>
