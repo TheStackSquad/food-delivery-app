@@ -1,6 +1,6 @@
 // src/GlobalLayout/layout.js
 import React, { useCallback, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaTimes, FaHome, FaUser, FaUtensils, FaMoneyCheckAlt, FaSignInAlt, FaPhone } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
@@ -60,13 +60,22 @@ const handleCartClick = () => {
   navigate('/checkout');
 };
 
+//navigate function to home page
+
+const handleNavigation = () => {
+  navigate("/");
+};
 
   return (
     <div className={styles['global-layout']}>
        <div className={styles['header-brand']}>
-        <Link to="/">
-      <h3 className={styles['brand']}>Dev-Kitchen</h3>
-        </Link>
+       <h3 
+      className={styles['brand']} 
+      onClick={handleNavigation} 
+      style={{ cursor: "pointer" }}
+    >
+      Dev-Kitchen
+    </h3>
       
         
 

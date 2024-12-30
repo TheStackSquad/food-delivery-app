@@ -20,15 +20,16 @@
 .brand {
   width: fit-content;
   height: fit-content;
-  border: 2px solid orangered;
   color: orange;
   text-shadow: 2px 2px 4px rgba(68, 20, 2, 0.8);
   box-shadow: 3px 3px 10px rgba(255, 69, 0, 0.7);
   padding: var(--paddingRegular);
   border-radius: 0.4rem;
   background-color: rgba(4, 58, 105, 0.6);
+  border: 2px solid orangered;
   font-family: var(--fontfamilyMacondo);
 }
+
 /*iconGrid Element Styling*/
 .iconsGrid {
   display: flex;
